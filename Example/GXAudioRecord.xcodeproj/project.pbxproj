@@ -295,6 +295,9 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = gaoguangxiao;
 				TargetAttributes = {
+					6003F589195388D20070C39A = {
+						DevelopmentTeam = NK58M56UN4;
+					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
 					};
@@ -567,6 +570,7 @@
 			baseConfigurationReference = 79B928C3139D5669930A8106 /* Pods-GXAudioRecord_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = NK58M56UN4;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GXAudioRecord/GXAudioRecord-Prefix.pch";
 				INFOPLIST_FILE = "GXAudioRecord/GXAudioRecord-Info.plist";
@@ -583,6 +587,7 @@
 			baseConfigurationReference = C7CBD36B40159EF7B82FB68D /* Pods-GXAudioRecord_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = NK58M56UN4;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GXAudioRecord/GXAudioRecord-Prefix.pch";
 				INFOPLIST_FILE = "GXAudioRecord/GXAudioRecord-Info.plist";
