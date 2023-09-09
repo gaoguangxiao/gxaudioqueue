@@ -1,0 +1,6 @@
+framework module Pods_GXAudioRecord_Example {
+  umbrella header "Pods-GXAudioRecord_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

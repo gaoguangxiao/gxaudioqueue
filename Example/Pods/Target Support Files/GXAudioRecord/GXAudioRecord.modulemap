@@ -1,0 +1,6 @@
+framework module GXAudioRecord {
+  umbrella header "GXAudioRecord-umbrella.h"
+
+  export *
+  module * { export * }
+}

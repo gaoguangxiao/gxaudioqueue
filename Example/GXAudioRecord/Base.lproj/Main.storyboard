@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LrV-DU-brP">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="8xX-FS-gDM">
+            <objects>
+                <navigationController id="LrV-DU-brP" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="seO-J9-su1">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="o3v-RC-34s" kind="relationship" relationship="rootViewController" id="YSF-T9-DDx"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qCM-yH-Hpi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1172" y="256"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="6pX-ip-b2R">
+            <objects>
+                <viewController id="o3v-RC-34s" customClass="GGXViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y0v-dv-0ho"/>
+                        <viewControllerLayoutGuide type="bottom" id="VPF-De-cfx"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iWh-xS-oeg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="egV-OL-MgH">
+                                <rect key="frame" x="137.5" y="308.5" width="100" height="50"/>
+                                <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.89019607840000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="QbZ-JD-rHj"/>
+                                    <constraint firstAttribute="height" constant="50" id="baS-cf-4we"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="进入主界面"/>
+                                <connections>
+                                    <action selector="pushVc:" destination="o3v-RC-34s" eventType="touchUpInside" id="1Bs-Dd-lwV"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="egV-OL-MgH" firstAttribute="centerY" secondItem="iWh-xS-oeg" secondAttribute="centerY" id="0Vy-Rq-bSv"/>
+                            <constraint firstItem="egV-OL-MgH" firstAttribute="centerX" secondItem="iWh-xS-oeg" secondAttribute="centerX" id="csa-St-JCh"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="vCO-My-Za5"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7am-3k-eRw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-222" y="256"/>
+        </scene>
+    </scenes>
+</document>

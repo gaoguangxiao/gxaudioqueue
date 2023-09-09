@@ -1,0 +1,31 @@
+PODS:
+  - FBSnapshotTestCase (2.1.4):
+    - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
+  - FBSnapshotTestCase/Core (2.1.4)
+  - FBSnapshotTestCase/SwiftSupport (2.1.4):
+    - FBSnapshotTestCase/Core
+  - GXAudioRecord (0.1.0)
+  - Masonry (1.1.0)
+
+DEPENDENCIES:
+  - FBSnapshotTestCase
+  - GXAudioRecord (from `../`)
+  - Masonry
+
+SPEC REPOS:
+  trunk:
+    - FBSnapshotTestCase
+    - Masonry
+
+EXTERNAL SOURCES:
+  GXAudioRecord:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
+  GXAudioRecord: 40b53ed002b75661d96a0a95619337a45106768b
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+
+PODFILE CHECKSUM: 30c65690f6c08df826e38fe52fb60d0e1d10a78b
+
+COCOAPODS: 1.12.1
