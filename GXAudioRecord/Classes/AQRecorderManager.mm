@@ -130,8 +130,6 @@ static void HandleInputBuffer (
         inNumPackets = inBuffer->mAudioDataByteSize / pAqData->mDataFormat.mBytesPerPacket;
     }
     //获取音量
-//    float peakPower = [audioRecorder getCurrentPower];
-//    NSLog(@"录制中MeterDB当前分贝:%.2f",peakPower);
     // Get DB
     float channelValue[2];
     double maxDepth  =  pow(10, KDefaultLimitMaxDb/20);
@@ -513,40 +511,6 @@ OSStatus SetMagicCookieForFile (
 
 - (Float32 )getCurrentPower {
     return [AQUnitTools getCurrentPower:aqData.mQueue andDataFormat:aqData.mDataFormat];
-}
-
-#pragma mark - Private 实时获取音频数据
-- (void)processAudioBuffer:(AudioQueueBufferRef)inBuffer withQueue:(AudioQueueRef)queue {
-    Byte *data = (Byte *)malloc(inBuffer->mAudioDataByteSize);
-    memset(data,0, inBuffer->mAudioDataByteSize);
-    memcpy(data, inBuffer->mAudioData, inBuffer->mAudioDataByteSize);
-    //调用方法获取音量
-//    inBuffer->mUserData;//void * __nullable
-//    NSMutableData *mData = [NSMutableData dataWithBytes:<#(nullable const void *)#> length:<#(NSUInteger)#>]
-    NSData *dataBuffer = [[NSData alloc]initWithBytes:data length:inBuffer->mAudioDataByteSize];
-    [self isQuite:dataBuffer];
-    free(data);
-}
-
-#pragma mark - 调用方法获取音量
-
--(BOOL)isQuite:(NSData *)pcmData {
-    if(pcmData ==nil) {
-        return NO;
-    }
-    long long pcmAllLenght = 0;
-    short butterByte[pcmData.length/2];
-    memcpy(butterByte, pcmData.bytes, pcmData.length);//frame_size * sizeof(short)
-    // 将 buffer 内容取出，进行平方和运算
-    for(int i =0; i < pcmData.length/2; i++) {
-        pcmAllLenght += butterByte[i] * butterByte[i];
-    }
-    // 平方和除以数据总长度，得到音量大小。
-    double mean   = pcmAllLenght / (double)pcmData.length;
-    NSLog(@"音量大小：%fmean",mean);
-    double volume = 10*log10(mean);//volume为分贝数大小
-    NSLog(@"计算的：%f分贝",volume);
-    return YES;
 }
 
 - (void)addPoint:(NSTimer *)timer {

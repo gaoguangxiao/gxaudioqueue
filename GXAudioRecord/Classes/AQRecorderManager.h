@@ -50,8 +50,5 @@
 - (void)removeTimer;
 
 - (Float32 )getCurrentPower;
-///获取当前录制时长
-//- (Float64)getRecordTime;
 
-- (void)processAudioBuffer:(AudioQueueBufferRef)inBuffer withQueue:(AudioQueueRef)queue;
 @end
