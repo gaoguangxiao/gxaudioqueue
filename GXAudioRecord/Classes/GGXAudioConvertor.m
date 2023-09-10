@@ -1,0 +1,255 @@
+//
+//  GGXAudioConvertor.m
+//  GXAudioRecord
+//
+//  Created by 高广校 on 2023/9/10.
+//
+
+#import "GGXAudioConvertor.h"
+
+#import <AVFoundation/AVFoundation.h>
+#import "GGXAudioQueueHeader.h"
+@implementation GGXAudioConvertor
+
+//导出M4A
++(void)convertCAFToM4A:(NSURL *)path outPath:(NSURL *)outPath andComplete:(void (^ _Nullable)(id _Nonnull))block{
+    //获取音频元数据
+    AVURLAsset *audioAsset = [AVURLAsset assetWithURL:path];
+    [self convertCAFToM4A:kCMTimeZero endTime:audioAsset.duration inputPath:path outPath:outPath andComplete:block];
+}
+
++(void)convertCAFToM4A:(CMTime)source endTime:(CMTime)end inputPath:(NSURL *)inputpath outPath:(NSURL *)outPath andComplete:(void (^ _Nullable)(id _Nonnull))block{
+    //音频输出会话
+    AVURLAsset *audioAsset = [AVURLAsset assetWithURL:inputpath];
+    //音频输出会话
+    //AVAssetExportPresetAppleM4A
+    AVAssetExportSession *exportSession = [AVAssetExportSession exportSessionWithAsset:audioAsset presetName:AVAssetExportPresetAppleM4A];
+    exportSession.outputURL = outPath;
+    exportSession.outputFileType = AVFileTypeAppleM4A;
+    //1 1.5
+    exportSession.timeRange = CMTimeRangeFromTimeToTime(source, end);
+    [exportSession exportAsynchronouslyWithCompletionHandler:^{
+        //exporeSession.status
+        if (AVAssetExportSessionStatusCompleted == exportSession.status) {
+            //            NSLog(@"新文件路径:%@",outPath);
+            block(outPath);
+        } else if (AVAssetExportSessionStatusFailed == exportSession.status) {
+            NSLog(@"导出失败！");
+        }else{
+            NSLog(@"Export Session Status: %ld", (long)exportSession.status);
+        }
+    }];
+}
+
+//m4a转成wav
++ (void)convertM4AToWAV:(NSString *)originalPath
+                outPath:(NSString *)outputPath
+                success:(void(^)(NSString *outputPath))success
+                failure:(void(^)(NSError *error))failure {
+    NSFileManager *fm = [NSFileManager defaultManager];
+    if (![fm fileExistsAtPath:originalPath]) {
+        NSLog(@"文件不存在");
+        return ;
+    }
+    NSError *error = nil;
+    NSURL *originalUrl = [NSURL fileURLWithPath:originalPath];
+    NSURL *outputURL = [NSURL fileURLWithPath:outputPath];
+    if ([fm fileExistsAtPath:outputPath]) {
+        NSLog(@"outPutUrl：文件存在，删除");
+        [fm removeItemAtPath:outputPath error:&error];
+    }
+    
+    AVURLAsset *songAsset = [AVURLAsset URLAssetWithURL:originalUrl options:nil];    //读取原始文件信息
+    AVAssetReader *assetReader = [AVAssetReader assetReaderWithAsset:songAsset error:&error];
+    if (error) {
+        NSLog(@"error: %@", error);
+        return;
+    }
+    AVAssetReaderOutput *assetReaderOutput = [AVAssetReaderAudioMixOutput
+                                              assetReaderAudioMixOutputWithAudioTracks:songAsset.tracks
+                                              audioSettings: nil];
+    if (![assetReader canAddOutput:assetReaderOutput]) {
+        NSLog(@"can't add reader output... die!");
+        return;
+    }
+    [assetReader addOutput:assetReaderOutput];
+    
+    AVAssetWriter *assetWriter = [AVAssetWriter assetWriterWithURL:outputURL fileType:AVFileTypeCoreAudioFormat error:&error];
+    if (error) {
+        NSLog(@"error: %@", error);
+        return;
+    }
+    AudioChannelLayout channelLayout;
+    memset(&channelLayout, 0, sizeof(AudioChannelLayout));
+    channelLayout.mChannelLayoutTag = kAudioChannelLayoutTag_Stereo;
+    
+    NSData *channelLayoutAsData = [NSData dataWithBytes:&channelLayout length:sizeof(AudioChannelLayout)];
+    /** 配置音频参数 */
+    NSDictionary *outputSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [NSNumber numberWithInt:kAudioFormatLinearPCM], AVFormatIDKey,
+                                    [NSNumber numberWithFloat:kDefaultSampleRate/2], AVSampleRateKey,
+                                    [NSNumber numberWithInt:2], AVNumberOfChannelsKey,
+                                    channelLayoutAsData, AVChannelLayoutKey,
+                                    [NSNumber numberWithInt:16], AVLinearPCMBitDepthKey,
+                                    [NSNumber numberWithBool:NO], AVLinearPCMIsNonInterleaved,
+                                    [NSNumber numberWithBool:NO],AVLinearPCMIsFloatKey,
+                                    [NSNumber numberWithBool:NO], AVLinearPCMIsBigEndianKey,
+                                    nil];
+    AVAssetWriterInput *assetWriterInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeAudio                                                                                outputSettings:outputSettings];
+    if ([assetWriter canAddInput:assetWriterInput]) {
+        [assetWriter addInput:assetWriterInput];
+    } else {
+        NSLog(@"can't add asset writer input... die!");
+        return;
+    }
+    assetWriterInput.expectsMediaDataInRealTime = NO;
+    [assetWriter startWriting];
+    [assetReader startReading];
+    
+    AVAssetTrack *soundTrack = [songAsset.tracks objectAtIndex:0];
+    CMTime startTime = CMTimeMake (0, soundTrack.naturalTimeScale);
+    [assetWriter startSessionAtSourceTime:startTime];
+    
+    __block UInt64 convertedByteCount = 0;
+    dispatch_queue_t mediaInputQueue = dispatch_queue_create("mediaInputQueue", NULL);
+    [assetWriterInput requestMediaDataWhenReadyOnQueue:mediaInputQueue  usingBlock: ^{
+        while (assetWriterInput.readyForMoreMediaData) {
+            CMSampleBufferRef nextBuffer = [assetReaderOutput copyNextSampleBuffer];
+            if (nextBuffer) {
+                // append buffer
+                [assetWriterInput appendSampleBuffer: nextBuffer];
+                convertedByteCount += CMSampleBufferGetTotalSampleSize (nextBuffer);
+            } else {
+                [assetWriterInput markAsFinished];
+                [assetWriter finishWritingWithCompletionHandler:^{
+                }];
+                [assetReader cancelReading];
+                
+//                NSDictionary *outputFileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[outputURL path] error:nil];
+//                NSLog(@"FlyElephant %lld",[outputFileAttributes fileSize]);
+//                // 删除原始音源
+//                if ([fm fileExistsAtPath:originalPath])
+//                {
+//                    [fm removeItemAtPath:originalPath error:nil];
+//                }
+                success(outputPath);
+                break;
+            }
+        }
+    }];
+}
+
++ (void)convertM4AToMp3:(NSString *)originalPath
+                outPath:(NSString *)outputPath
+                success:(void(^)(NSString *mp3Path))success
+                failure:(void(^)(NSError *error))failure {
+    
+    [self convertM4AToWAV:originalPath outPath:outputPath success:^(NSString * _Nonnull outputPath) {
+        //        [self convertPCMToMp3:outputPath
+        //                                   success:^(NSString * _Nonnull mp3Path) {
+        //            success(mp3Path);
+        //        } failure:^(NSError * _Nonnull error) {
+        //            failure(error);
+        //        }];
+    } failure:^(NSError * _Nonnull error) {
+        
+    }];
+}
+
+// wav 转 mp3
+//+ (void)convertPCMToMp3:(NSString *)pcmFilePath
+//                success:(void(^)(NSString *outPath))success
+//                failure:(void(^)(NSError *error))failure {
+//
+//    // 判断输入路径是否存在
+//    NSFileManager *fm = [NSFileManager defaultManager];
+//    if (![fm fileExistsAtPath:pcmFilePath])
+//    {
+//        NSLog(@"文件不存在");
+//        return ;
+//    }
+//
+//    // 输出路径
+//    NSString *mp3FilePath = [[pcmFilePath stringByDeletingPathExtension] stringByAppendingString:@".mp3"];
+//    @try {
+//
+//        int channel = 1;
+//        int read, write;
+//        FILE *pcm = fopen([pcmFilePath cStringUsingEncoding:1], "rb");  //source 被转换的音频文件位置
+//        if (!pcm) {
+//            return;
+//        }
+//
+//        // 删除头，否则在前一秒钟会有杂音
+//        fseek(pcm, 4*1024, SEEK_CUR);                                   //skip file header
+//        FILE *mp3 = fopen([mp3FilePath cStringUsingEncoding:1], "wb");  //output 输出生成的Mp3文件位置
+//
+//        const int PCM_SIZE = 8192;
+//        const int MP3_SIZE = 8192;
+//        short int pcm_buffer[PCM_SIZE*2];
+//        unsigned char mp3_buffer[MP3_SIZE];
+//
+//        lame_t lame = lame_init();
+//        lame_set_num_channels(lame,channel);
+//        lame_set_in_samplerate(lame, kMSBAudioSampleRate);
+//        //        lame_set_out_samplerate(lame, kMSBAudioSampleRate/2); //设置输出数据采样率，默认和输入的一致
+//        //关键这一句！！！！！！！！！！！！
+//        lame_set_VBR_mean_bitrate_kbps(lame, 24);
+//        // lame_set_VBR(lame, vbr_default);//压缩级别参数：
+//        lame_set_brate(lame,16);/* CBR模式下的，CBR比特率 */
+//        lame_set_mode(lame,MONO);//输出通道数 模式参数:stereo 双，MONO 单
+//        lame_set_quality(lame,2);/* 2=high  5 = medium  7=low */
+//
+//        lame_init_params(lame);
+//
+//        do {
+//            read = (int)fread(pcm_buffer, channel*sizeof(short int), PCM_SIZE, pcm);
+//            if (read == 0)
+//                write = lame_encode_flush(lame, mp3_buffer, MP3_SIZE);
+//            else {
+//                if (channel == 2) {
+//                    write = lame_encode_buffer_interleaved(lame, pcm_buffer, read, mp3_buffer, MP3_SIZE);
+//                }else {//单声道走这
+//                    write = lame_encode_buffer(lame, pcm_buffer, NULL, read, mp3_buffer, MP3_SIZE);
+//                }
+//
+//            }
+//
+//            /*
+//             * 二进制形式写数据到文件中
+//             *
+//             * mp3_buffer：数据输出到文件的缓冲区首地址
+//             * write：一个数据块的字节数
+//             * 1：指定一次输出数据块的个数
+//             * mp3：文件指针
+//             */
+//            fwrite(mp3_buffer, write, 1, mp3);
+//
+//        } while (read != 0);
+//        lame_mp3_tags_fid(lame, mp3);
+//
+//        lame_close(lame);
+//        fclose(mp3);
+//        fclose(pcm);
+//    } @catch (NSException *exception) {
+//        MSBAudioLog(@"%@", [exception description]);
+//        if (failure) {
+//            failure(nil);
+//        }
+//    } @finally {
+//        MSBAudioLog(@"PCM转换MP3转换成功");
+//        // 删除原始音源 wav
+//        if ([fm fileExistsAtPath:pcmFilePath]) {
+////            [fm removeItemAtPath:pcmFilePath error:nil];
+//        }
+//        if (success) {
+//            success(mp3FilePath);
+//        }
+//    }
+//
+//    double time = [MSBAudioConvertor audioDurationFromUrl:mp3FilePath];
+//    NSLog(@"当前转换的mp3时长是：%li",time);
+//}
+
+
+@end

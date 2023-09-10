@@ -23,7 +23,7 @@
     return instance;
 }
 
-- (NSString *)createFilePath:(NSString *)fileConverte {
+- (NSString *)createFilePathWithFormat:(NSString *)fileFormat {
     NSString *documentDicPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     NSString *dictionaryName = [documentDicPath stringByAppendingPathComponent:kAudioFileName];
     
@@ -47,7 +47,7 @@
     //
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
-    NSString *filePath2 = [NSString stringWithFormat:@"%@.%@",videoDestDateString,fileConverte];
+    NSString *filePath2 = [NSString stringWithFormat:@"%@.%@",videoDestDateString,fileFormat];
     
     [dict setValue:filePath2 forKey:@"name"];
     [array addObject:dict];
@@ -58,7 +58,7 @@
 }
 
 - (NSString *)createFilePath {
-    return [self createFilePath:kAudioRecordConvertedCAFFile];
+    return [self createFilePathWithFormat:kAudioRecordConvertedCAFFile];
 }
 
 - (NSString *)getFilePath:(NSString *)fileName {
@@ -70,10 +70,22 @@
     NSString *documentDicPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     NSString *dictionaryName = [documentDicPath stringByAppendingPathComponent:kAudioFileName];
     NSString *plistPath = [dictionaryName stringByAppendingPathComponent:@"AudioRecord.plist"];
-    NSMutableArray *dict = [NSMutableArray arrayWithContentsOfFile:plistPath];
-    return dict;
+    NSMutableArray *array = [NSMutableArray arrayWithContentsOfFile:plistPath];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:NO];//
+    [array sortUsingDescriptors:@[sortDescriptor]];
+    return array;
 }
 
+- (void)insertPath:(NSString *)path andKey:(NSString *)key {
+    NSArray *arr = [self getPlistData];
+    
+//    [arr enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//        if ([obj valueForKey:@"name"]isEqualToString:key]) {
+//            
+//        }
+//    }];
+    
+}
 /**
  *  创建文件名
  */

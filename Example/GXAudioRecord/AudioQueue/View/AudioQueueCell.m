@@ -10,7 +10,11 @@
 #import "AQPlayerManager.h"
 #import "ParsingAudioHander.h"
 #import "JHAudioRecorder.h"
+
+#import "GGXAudioConvertor.h"
 @interface AudioQueueCell ()
+@property (weak, nonatomic) IBOutlet UILabel *m4aPath;
+@property (weak, nonatomic) IBOutlet UILabel *wavPath;
 
 @property (weak, nonatomic) IBOutlet UILabel *audioName;
 
@@ -31,12 +35,12 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 - (IBAction)playAction:(id)sender {
     NSString *filePath = [GGXFileManeger.shared getFilePath:self.audioName.text];
-//    [self.playerManager startPlay:filePath];
+    //    [self.playerManager startPlay:filePath];
     NSLog(@"%@",filePath);
     JHAudioRecorder *audio = [JHAudioRecorder shareAudioRecorder];
     audio.delegate = self;
@@ -45,21 +49,49 @@
 
 -(void)reloadValueWithArr:(NSArray *)valueArr{
     
-//    NSLog(@"%@",valueArr);
-//    self.waveView
+    //    NSLog(@"%@",valueArr);
+    //    self.waveView
 }
 
 - (IBAction)handleSE:(id)sender {
-    NSLog(@"处理音频前后");
     
     NSString *filePath = [GGXFileManeger.shared getFilePath:self.audioName.text];
+    NSURL *uuInputPath = [NSURL fileURLWithPath:filePath];
     NSLog(@"filePath:%@",filePath);
     
-//    [ParsingAudioHander cutAudioStartTime:1.0 endTime:1.5 withPath:filePath andComplete:^(id  _Nonnull selfPtr) {
-//        
-//    }];
-//    +(void)cutAudioStartTime:(CGFloat)source endTime:(CGFloat)end withPath:(NSString *)path
+    NSString *outPath = [GGXFileManeger.shared createFilePathWithFormat:@"m4a"];
+    NSURL *uuPath =  [NSURL fileURLWithPath:outPath];
+    
+    [GGXAudioConvertor convertCAFToM4A:uuInputPath outPath:uuPath andComplete:^(id _Nonnull obj) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"输出路径：%@",outPath);
+            self.m4aPath.text = [NSString stringWithFormat:@"%@",uuPath.lastPathComponent];
+        });
+    }];
 }
+- (IBAction)m4aTowavHnader:(id)sender {
+    //获取
+    NSString *filePath = [GGXFileManeger.shared getFilePath:self.audioName.text];
+    NSURL *uuInputPath = [NSURL fileURLWithPath:filePath];
+    if (![uuInputPath.pathExtension isEqualToString:@"m4a"]) {
+        filePath = [GGXFileManeger.shared getFilePath:self.m4aPath.text];
+    }
+    
+    NSLog(@"原始路径：%@",filePath);
+    NSString *outPath = [GGXFileManeger.shared createFilePathWithFormat:@"wav"];
+    
+    [GGXAudioConvertor convertM4AToWAV:filePath outPath:outPath success:^(NSString * _Nonnull outputPath) {
+        NSURL *uOutPath = [NSURL fileURLWithPath:outputPath];
+        //当前文件中 增加wav路径 wavName
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.wavPath.text = [NSString stringWithFormat:@"%@",uOutPath.lastPathComponent];
+        });
+    } failure:^(NSError * _Nonnull error) {
+        
+    }];
+}
+
+
 - (IBAction)GainDBPcm:(id)sender {
     //获取PCM的分贝
     NSLog(@"获取PCM分贝");
@@ -67,9 +99,9 @@
     NSString *filePath = [GGXFileManeger.shared getFilePath:self.audioName.text];
     NSArray *datas = [ap getRecorderDataFromURL:[NSURL fileURLWithPath:filePath]];
     
-//    [ap pcmDB:[NSURL fileURLWithPath:filePath]];
+    //    [ap pcmDB:[NSURL fileURLWithPath:filePath]];
     
-//    NSLog(@"PCM分贝：%@",datas);
+    //    NSLog(@"PCM分贝：%@",datas);
 }
 
 - (AQPlayerManager *)playerManager {

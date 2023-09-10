@@ -17,7 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// 自动创建文件，返回创建完毕的
 - (NSString *)createFilePath;
 
-- (NSString *)createFilePath:(NSString *)fileConverte;
+
+/// 创建目录
+/// - Parameter fileFormat: <#fileFormat description#>
+- (NSString *)createFilePathWithFormat:(NSString *)fileFormat;
 
 - (NSMutableArray *)getPlistData;
 

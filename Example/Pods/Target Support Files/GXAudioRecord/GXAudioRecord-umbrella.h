@@ -13,9 +13,11 @@
 #import "AQPlayerManager.h"
 #import "AQRecorderManager.h"
 #import "AQUnitTools.h"
+#import "GGXAudioConvertor.h"
 #import "GGXAudioQueueHeader.h"
 #import "GGXFileManeger.h"
 #import "JHAudioRecorder.h"
+#import "MusicControl.h"
 #import "MusicModel.h"
 #import "ParsingAudioHander.h"
 

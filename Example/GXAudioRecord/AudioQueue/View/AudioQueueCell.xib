@@ -17,16 +17,16 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KTE-zD-ugd">
-                        <rect key="frame" x="10" y="20" width="42" height="65"/>
+                        <rect key="frame" x="10" y="20" width="42" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H8P-8u-Wgq">
-                        <rect key="frame" x="10" y="95" width="393" height="40"/>
+                        <rect key="frame" x="10" y="45" width="393" height="40"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p0X-P5-kwb">
-                                <rect key="frame" x="10" y="2.6666666666666714" width="94" height="35"/>
+                                <rect key="frame" x="10" y="2.6666666666666643" width="94" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="播放音频"/>
                                 <connections>
@@ -50,18 +50,24 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eni-58-0ad">
-                        <rect key="frame" x="10" y="145" width="393" height="40"/>
+                        <rect key="frame" x="10" y="95" width="393" height="40"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y34-dR-T4R">
+                                <rect key="frame" x="341" y="9.6666666666666714" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cVh-cm-lkw">
-                                <rect key="frame" x="10" y="2.6666666666666572" width="94" height="35"/>
+                                <rect key="frame" x="10" y="2.6666666666666714" width="133.66666666666666" height="35"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="处理音频"/>
+                                <buttonConfiguration key="configuration" style="plain" title="caf-&gt;m4a转码"/>
                                 <connections>
                                     <action selector="handleSE:" destination="KOk-L3-qCf" eventType="touchUpInside" id="blj-lZ-TgB"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YAC-n0-6EF">
-                                <rect key="frame" x="114" y="0.0" width="128" height="40"/>
+                                <rect key="frame" x="153.66666666666666" y="0.0" width="127.99999999999997" height="40"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="获取音频分贝"/>
                                 <connections>
@@ -74,9 +80,46 @@
                             <constraint firstAttribute="bottom" secondItem="YAC-n0-6EF" secondAttribute="bottom" id="27d-Ty-2k4"/>
                             <constraint firstItem="cVh-cm-lkw" firstAttribute="leading" secondItem="Eni-58-0ad" secondAttribute="leading" constant="10" id="4ne-xX-ZGV"/>
                             <constraint firstAttribute="height" constant="40" id="QX2-GD-sMn"/>
+                            <constraint firstAttribute="trailing" secondItem="Y34-dR-T4R" secondAttribute="trailing" constant="10" id="Szv-A2-Crw"/>
                             <constraint firstItem="YAC-n0-6EF" firstAttribute="leading" secondItem="cVh-cm-lkw" secondAttribute="trailing" constant="10" id="XhQ-ts-Esf"/>
                             <constraint firstItem="YAC-n0-6EF" firstAttribute="top" secondItem="Eni-58-0ad" secondAttribute="top" id="g24-bf-cZ5"/>
+                            <constraint firstItem="Y34-dR-T4R" firstAttribute="centerY" secondItem="Eni-58-0ad" secondAttribute="centerY" id="ysG-rd-oIc"/>
                             <constraint firstItem="cVh-cm-lkw" firstAttribute="centerY" secondItem="Eni-58-0ad" secondAttribute="centerY" id="z9S-M8-luv"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K31-IE-Wal">
+                        <rect key="frame" x="10" y="145" width="393" height="40"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hcx-Qy-lD4">
+                                <rect key="frame" x="10" y="2.6666666666666572" width="105.33333333333333" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="m4a-&gt;wav"/>
+                                <connections>
+                                    <action selector="m4aTowavHnader:" destination="KOk-L3-qCf" eventType="touchUpInside" id="kJ2-jG-DFb"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QLM-FS-GNK">
+                                <rect key="frame" x="125.33333333333334" y="0.0" width="128" height="40"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="获取音频分贝"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8B0-su-VZg">
+                                <rect key="frame" x="341" y="9.6666666666666572" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="8B0-su-VZg" secondAttribute="trailing" constant="10" id="Eze-DL-mec"/>
+                            <constraint firstItem="QLM-FS-GNK" firstAttribute="leading" secondItem="Hcx-Qy-lD4" secondAttribute="trailing" constant="10" id="N1D-EA-fHV"/>
+                            <constraint firstItem="Hcx-Qy-lD4" firstAttribute="leading" secondItem="K31-IE-Wal" secondAttribute="leading" constant="10" id="anI-Xh-JdD"/>
+                            <constraint firstItem="8B0-su-VZg" firstAttribute="centerY" secondItem="K31-IE-Wal" secondAttribute="centerY" id="dsY-pK-cQ0"/>
+                            <constraint firstAttribute="height" constant="40" id="paz-WI-ahV"/>
+                            <constraint firstAttribute="bottom" secondItem="QLM-FS-GNK" secondAttribute="bottom" id="qaw-o5-iQB"/>
+                            <constraint firstItem="Hcx-Qy-lD4" firstAttribute="centerY" secondItem="K31-IE-Wal" secondAttribute="centerY" id="yAC-rB-3ng"/>
+                            <constraint firstItem="QLM-FS-GNK" firstAttribute="top" secondItem="K31-IE-Wal" secondAttribute="top" id="yQe-fk-Yzh"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -87,14 +130,19 @@
                     <constraint firstItem="KTE-zD-ugd" firstAttribute="leading" secondItem="VnA-Li-99l" secondAttribute="leading" constant="10" id="GKG-1x-g2t"/>
                     <constraint firstItem="Eni-58-0ad" firstAttribute="trailing" secondItem="H8P-8u-Wgq" secondAttribute="trailing" id="Ngz-rT-G5e"/>
                     <constraint firstAttribute="trailing" secondItem="H8P-8u-Wgq" secondAttribute="trailing" constant="10" id="Q7H-wH-OUX"/>
+                    <constraint firstAttribute="trailing" secondItem="K31-IE-Wal" secondAttribute="trailing" constant="10" id="ZHi-Jm-jwo"/>
                     <constraint firstItem="KTE-zD-ugd" firstAttribute="top" secondItem="VnA-Li-99l" secondAttribute="top" constant="20" id="aeO-sQ-Q96"/>
                     <constraint firstItem="H8P-8u-Wgq" firstAttribute="top" secondItem="KTE-zD-ugd" secondAttribute="bottom" constant="10" id="bz2-no-Taf"/>
+                    <constraint firstItem="K31-IE-Wal" firstAttribute="leading" secondItem="VnA-Li-99l" secondAttribute="leading" constant="10" id="eSv-uB-JGG"/>
+                    <constraint firstAttribute="bottom" secondItem="K31-IE-Wal" secondAttribute="bottom" constant="10" id="eVo-O1-FNi"/>
                     <constraint firstItem="Eni-58-0ad" firstAttribute="top" secondItem="H8P-8u-Wgq" secondAttribute="bottom" constant="10" id="hma-sP-AI4"/>
-                    <constraint firstAttribute="bottom" secondItem="Eni-58-0ad" secondAttribute="bottom" constant="10" id="lRX-5n-FiQ"/>
+                    <constraint firstAttribute="bottom" secondItem="Eni-58-0ad" secondAttribute="bottom" constant="60" id="lRX-5n-FiQ"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="audioName" destination="KTE-zD-ugd" id="5sc-I2-IQw"/>
+                <outlet property="m4aPath" destination="Y34-dR-T4R" id="pnI-zH-PsN"/>
+                <outlet property="wavPath" destination="8B0-su-VZg" id="ceb-MU-pp8"/>
             </connections>
             <point key="canvasLocation" x="-54.198473282442748" y="40.492957746478872"/>
         </tableViewCell>
