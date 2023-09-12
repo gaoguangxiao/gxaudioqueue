@@ -155,7 +155,7 @@
         model.value = value;
         model.time  = i/binSize * kAudioPlayerLineSpacing;//
         model.peakPower = g_frame_db;
-        NSLog(@"音频分贝：%.2f",g_frame_db);
+//        NSLog(@"音频分贝：%.2f",g_frame_db);
         //保存数据
         [filteredSamplesMA addObject:model];
         //将所有数据中的最大数据保存，作为一个参考。可以根据情况对所有数据进行“缩放”
@@ -211,6 +211,34 @@
     }
     return maxvalue;
 }
+
+
++(void)cutAudioStartTime:(CMTime)source endTime:(CMTime)end withPath:(NSURL *)path andComplete:(void (^ _Nullable)(id _Nonnull))block{
+    NSString *outPath = [GGXFileManeger.shared createFilePathWithFormat:@"m4a"];
+//    NSString *wavOutPath = [AudioFileManager wavRecordName:kAuditionRecord];
+    //音频输出会话
+    AVURLAsset *audioAsset = [AVURLAsset assetWithURL:path];
+    //音频输出会话
+    //AVAssetExportPresetAppleM4A:(输出音频,并且是.caf格式)
+    AVAssetExportSession *exportSession = [AVAssetExportSession exportSessionWithAsset:audioAsset presetName:AVAssetExportPresetAppleM4A];
+    exportSession.outputURL = [NSURL fileURLWithPath:outPath];
+    exportSession.outputFileType = AVFileTypeAppleM4A;
+    //1 1.5
+    exportSession.timeRange = CMTimeRangeFromTimeToTime(source, end);
+    [exportSession exportAsynchronouslyWithCompletionHandler:^{
+        //exporeSession.status
+        if (AVAssetExportSessionStatusCompleted == exportSession.status) {
+            NSLog(@"新文件路径:%@",outPath);
+            block(outPath);
+        } else if (AVAssetExportSessionStatusFailed == exportSession.status) {
+            NSLog(@"剪切失败！");
+        }else{
+             NSLog(@"Export Session Status: %ld", (long)exportSession.status);
+        }
+    }];
+}
+
+
 
 - (void)synthetiAudioWithAudioPath:(NSString *)audioPath bgPath:(NSString *)bgPath outPath:(NSString *)outPath completion:(void (^)(BOOL isSucess,NSString * path))completion{
         

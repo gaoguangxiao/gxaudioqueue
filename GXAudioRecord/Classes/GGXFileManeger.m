@@ -23,7 +23,7 @@
     return instance;
 }
 
-- (NSString *)createFilePathWithFormat:(NSString *)fileFormat {
+- (NSString *)createFilePathWithFormat:(NSString *)fileConverte {
     NSString *documentDicPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     NSString *dictionaryName = [documentDicPath stringByAppendingPathComponent:kAudioFileName];
     
@@ -47,7 +47,7 @@
     //
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
-    NSString *filePath2 = [NSString stringWithFormat:@"%@.%@",videoDestDateString,fileFormat];
+    NSString *filePath2 = [NSString stringWithFormat:@"%@.%@",videoDestDateString,fileConverte];
     
     [dict setValue:filePath2 forKey:@"name"];
     [array addObject:dict];
@@ -70,22 +70,10 @@
     NSString *documentDicPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     NSString *dictionaryName = [documentDicPath stringByAppendingPathComponent:kAudioFileName];
     NSString *plistPath = [dictionaryName stringByAppendingPathComponent:@"AudioRecord.plist"];
-    NSMutableArray *array = [NSMutableArray arrayWithContentsOfFile:plistPath];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:NO];//
-    [array sortUsingDescriptors:@[sortDescriptor]];
-    return array;
+    NSMutableArray *dict = [NSMutableArray arrayWithContentsOfFile:plistPath];
+    return dict;
 }
 
-- (void)insertPath:(NSString *)path andKey:(NSString *)key {
-    NSArray *arr = [self getPlistData];
-    
-//    [arr enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//        if ([obj valueForKey:@"name"]isEqualToString:key]) {
-//            
-//        }
-//    }];
-    
-}
 /**
  *  创建文件名
  */
