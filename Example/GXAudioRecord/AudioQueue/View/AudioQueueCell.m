@@ -91,6 +91,19 @@
     }];
 }
 
+- (IBAction)m4aToMp3:(id)sender {
+    NSLog(@"m4q转mm3");
+    
+    NSString *filePath = [GGXFileManeger.shared getFilePath:self.audioName.text];
+    NSURL *uuInputPath = [NSURL fileURLWithPath:filePath];
+    if (![uuInputPath.pathExtension isEqualToString:@"m4a"]) {
+        filePath = [GGXFileManeger.shared getFilePath:self.m4aPath.text];
+    }
+    
+    NSLog(@"原始路径：%@",filePath);
+    
+    
+}
 
 - (IBAction)GainDBPcm:(id)sender {
     //获取PCM的分贝

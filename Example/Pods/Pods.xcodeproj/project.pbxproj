@@ -7,110 +7,112 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B04274A91E2B7FF578D66C00AC47351 /* GGXFileManeger.m in Sources */ = {isa = PBXBuildFile; fileRef = D62E560723155FD0EB93524F4085E831 /* GGXFileManeger.m */; };
 		0E8CCAE597756C61B2D7B60EEF4A29E4 /* MASUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = A394C2C6ABAE5BF5090CF2AD98C696AF /* MASUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12BCAD7AC9C3B76FE96ED7A583244188 /* Pods-GXAudioRecord_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FE217846B3BAE80D3F1CD416E405F88E /* Pods-GXAudioRecord_Example-dummy.m */; };
 		19300CF68F5718C6F9C3476F1A98C1DC /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 823AE4B4979D09F91ADB18679CF355CD /* MASCompositeConstraint.m */; };
+		1B15BA2522F6AB687E58AE15FF01801A /* MusicControl.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D78BDEC7B10EAD0667B589F521A19C /* MusicControl.m */; };
 		1B433A1BF92BBD5811F61A000E4771C2 /* MASConstraintMaker.h in Headers */ = {isa = PBXBuildFile; fileRef = 25A8E30D4F9F5E4535B69508873FAD12 /* MASConstraintMaker.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1CE50789EBA14E26B00307EC8CD1011E /* GGXAudioConvertor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F61453EC105435820E0AE914A5338BB /* GGXAudioConvertor.m */; };
-		1E7878DAD30F8B8ECE9FCE62486F9E06 /* ReplaceMe.m in Sources */ = {isa = PBXBuildFile; fileRef = BB59A5BA5E2A2E27E071296AA3778011 /* ReplaceMe.m */; };
 		1F84FE646CD1D7BAFFB58C243277AFF8 /* FBSnapshotTestCase-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B367BF20EC952AD50F06D3171735002D /* FBSnapshotTestCase-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1FACFE40B63602C23665BD8629A866ED /* MusicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0593E1D8A228516D2E339257A07E82 /* MusicModel.m */; };
 		2839E3707C14798138E8A0C72ACE4C25 /* MASLayoutConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = B17D6A5548097996EE3796656A32B6D2 /* MASLayoutConstraint.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2975A09730FD83DC0897129A11EA6585 /* SwiftSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3538C14800BA6D283B6500C766E4F0D3 /* SwiftSupport.swift */; };
 		2B88C28DD20CBFA7B3AEB21A365197FE /* FBSnapshotTestController.h in Headers */ = {isa = PBXBuildFile; fileRef = 67380272F2DF7819A336DF552AD92896 /* FBSnapshotTestController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2CB61F6FA511CAACB43A50DC3A82E0DD /* UIImage+Snapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A691C70504B82F1D79E0F50DF6B488 /* UIImage+Snapshot.m */; };
 		2ECCAC52EF4C74E1032E0BC646BBE5B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57221B54D014471C3D3E1925EFC917C8 /* Foundation.framework */; };
 		30D475DF57C0C682A723231E7BCA0D14 /* FBSnapshotTestCasePlatform.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B0A71045D2C733C3BD6340095E5E033 /* FBSnapshotTestCasePlatform.m */; };
+		312E455F1EAD686D9F00CF2FF6A98623 /* ReplaceMe.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB5F02A12EB942EC4D8BDB04649D2BC /* ReplaceMe.m */; };
 		31F7C35C8863FA25A741A884E21BE7D0 /* Masonry.h in Headers */ = {isa = PBXBuildFile; fileRef = 05ED7991BE91B391C4F38B25354DEEB6 /* Masonry.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		373413256658309F9053CE22BF62077E /* UIImage+Snapshot.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FD0500F155110FC81738ABCFD8722E /* UIImage+Snapshot.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		38FC202406D0AFE7B5AC5D4A8510ED88 /* ParsingAudioHander.h in Headers */ = {isa = PBXBuildFile; fileRef = 7031C483DB37B6D6EF75DEB83E5D7BEB /* ParsingAudioHander.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3BD4596BA8F391ACEDC8978969F6CFC3 /* GXAudioRecord-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 894B10F36D8DBA653A7C870A837C554C /* GXAudioRecord-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D0EFFE30E3193932A034220E3C4C0FA /* View+MASAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 602E46B1DC438E157FEFDB89FFC1FEE0 /* View+MASAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4772F3F1933A24FB73E53DCCA1156791 /* GXAudioRecord-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A2DA7097FCC5AE9F24E72A3F2D1B17 /* GXAudioRecord-dummy.m */; };
 		4CC9B43AD90714A316815FAA71DC89A2 /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AAAA6DA488D5DF77D99C020E582627 /* MASConstraintMaker.m */; };
-		4DBB07A53DEADB82B26DC81FE7710D27 /* GXAudioRecord-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4296F3D74278261B05C090BD49FF0063 /* GXAudioRecord-dummy.m */; };
 		53305278F1654F968B4E02DF71B098BE /* MASViewAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 498E8B0053FC9C12650256AC7795C1C6 /* MASViewAttribute.m */; };
 		54BEFE9F75005D327641073B838C6776 /* MASLayoutConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A6BCDB8B38970BAAE92CDDEBB3B20 /* MASLayoutConstraint.m */; };
 		5558B876B579BC1E79BD3D2B19148329 /* UIApplication+StrictKeyWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = F793D8588CD60BFFC82AF37C9BC308D0 /* UIApplication+StrictKeyWindow.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		567ABE0681AA82748435E32386DE12D7 /* ViewController+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D0FB1357DE7D247BE34CCB29EDCCFAC /* ViewController+MASAdditions.m */; };
 		5BE525FF6FA14B999ED2CCC0AA4FA0CF /* FBSnapshotTestCase-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B839A35A2BFBEC3479FF1552F569BC /* FBSnapshotTestCase-dummy.m */; };
+		5F260ECC7D60DFFEC6F8CACDD11E7F64 /* MusicControl.h in Headers */ = {isa = PBXBuildFile; fileRef = EDAE47D935AF0E0C3B0F7B5EC94D2928 /* MusicControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		61225B0B9AEC591476E30C9A575013B3 /* View+MASShorthandAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 909597D5A7270BB0B845363BD757AC74 /* View+MASShorthandAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		640CCE9C3A28AA3CA15510899F9140EE /* FBSnapshotTestCasePlatform.h in Headers */ = {isa = PBXBuildFile; fileRef = 8940D361FD89F610F4C862B772A33E51 /* FBSnapshotTestCasePlatform.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		644FE7ABDDC7CF682D946AFC589EF2AC /* MusicModel.h in Headers */ = {isa = PBXBuildFile; fileRef = BC5DC627BD8B2514BDDFD1469942F1EA /* MusicModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		67F1963AA7C9EDB78127AD5F566A4949 /* UIImage+Diff.h in Headers */ = {isa = PBXBuildFile; fileRef = 2547F69451A0A27A16D11D9705986E91 /* UIImage+Diff.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		6E38D68EB96744FA889D4E992D90BC08 /* GGXAudioConvertor.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F8795859F1EA77AB99EC10B81255024 /* GGXAudioConvertor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		715AB2C777F6FCAB5EE0C667A909B698 /* MASViewAttribute.h in Headers */ = {isa = PBXBuildFile; fileRef = E1664911F55968A776BA11F00D8E434D /* MASViewAttribute.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7339F405B514AF27B7344BC601D3CA82 /* AQPlayerManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 28DF2DBC853FF202791BDBEE365D155B /* AQPlayerManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		74339C58AC4E5631FB8C0E662668A796 /* UIApplication+StrictKeyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A282C53A123426D0DC6CB96D76A6B7 /* UIApplication+StrictKeyWindow.m */; };
+		77875C7CB0FE8D5A62774DB25957C2AE /* MusicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7AD23C936DA85D394C421FC40140D8 /* MusicModel.m */; };
+		77DAB9A794AB41FFF1809D4503C4DC9B /* GGXFileManeger.h in Headers */ = {isa = PBXBuildFile; fileRef = 45DD47EAEC4213A6A98861189910A3BA /* GGXFileManeger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		78251F42EB680FB72F040A1986279CD2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57221B54D014471C3D3E1925EFC917C8 /* Foundation.framework */; };
 		7B05A8DE072977F90AA84A0E98E23167 /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A12C368749FD2EEF1BB8849594446F /* MASConstraint.m */; };
+		7B47FE64E3D437AE91F02B3EADAF2F83 /* AQUnitTools.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3BBEC460FB78148B1BD7BFE4CB020E /* AQUnitTools.m */; };
 		7C67CBD15D9B5D0B7769B2F469478332 /* FBSnapshotTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = C43B4427803F45E5EE12A79C135ABCEE /* FBSnapshotTestCase.m */; };
 		8171D105E2C5CD3C1357D544942B4446 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DA24A38BA9EE106B59E3D4C8DD1CE0E /* UIKit.framework */; };
 		82BAE906E5405012D6E55782D89D179B /* Pods-GXAudioRecord_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D724ADF98E12EB05530027B683351725 /* Pods-GXAudioRecord_Tests-dummy.m */; };
 		8397F47A4D9216C91C16E328F7E6F09D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57221B54D014471C3D3E1925EFC917C8 /* Foundation.framework */; };
 		8528B8AC668DECD421BC118EDA926C22 /* Pods-GXAudioRecord_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F6592BBDD476F58BCC00A365E62BCFB5 /* Pods-GXAudioRecord_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		869E9B35E07C863A39DC1262F33EA4E4 /* AQUnitTools.m in Sources */ = {isa = PBXBuildFile; fileRef = D9167E87A985B72CF0F346D70443EC8C /* AQUnitTools.m */; };
-		86DE42CEDFF56585FF3369D7BC2C92D4 /* ParsingAudioHander.m in Sources */ = {isa = PBXBuildFile; fileRef = 846006EA6699CF3FECF0DDB697197AD8 /* ParsingAudioHander.m */; };
 		875A310EAF4D0C136C3FFFF5E0335BE4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DA24A38BA9EE106B59E3D4C8DD1CE0E /* UIKit.framework */; };
 		8AE19756F0126FE92AF625E36F3D70FE /* UIImage+Compare.h in Headers */ = {isa = PBXBuildFile; fileRef = E20173728E322CA943398A88168AD012 /* UIImage+Compare.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		8AE868BC3E2E6FC92F4717835180C47D /* NSArray+MASAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = B32DC82B087A3199F46DEE37F30C42D4 /* NSArray+MASAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		91638107B7FD9E20F95889386A131550 /* GGXFileManeger.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F41C995E96DE9134ECD97D41F81943 /* GGXFileManeger.m */; };
-		9CA79C855B9D8F578B857FF83701C9D6 /* ParsingAudioHander.h in Headers */ = {isa = PBXBuildFile; fileRef = C2C9B205CA42669B0F1DBBDE27F0C962 /* ParsingAudioHander.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		96C1B3E74459DDD6D9C5F6C37799AD3B /* GGXAudioConvertor.m in Sources */ = {isa = PBXBuildFile; fileRef = C1FC5504E30016E6D5F44917D08DBC15 /* GGXAudioConvertor.m */; };
 		9D3C5E2F56838937146191468A893244 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E658F388F01C72599CA75537950B6095 /* XCTest.framework */; };
+		9DA0E7BE382A3293A889000CCEF806D9 /* GGXAudioConvertor.h in Headers */ = {isa = PBXBuildFile; fileRef = E064794CF85FDF8F1BA8ED4E6D4FFEE3 /* GGXAudioConvertor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A1336977ADAAD492D6CFD089A8C6E358 /* View+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0204C03E3631573430F1065E0C562121 /* View+MASAdditions.m */; };
-		A4268FC01D50C9435435251A4890DCA5 /* AQUnitTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 4282FF1A4182E77B1CDCF7B0982DE90C /* AQUnitTools.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A7337F37111957AE93BCEDF2174BB363 /* JHAudioRecorder.h in Headers */ = {isa = PBXBuildFile; fileRef = B7BC4194136E75CD1F82BEEE7CB02D6F /* JHAudioRecorder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A4174EBEB9024AD6195A79DA44706E36 /* ParsingAudioHander.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD7BC4D06A4F7F83B6167943457686B /* ParsingAudioHander.m */; };
+		A421E48ED36BF729C8325E5ABC7CD86B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57221B54D014471C3D3E1925EFC917C8 /* Foundation.framework */; };
+		A66B4D69C7E0AE5CCC88C8EBBBC24405 /* JHAudioRecorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 1BD79303BB2EFFD5F0D8B4808C5394CF /* JHAudioRecorder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A83A6757F6C0003332D57B41FE24BEEA /* MASConstraint+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D39570D3C32595968B12039E56A71CC2 /* MASConstraint+Private.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AA8F30926A5290F23C1DDBE4954BF639 /* MusicControl.h in Headers */ = {isa = PBXBuildFile; fileRef = C1A929E25D9585D71C84CC33D1EA808A /* MusicControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AD0651BC14330FBEBD9036C3F07E874B /* AQPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2992DA72155938F47E16C226653D5F /* AQPlayerManager.m */; };
-		AFE161D84F08665997A46D5D583414D9 /* GGXAudioQueueHeader.h in Headers */ = {isa = PBXBuildFile; fileRef = AC4195265EEF5A9F759AB255EDF8B082 /* GGXAudioQueueHeader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B10646B6AF73D470221EF25A5DEEEB6F /* ViewController+MASAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 636796616D38EB5C7185BD684C7AE48B /* ViewController+MASAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B4BE7728D87333785F811FED48CF134E /* MASCompositeConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = 351B469F82A69464763DA9A8A556D5E4 /* MASCompositeConstraint.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B4C96B4268538942ACFD2EB74C201294 /* lame.h in Headers */ = {isa = PBXBuildFile; fileRef = 462D4F8AE9681DDCE033A42590DEC012 /* lame.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B52281F9F4340D4FC8ABB2FEB1FEC08E /* UIImage+Compare.m in Sources */ = {isa = PBXBuildFile; fileRef = 9016A8DDB9A4258DCC8B1B3DDECA0207 /* UIImage+Compare.m */; };
 		B61AA5459C2B345AD6D84D8A5111C9CE /* Masonry-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 03F83E555D0CF0CB47EB4F7E712AAAE4 /* Masonry-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B978C54D9C8D69D8214507D1E7F4D0E9 /* AQRecorderManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83BC0383909819A7D04531A6FC6EB115 /* AQRecorderManager.mm */; };
-		BB3AF125BE7C415AC10ABA21C8D12FFD /* JHAudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 880B45B814169E3E3C4B9F0E73DFF564 /* JHAudioRecorder.m */; };
 		BE050DABC9BF806B3379AFD2367F4194 /* NSLayoutConstraint+MASDebugAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = EDFA8CC2AD68834644662EE1AC469B03 /* NSLayoutConstraint+MASDebugAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BEA99A49E5F8DA685E33DABA606041FF /* MASConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = 66BA6286FFDDBFEF509A327789F6D690 /* MASConstraint.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BED957A7F9197025ACEDBC23868152B7 /* libmp3lame.a in Sources */ = {isa = PBXBuildFile; fileRef = C4494D6302739E247B9795A28C13590C /* libmp3lame.a */; };
+		BFACE5955D0399EA9780B70E559D5C6D /* AQPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A69E1FFB8153E4EADDCFC06AA0051017 /* AQPlayerManager.m */; };
 		C02479613035647A61A3DDB1F621D895 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57221B54D014471C3D3E1925EFC917C8 /* Foundation.framework */; };
 		C390C6005353FB986CB52F474CEF8588 /* FBSnapshotTestController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8AD9A6CFD4331B9A23C2F7983498CF3 /* FBSnapshotTestController.m */; };
+		C3EFA6D420BEC596FF8259FCD0377430 /* AQPlayerManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7747BED6D6AF8F2F93ECA040D42926B5 /* AQPlayerManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C66B580F4C2CBF9F423B2454C4B671CB /* JHAudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 68325C3F8F0F3FB029BE776555C3C829 /* JHAudioRecorder.m */; };
 		C7D83D99D755676EF8A09CC77845BAF4 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 41CB974288A2892A90F9702F03E0697C /* NSLayoutConstraint+MASDebugAdditions.m */; };
-		C8C77845E72E0CF80A39FA6698991DA2 /* MusicControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 54D61FCBDBB22CA040E4CF37B56D0BC7 /* MusicControl.m */; };
-		C8E562B7D69F050D8138922C63CF0698 /* MusicModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 10761E3D684EE5E4125262D9D9031A5B /* MusicModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9375F078B54A9030D4B9C2E73222A5D /* NSArray+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = DA48B7947D5AC0DDE52563C2DC8A5E3D /* NSArray+MASAdditions.m */; };
 		C9F76407497DF0205D7460B36D22259F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3280BB5E7B57C31D41117A74F76E9DF3 /* QuartzCore.framework */; };
 		CA54C09A12400567AFFCB407EEB7E154 /* UIImage+Diff.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DA303DBB7E087CE9560BA4AE5D91CC /* UIImage+Diff.m */; };
 		CECDB459AFB5AD0040AF86378F2DBF97 /* Masonry-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 268C4808A7B284FD5CE12AF500644E1A /* Masonry-dummy.m */; };
 		CEE7BDCC3F3073CBBF7A76BC6CF3E519 /* MASViewConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = FCE1DDE1A00CE0531A4DF74A6C2EB5F8 /* MASViewConstraint.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CF29613B3CE137E7635FFD3638D94BC5 /* GGXAudioQueueHeader.h in Headers */ = {isa = PBXBuildFile; fileRef = A8A00A6F9F13046033690E97266495C2 /* GGXAudioQueueHeader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D804EF21D7C92D4C21C63F2F9417F05A /* Pods-GXAudioRecord_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = BF87B1F18634C8DF15DAE189EE439390 /* Pods-GXAudioRecord_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DFFD9C82100F8E861DEA064C1ECE0E24 /* GGXFileManeger.h in Headers */ = {isa = PBXBuildFile; fileRef = E44DFB03AF63FEC25E5438DA833E6B60 /* GGXFileManeger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D86052B5FBE0D2DED4AD671DA2C3CFFB /* AQRecorderManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0C2F2483D37DC7385D0851D0421E143A /* AQRecorderManager.mm */; };
 		E53FCD0CD1526B53074ED4EEF00131E9 /* NSArray+MASShorthandAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 98E5B4DDA3A6742DA86BC33EDEB35F59 /* NSArray+MASShorthandAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E6FB269534400D40C1CE67D18EDD8A9A /* MASViewConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E502E95D75F8DF19C71E7419515430D /* MASViewConstraint.m */; };
-		F0DB928AF4BCAFF11F507660F6A92ABE /* AQRecorderManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 735156D3E9C72B7D17C8E3493CA41D9E /* AQRecorderManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FE8335E2D1182313BB9C23CC590F8097 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57221B54D014471C3D3E1925EFC917C8 /* Foundation.framework */; };
+		EEE040155D673A8D3E6482FE0F52F318 /* AQRecorderManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B7DC79536EF46992D2E2ADF6561293D /* AQRecorderManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FEAD6E5C59D2DA942A154478FEC9A225 /* AQUnitTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CE852EE11F3D4F543655C9F4033E829 /* AQUnitTools.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF8307B7346F4D3BA13C11AECFE6EDD0 /* FBSnapshotTestCase.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CEEB1F6C31B89937C80AD46D2ECA574 /* FBSnapshotTestCase.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FF858D879B1506FF84205EA7B696554C /* GXAudioRecord-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9C1AFDE137743800C401CFAE0C482159 /* GXAudioRecord-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		4F8439BEAC7745D06A82A68FB5E74C12 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1AD1091604ECB06E61E6956CE5943D1F;
-			remoteInfo = "Pods-GXAudioRecord_Example";
-		};
-		905A269A1721F097E3DA41653923DEE9 /* PBXContainerItemProxy */ = {
+		45E3202563313E7E89B5A80BF4A9A028 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 98A98149697C80CEF8D5772791E92E66;
 			remoteInfo = FBSnapshotTestCase;
 		};
-		FA06F882DCAE274A54C791319806EED2 /* PBXContainerItemProxy */ = {
+		B45E87147A9B6B6592E2B490A2AD0439 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1AD1091604ECB06E61E6956CE5943D1F;
+			remoteInfo = "Pods-GXAudioRecord_Example";
+		};
+		C4A20576A2CD6F17798BC37A78808950 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = A4AE189AF27B4ED4D6C0C33C1628E7D1;
 			remoteInfo = GXAudioRecord;
 		};
-		FFE3C2DD34A6DB73DCD53017CBB08F30 /* PBXContainerItemProxy */ = {
+		EBF412275E0DB805774B57CE600977D7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -125,43 +127,41 @@
 		04DBA5D9D467E921B4B19C0DDD06E742 /* Masonry.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Masonry.debug.xcconfig; sourceTree = "<group>"; };
 		05ED7991BE91B391C4F38B25354DEEB6 /* Masonry.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Masonry.h; path = Masonry/Masonry.h; sourceTree = "<group>"; };
 		0B0A71045D2C733C3BD6340095E5E033 /* FBSnapshotTestCasePlatform.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSnapshotTestCasePlatform.m; path = FBSnapshotTestCase/FBSnapshotTestCasePlatform.m; sourceTree = "<group>"; };
+		0C2F2483D37DC7385D0851D0421E143A /* AQRecorderManager.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = AQRecorderManager.mm; path = GXAudioRecord/Classes/AQRecorderManager.mm; sourceTree = "<group>"; };
+		0CE852EE11F3D4F543655C9F4033E829 /* AQUnitTools.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AQUnitTools.h; path = GXAudioRecord/Classes/AQUnitTools.h; sourceTree = "<group>"; };
 		0D85C3E6E50008C91B87CB4DB841D90A /* FBSnapshotTestCase-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "FBSnapshotTestCase-Info.plist"; sourceTree = "<group>"; };
-		10761E3D684EE5E4125262D9D9031A5B /* MusicModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MusicModel.h; path = GXAudioRecord/Classes/MusicModel.h; sourceTree = "<group>"; };
+		1439B0E06E6A1E6308480FCD2F8E6015 /* GXAudioRecord-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GXAudioRecord-prefix.pch"; sourceTree = "<group>"; };
 		17AAAA6DA488D5DF77D99C020E582627 /* MASConstraintMaker.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MASConstraintMaker.m; path = Masonry/MASConstraintMaker.m; sourceTree = "<group>"; };
 		184DD14C00CA1A9D3DC375878AAC19A1 /* Masonry.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Masonry.modulemap; sourceTree = "<group>"; };
+		19E32CBF57B9AA8786896685D8025DBF /* GXAudioRecord.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = GXAudioRecord.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		1BD79303BB2EFFD5F0D8B4808C5394CF /* JHAudioRecorder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JHAudioRecorder.h; path = GXAudioRecord/Classes/JHAudioRecorder.h; sourceTree = "<group>"; };
 		1D0FB1357DE7D247BE34CCB29EDCCFAC /* ViewController+MASAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "ViewController+MASAdditions.m"; path = "Masonry/ViewController+MASAdditions.m"; sourceTree = "<group>"; };
 		1DA24A38BA9EE106B59E3D4C8DD1CE0E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		1F2A6BCDB8B38970BAAE92CDDEBB3B20 /* MASLayoutConstraint.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MASLayoutConstraint.m; path = Masonry/MASLayoutConstraint.m; sourceTree = "<group>"; };
-		1F61453EC105435820E0AE914A5338BB /* GGXAudioConvertor.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GGXAudioConvertor.m; path = GXAudioRecord/Classes/GGXAudioConvertor.m; sourceTree = "<group>"; };
 		1FED2B88992E015434423DD7D6F2E5F8 /* Pods-GXAudioRecord_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-GXAudioRecord_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		1FFED36A657123030ABB700256D73F15 /* Masonry */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Masonry; path = Masonry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		24E3AE08E7AB2C7BBD4E00F1CCD86FB5 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
 		2547F69451A0A27A16D11D9705986E91 /* UIImage+Diff.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+Diff.h"; path = "FBSnapshotTestCase/Categories/UIImage+Diff.h"; sourceTree = "<group>"; };
 		25A8E30D4F9F5E4535B69508873FAD12 /* MASConstraintMaker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASConstraintMaker.h; path = Masonry/MASConstraintMaker.h; sourceTree = "<group>"; };
 		268C4808A7B284FD5CE12AF500644E1A /* Masonry-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Masonry-dummy.m"; sourceTree = "<group>"; };
 		27DA303DBB7E087CE9560BA4AE5D91CC /* UIImage+Diff.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Diff.m"; path = "FBSnapshotTestCase/Categories/UIImage+Diff.m"; sourceTree = "<group>"; };
-		28DF2DBC853FF202791BDBEE365D155B /* AQPlayerManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AQPlayerManager.h; path = GXAudioRecord/Classes/AQPlayerManager.h; sourceTree = "<group>"; };
+		2B7DC79536EF46992D2E2ADF6561293D /* AQRecorderManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AQRecorderManager.h; path = GXAudioRecord/Classes/AQRecorderManager.h; sourceTree = "<group>"; };
 		2CEEB1F6C31B89937C80AD46D2ECA574 /* FBSnapshotTestCase.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSnapshotTestCase.h; path = FBSnapshotTestCase/FBSnapshotTestCase.h; sourceTree = "<group>"; };
-		2D2992DA72155938F47E16C226653D5F /* AQPlayerManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AQPlayerManager.m; path = GXAudioRecord/Classes/AQPlayerManager.m; sourceTree = "<group>"; };
-		2F8795859F1EA77AB99EC10B81255024 /* GGXAudioConvertor.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GGXAudioConvertor.h; path = GXAudioRecord/Classes/GGXAudioConvertor.h; sourceTree = "<group>"; };
+		2DD7BC4D06A4F7F83B6167943457686B /* ParsingAudioHander.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ParsingAudioHander.m; path = GXAudioRecord/Classes/ParsingAudioHander.m; sourceTree = "<group>"; };
 		3280BB5E7B57C31D41117A74F76E9DF3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		34F186FABB2D38A056BA627333B27F9A /* Pods-GXAudioRecord_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-GXAudioRecord_Example.release.xcconfig"; sourceTree = "<group>"; };
 		351B469F82A69464763DA9A8A556D5E4 /* MASCompositeConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASCompositeConstraint.h; path = Masonry/MASCompositeConstraint.h; sourceTree = "<group>"; };
 		3538C14800BA6D283B6500C766E4F0D3 /* SwiftSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftSupport.swift; path = FBSnapshotTestCase/SwiftSupport.swift; sourceTree = "<group>"; };
 		41CB974288A2892A90F9702F03E0697C /* NSLayoutConstraint+MASDebugAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSLayoutConstraint+MASDebugAdditions.m"; path = "Masonry/NSLayoutConstraint+MASDebugAdditions.m"; sourceTree = "<group>"; };
-		4282FF1A4182E77B1CDCF7B0982DE90C /* AQUnitTools.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AQUnitTools.h; path = GXAudioRecord/Classes/AQUnitTools.h; sourceTree = "<group>"; };
-		4296F3D74278261B05C090BD49FF0063 /* GXAudioRecord-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "GXAudioRecord-dummy.m"; sourceTree = "<group>"; };
 		43FD0500F155110FC81738ABCFD8722E /* UIImage+Snapshot.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+Snapshot.h"; path = "FBSnapshotTestCase/Categories/UIImage+Snapshot.h"; sourceTree = "<group>"; };
+		45DD47EAEC4213A6A98861189910A3BA /* GGXFileManeger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GGXFileManeger.h; path = GXAudioRecord/Classes/GGXFileManeger.h; sourceTree = "<group>"; };
+		462D4F8AE9681DDCE033A42590DEC012 /* lame.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = lame.h; sourceTree = "<group>"; };
+		47FEF85B32EDB987BE707C5CE6E7F79B /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
 		498E8B0053FC9C12650256AC7795C1C6 /* MASViewAttribute.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MASViewAttribute.m; path = Masonry/MASViewAttribute.m; sourceTree = "<group>"; };
 		4A0645C055AA56932A61C0D0DEEEEF4B /* Pods-GXAudioRecord_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-GXAudioRecord_Example-frameworks.sh"; sourceTree = "<group>"; };
 		4A937F4D1DF64E87449BD5F6513DC23B /* Pods-GXAudioRecord_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-GXAudioRecord_Example-Info.plist"; sourceTree = "<group>"; };
-		4D2121F9D04153BCFCF729C58513282E /* GXAudioRecord.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = GXAudioRecord.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		51334C08C8099734EF74BAF7C895B253 /* GXAudioRecord.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GXAudioRecord.debug.xcconfig; sourceTree = "<group>"; };
+		4EB5F02A12EB942EC4D8BDB04649D2BC /* ReplaceMe.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReplaceMe.m; path = GXAudioRecord/Classes/ReplaceMe.m; sourceTree = "<group>"; };
 		51578A1CEE9E9D26C7DF19EE8277B170 /* Masonry-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Masonry-Info.plist"; sourceTree = "<group>"; };
 		52471D719460C4380BF7E4C37A55F8F4 /* Pods-GXAudioRecord_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-GXAudioRecord_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
-		5428E6F05E82DD9CBC4810D80AB18999 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
-		54655BE10191147656A58218E8129B69 /* GXAudioRecord.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GXAudioRecord.release.xcconfig; sourceTree = "<group>"; };
-		54D61FCBDBB22CA040E4CF37B56D0BC7 /* MusicControl.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MusicControl.m; path = GXAudioRecord/Classes/MusicControl.m; sourceTree = "<group>"; };
 		57221B54D014471C3D3E1925EFC917C8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		575D517172D4293566E45C56D5094E82 /* Pods-GXAudioRecord_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-GXAudioRecord_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		5C4F31330DFA99D699E4BDC8C3573D73 /* FBSnapshotTestCase */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FBSnapshotTestCase; path = FBSnapshotTestCase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -170,84 +170,88 @@
 		65172B9C2876929CE87F7D1131AD7CDB /* GXAudioRecord */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = GXAudioRecord; path = GXAudioRecord.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		66BA6286FFDDBFEF509A327789F6D690 /* MASConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASConstraint.h; path = Masonry/MASConstraint.h; sourceTree = "<group>"; };
 		67380272F2DF7819A336DF552AD92896 /* FBSnapshotTestController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSnapshotTestController.h; path = FBSnapshotTestCase/FBSnapshotTestController.h; sourceTree = "<group>"; };
-		6F99C50E03596507236DC09748D6A042 /* GXAudioRecord.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = GXAudioRecord.modulemap; sourceTree = "<group>"; };
-		735156D3E9C72B7D17C8E3493CA41D9E /* AQRecorderManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AQRecorderManager.h; path = GXAudioRecord/Classes/AQRecorderManager.h; sourceTree = "<group>"; };
+		68325C3F8F0F3FB029BE776555C3C829 /* JHAudioRecorder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JHAudioRecorder.m; path = GXAudioRecord/Classes/JHAudioRecorder.m; sourceTree = "<group>"; };
+		7031C483DB37B6D6EF75DEB83E5D7BEB /* ParsingAudioHander.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ParsingAudioHander.h; path = GXAudioRecord/Classes/ParsingAudioHander.h; sourceTree = "<group>"; };
 		73DA2B3A3C8E6F3A7D976D1C4C4BCEC9 /* FBSnapshotTestCase.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = FBSnapshotTestCase.modulemap; sourceTree = "<group>"; };
 		75B839A35A2BFBEC3479FF1552F569BC /* FBSnapshotTestCase-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FBSnapshotTestCase-dummy.m"; sourceTree = "<group>"; };
 		7731683F4BFFF04ACBB3E9BA86F1B2BA /* FBSnapshotTestCase.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FBSnapshotTestCase.release.xcconfig; sourceTree = "<group>"; };
+		7747BED6D6AF8F2F93ECA040D42926B5 /* AQPlayerManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AQPlayerManager.h; path = GXAudioRecord/Classes/AQPlayerManager.h; sourceTree = "<group>"; };
 		7AF02E0B25C8156CA917D0E383991131 /* Pods-GXAudioRecord_Tests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-GXAudioRecord_Tests"; path = Pods_GXAudioRecord_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E502E95D75F8DF19C71E7419515430D /* MASViewConstraint.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MASViewConstraint.m; path = Masonry/MASViewConstraint.m; sourceTree = "<group>"; };
 		823AE4B4979D09F91ADB18679CF355CD /* MASCompositeConstraint.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MASCompositeConstraint.m; path = Masonry/MASCompositeConstraint.m; sourceTree = "<group>"; };
-		83BC0383909819A7D04531A6FC6EB115 /* AQRecorderManager.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = AQRecorderManager.mm; path = GXAudioRecord/Classes/AQRecorderManager.mm; sourceTree = "<group>"; };
-		846006EA6699CF3FECF0DDB697197AD8 /* ParsingAudioHander.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ParsingAudioHander.m; path = GXAudioRecord/Classes/ParsingAudioHander.m; sourceTree = "<group>"; };
-		880B45B814169E3E3C4B9F0E73DFF564 /* JHAudioRecorder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JHAudioRecorder.m; path = GXAudioRecord/Classes/JHAudioRecorder.m; sourceTree = "<group>"; };
 		8940D361FD89F610F4C862B772A33E51 /* FBSnapshotTestCasePlatform.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSnapshotTestCasePlatform.h; path = FBSnapshotTestCase/FBSnapshotTestCasePlatform.h; sourceTree = "<group>"; };
+		894B10F36D8DBA653A7C870A837C554C /* GXAudioRecord-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GXAudioRecord-umbrella.h"; sourceTree = "<group>"; };
+		8F94B50C8853B7CD2AD3DC64ABFF47E9 /* GXAudioRecord-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "GXAudioRecord-Info.plist"; sourceTree = "<group>"; };
 		9016A8DDB9A4258DCC8B1B3DDECA0207 /* UIImage+Compare.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Compare.m"; path = "FBSnapshotTestCase/Categories/UIImage+Compare.m"; sourceTree = "<group>"; };
 		909597D5A7270BB0B845363BD757AC74 /* View+MASShorthandAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "View+MASShorthandAdditions.h"; path = "Masonry/View+MASShorthandAdditions.h"; sourceTree = "<group>"; };
 		94A691C70504B82F1D79E0F50DF6B488 /* UIImage+Snapshot.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Snapshot.m"; path = "FBSnapshotTestCase/Categories/UIImage+Snapshot.m"; sourceTree = "<group>"; };
 		954B1C0B21F935FC39E6E881F09FA01E /* Pods-GXAudioRecord_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-GXAudioRecord_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		97C56360791C25E2BD94451B7D7479CB /* Pods-GXAudioRecord_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-GXAudioRecord_Tests.modulemap"; sourceTree = "<group>"; };
 		98E5B4DDA3A6742DA86BC33EDEB35F59 /* NSArray+MASShorthandAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSArray+MASShorthandAdditions.h"; path = "Masonry/NSArray+MASShorthandAdditions.h"; sourceTree = "<group>"; };
-		9C1AFDE137743800C401CFAE0C482159 /* GXAudioRecord-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GXAudioRecord-umbrella.h"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9F7AD23C936DA85D394C421FC40140D8 /* MusicModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MusicModel.m; path = GXAudioRecord/Classes/MusicModel.m; sourceTree = "<group>"; };
 		A394C2C6ABAE5BF5090CF2AD98C696AF /* MASUtilities.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASUtilities.h; path = Masonry/MASUtilities.h; sourceTree = "<group>"; };
 		A3C01B07FA53F022835FB059381BE239 /* Pods-GXAudioRecord_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-GXAudioRecord_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		A4A12C368749FD2EEF1BB8849594446F /* MASConstraint.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MASConstraint.m; path = Masonry/MASConstraint.m; sourceTree = "<group>"; };
 		A5ADEF2C33BF1C36E1F6020EA61D65B7 /* Masonry.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Masonry.release.xcconfig; sourceTree = "<group>"; };
+		A69E1FFB8153E4EADDCFC06AA0051017 /* AQPlayerManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AQPlayerManager.m; path = GXAudioRecord/Classes/AQPlayerManager.m; sourceTree = "<group>"; };
 		A76E045FDA8BA260BBBB42F96CC56671 /* Pods-GXAudioRecord_Example */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-GXAudioRecord_Example"; path = Pods_GXAudioRecord_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AC4195265EEF5A9F759AB255EDF8B082 /* GGXAudioQueueHeader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GGXAudioQueueHeader.h; path = GXAudioRecord/Classes/GGXAudioQueueHeader.h; sourceTree = "<group>"; };
+		A8A00A6F9F13046033690E97266495C2 /* GGXAudioQueueHeader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GGXAudioQueueHeader.h; path = GXAudioRecord/Classes/GGXAudioQueueHeader.h; sourceTree = "<group>"; };
 		B17D6A5548097996EE3796656A32B6D2 /* MASLayoutConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASLayoutConstraint.h; path = Masonry/MASLayoutConstraint.h; sourceTree = "<group>"; };
 		B24697F219BEEC2706E72C5281CD7D31 /* Pods-GXAudioRecord_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-GXAudioRecord_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		B2F033F60D62A18A7949F5FEBBC97313 /* GXAudioRecord.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GXAudioRecord.release.xcconfig; sourceTree = "<group>"; };
 		B32DC82B087A3199F46DEE37F30C42D4 /* NSArray+MASAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSArray+MASAdditions.h"; path = "Masonry/NSArray+MASAdditions.h"; sourceTree = "<group>"; };
 		B367BF20EC952AD50F06D3171735002D /* FBSnapshotTestCase-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FBSnapshotTestCase-umbrella.h"; sourceTree = "<group>"; };
-		B3FA563EA3F53517FCF408C856A84BF1 /* GXAudioRecord-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GXAudioRecord-prefix.pch"; sourceTree = "<group>"; };
-		B7BC4194136E75CD1F82BEEE7CB02D6F /* JHAudioRecorder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JHAudioRecorder.h; path = GXAudioRecord/Classes/JHAudioRecorder.h; sourceTree = "<group>"; };
-		BB59A5BA5E2A2E27E071296AA3778011 /* ReplaceMe.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReplaceMe.m; path = GXAudioRecord/Classes/ReplaceMe.m; sourceTree = "<group>"; };
+		B74C13E8FA13D78D1683D7B779BD94B6 /* GXAudioRecord.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = GXAudioRecord.modulemap; sourceTree = "<group>"; };
+		B8D78BDEC7B10EAD0667B589F521A19C /* MusicControl.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MusicControl.m; path = GXAudioRecord/Classes/MusicControl.m; sourceTree = "<group>"; };
+		BAB0729D3023EA56F23E411AB06550AB /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		BC5DC627BD8B2514BDDFD1469942F1EA /* MusicModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MusicModel.h; path = GXAudioRecord/Classes/MusicModel.h; sourceTree = "<group>"; };
 		BF110DE70107316228863B82A51A09D3 /* FBSnapshotTestCase-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FBSnapshotTestCase-prefix.pch"; sourceTree = "<group>"; };
 		BF87B1F18634C8DF15DAE189EE439390 /* Pods-GXAudioRecord_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-GXAudioRecord_Tests-umbrella.h"; sourceTree = "<group>"; };
-		C1A929E25D9585D71C84CC33D1EA808A /* MusicControl.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MusicControl.h; path = GXAudioRecord/Classes/MusicControl.h; sourceTree = "<group>"; };
-		C2C9B205CA42669B0F1DBBDE27F0C962 /* ParsingAudioHander.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ParsingAudioHander.h; path = GXAudioRecord/Classes/ParsingAudioHander.h; sourceTree = "<group>"; };
+		C1FC5504E30016E6D5F44917D08DBC15 /* GGXAudioConvertor.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GGXAudioConvertor.m; path = GXAudioRecord/Classes/GGXAudioConvertor.m; sourceTree = "<group>"; };
+		C2A2DA7097FCC5AE9F24E72A3F2D1B17 /* GXAudioRecord-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "GXAudioRecord-dummy.m"; sourceTree = "<group>"; };
 		C43B4427803F45E5EE12A79C135ABCEE /* FBSnapshotTestCase.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSnapshotTestCase.m; path = FBSnapshotTestCase/FBSnapshotTestCase.m; sourceTree = "<group>"; };
+		C4494D6302739E247B9795A28C13590C /* libmp3lame.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
 		C5FB78E881BBBB6AFA78B63214C1BFDD /* Pods-GXAudioRecord_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-GXAudioRecord_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
-		C6F41C995E96DE9134ECD97D41F81943 /* GGXFileManeger.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GGXFileManeger.m; path = GXAudioRecord/Classes/GGXFileManeger.m; sourceTree = "<group>"; };
 		D0DDF4B374D2C3E86FBE273690534CC7 /* Pods-GXAudioRecord_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-GXAudioRecord_Tests-Info.plist"; sourceTree = "<group>"; };
 		D39570D3C32595968B12039E56A71CC2 /* MASConstraint+Private.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "MASConstraint+Private.h"; path = "Masonry/MASConstraint+Private.h"; sourceTree = "<group>"; };
+		D62E560723155FD0EB93524F4085E831 /* GGXFileManeger.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GGXFileManeger.m; path = GXAudioRecord/Classes/GGXFileManeger.m; sourceTree = "<group>"; };
 		D724ADF98E12EB05530027B683351725 /* Pods-GXAudioRecord_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-GXAudioRecord_Tests-dummy.m"; sourceTree = "<group>"; };
 		D8AD9A6CFD4331B9A23C2F7983498CF3 /* FBSnapshotTestController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSnapshotTestController.m; path = FBSnapshotTestCase/FBSnapshotTestController.m; sourceTree = "<group>"; };
-		D9167E87A985B72CF0F346D70443EC8C /* AQUnitTools.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AQUnitTools.m; path = GXAudioRecord/Classes/AQUnitTools.m; sourceTree = "<group>"; };
 		D9A282C53A123426D0DC6CB96D76A6B7 /* UIApplication+StrictKeyWindow.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIApplication+StrictKeyWindow.m"; path = "FBSnapshotTestCase/Categories/UIApplication+StrictKeyWindow.m"; sourceTree = "<group>"; };
 		DA48B7947D5AC0DDE52563C2DC8A5E3D /* NSArray+MASAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSArray+MASAdditions.m"; path = "Masonry/NSArray+MASAdditions.m"; sourceTree = "<group>"; };
-		DC0593E1D8A228516D2E339257A07E82 /* MusicModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MusicModel.m; path = GXAudioRecord/Classes/MusicModel.m; sourceTree = "<group>"; };
 		DC7C362325DB688A8F95677E534F634A /* Masonry-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Masonry-prefix.pch"; sourceTree = "<group>"; };
 		DFE72805626641332E27A0EE2C6EF88B /* FBSnapshotTestCase.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FBSnapshotTestCase.debug.xcconfig; sourceTree = "<group>"; };
+		E064794CF85FDF8F1BA8ED4E6D4FFEE3 /* GGXAudioConvertor.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GGXAudioConvertor.h; path = GXAudioRecord/Classes/GGXAudioConvertor.h; sourceTree = "<group>"; };
 		E1664911F55968A776BA11F00D8E434D /* MASViewAttribute.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASViewAttribute.h; path = Masonry/MASViewAttribute.h; sourceTree = "<group>"; };
 		E20173728E322CA943398A88168AD012 /* UIImage+Compare.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+Compare.h"; path = "FBSnapshotTestCase/Categories/UIImage+Compare.h"; sourceTree = "<group>"; };
-		E44DFB03AF63FEC25E5438DA833E6B60 /* GGXFileManeger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GGXFileManeger.h; path = GXAudioRecord/Classes/GGXFileManeger.h; sourceTree = "<group>"; };
 		E658F388F01C72599CA75537950B6095 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		EDAB782201105705C8D8E25F6F0D2968 /* Pods-GXAudioRecord_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-GXAudioRecord_Tests-frameworks.sh"; sourceTree = "<group>"; };
+		EDAE47D935AF0E0C3B0F7B5EC94D2928 /* MusicControl.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MusicControl.h; path = GXAudioRecord/Classes/MusicControl.h; sourceTree = "<group>"; };
 		EDFA8CC2AD68834644662EE1AC469B03 /* NSLayoutConstraint+MASDebugAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSLayoutConstraint+MASDebugAdditions.h"; path = "Masonry/NSLayoutConstraint+MASDebugAdditions.h"; sourceTree = "<group>"; };
-		F32E2A7B6D15D07077F02C70F67021D8 /* GXAudioRecord-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "GXAudioRecord-Info.plist"; sourceTree = "<group>"; };
+		EE3BBEC460FB78148B1BD7BFE4CB020E /* AQUnitTools.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AQUnitTools.m; path = GXAudioRecord/Classes/AQUnitTools.m; sourceTree = "<group>"; };
 		F6592BBDD476F58BCC00A365E62BCFB5 /* Pods-GXAudioRecord_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-GXAudioRecord_Example-umbrella.h"; sourceTree = "<group>"; };
 		F69266F7AA15AB3F88F966B994B2F6DF /* Pods-GXAudioRecord_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-GXAudioRecord_Example.modulemap"; sourceTree = "<group>"; };
 		F793D8588CD60BFFC82AF37C9BC308D0 /* UIApplication+StrictKeyWindow.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIApplication+StrictKeyWindow.h"; path = "FBSnapshotTestCase/Categories/UIApplication+StrictKeyWindow.h"; sourceTree = "<group>"; };
+		F8AB01ECAA9E8507549B247236D71AD7 /* GXAudioRecord.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GXAudioRecord.debug.xcconfig; sourceTree = "<group>"; };
 		FCE1DDE1A00CE0531A4DF74A6C2EB5F8 /* MASViewConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASViewConstraint.h; path = Masonry/MASViewConstraint.h; sourceTree = "<group>"; };
 		FE217846B3BAE80D3F1CD416E405F88E /* Pods-GXAudioRecord_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-GXAudioRecord_Example-dummy.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		114234CDA8EE28C5260487BE62103345 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A421E48ED36BF729C8325E5ABC7CD86B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A309B5C94D9D507472B73D148F4FBD17 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				8397F47A4D9216C91C16E328F7E6F09D /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C4F8ECFCFFD0A48C6C4729CA4E3A6EDE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FE8335E2D1182313BB9C23CC590F8097 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,34 +339,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		6F561FAECB9B5F9CCAD0548684492631 /* GXAudioRecord */ = {
+		62BD9EF893F4DC7FC460EA706BC9CDD3 /* lame */ = {
 			isa = PBXGroup;
 			children = (
-				28DF2DBC853FF202791BDBEE365D155B /* AQPlayerManager.h */,
-				2D2992DA72155938F47E16C226653D5F /* AQPlayerManager.m */,
-				735156D3E9C72B7D17C8E3493CA41D9E /* AQRecorderManager.h */,
-				83BC0383909819A7D04531A6FC6EB115 /* AQRecorderManager.mm */,
-				4282FF1A4182E77B1CDCF7B0982DE90C /* AQUnitTools.h */,
-				D9167E87A985B72CF0F346D70443EC8C /* AQUnitTools.m */,
-				2F8795859F1EA77AB99EC10B81255024 /* GGXAudioConvertor.h */,
-				1F61453EC105435820E0AE914A5338BB /* GGXAudioConvertor.m */,
-				AC4195265EEF5A9F759AB255EDF8B082 /* GGXAudioQueueHeader.h */,
-				E44DFB03AF63FEC25E5438DA833E6B60 /* GGXFileManeger.h */,
-				C6F41C995E96DE9134ECD97D41F81943 /* GGXFileManeger.m */,
-				B7BC4194136E75CD1F82BEEE7CB02D6F /* JHAudioRecorder.h */,
-				880B45B814169E3E3C4B9F0E73DFF564 /* JHAudioRecorder.m */,
-				C1A929E25D9585D71C84CC33D1EA808A /* MusicControl.h */,
-				54D61FCBDBB22CA040E4CF37B56D0BC7 /* MusicControl.m */,
-				10761E3D684EE5E4125262D9D9031A5B /* MusicModel.h */,
-				DC0593E1D8A228516D2E339257A07E82 /* MusicModel.m */,
-				C2C9B205CA42669B0F1DBBDE27F0C962 /* ParsingAudioHander.h */,
-				846006EA6699CF3FECF0DDB697197AD8 /* ParsingAudioHander.m */,
-				BB59A5BA5E2A2E27E071296AA3778011 /* ReplaceMe.m */,
-				EBFF6A45997C8725F08342FBAC0FCF57 /* Pod */,
-				93217A8CC2B74200F648E7DDC4418E77 /* Support Files */,
+				462D4F8AE9681DDCE033A42590DEC012 /* lame.h */,
+				C4494D6302739E247B9795A28C13590C /* libmp3lame.a */,
 			);
-			name = GXAudioRecord;
-			path = ../..;
+			name = lame;
+			path = GXAudioRecord/Classes/lame;
 			sourceTree = "<group>";
 		};
 		717370984CC95901120CD02EACC41D72 /* SwiftSupport */ = {
@@ -397,29 +381,6 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		93217A8CC2B74200F648E7DDC4418E77 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				6F99C50E03596507236DC09748D6A042 /* GXAudioRecord.modulemap */,
-				4296F3D74278261B05C090BD49FF0063 /* GXAudioRecord-dummy.m */,
-				F32E2A7B6D15D07077F02C70F67021D8 /* GXAudioRecord-Info.plist */,
-				B3FA563EA3F53517FCF408C856A84BF1 /* GXAudioRecord-prefix.pch */,
-				9C1AFDE137743800C401CFAE0C482159 /* GXAudioRecord-umbrella.h */,
-				51334C08C8099734EF74BAF7C895B253 /* GXAudioRecord.debug.xcconfig */,
-				54655BE10191147656A58218E8129B69 /* GXAudioRecord.release.xcconfig */,
-			);
-			name = "Support Files";
-			path = "Example/Pods/Target Support Files/GXAudioRecord";
-			sourceTree = "<group>";
-		};
-		A6DB070F026DA3F43286579D83885767 /* Development Pods */ = {
-			isa = PBXGroup;
-			children = (
-				6F561FAECB9B5F9CCAD0548684492631 /* GXAudioRecord */,
-			);
-			name = "Development Pods";
-			sourceTree = "<group>";
-		};
 		A96A09D55B5FF1BDB4A23DD4C69BF12D /* Pods-GXAudioRecord_Example */ = {
 			isa = PBXGroup;
 			children = (
@@ -435,6 +396,14 @@
 			);
 			name = "Pods-GXAudioRecord_Example";
 			path = "Target Support Files/Pods-GXAudioRecord_Example";
+			sourceTree = "<group>";
+		};
+		B184D1B8C9EF9EFA8950B43F1F8EDED7 /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F2790E6D4AF5547F8D3D02FE4339B694 /* GXAudioRecord */,
+			);
+			name = "Development Pods";
 			sourceTree = "<group>";
 		};
 		B658CE446B469A6CB1DD01F837BFE848 /* FBSnapshotTestCase */ = {
@@ -494,7 +463,7 @@
 			isa = PBXGroup;
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
-				A6DB070F026DA3F43286579D83885767 /* Development Pods */,
+				B184D1B8C9EF9EFA8950B43F1F8EDED7 /* Development Pods */,
 				BA4F31F07263C99FC76E66D632A59F09 /* Frameworks */,
 				4A62A50A353010EE22AD4E07C3F1E2CC /* Pods */,
 				0F11FAA8D378AED6DD57C4128721F815 /* Products */,
@@ -502,14 +471,45 @@
 			);
 			sourceTree = "<group>";
 		};
-		EBFF6A45997C8725F08342FBAC0FCF57 /* Pod */ = {
+		E2F51B1015F1122459F991BBFE826B16 /* Pod */ = {
 			isa = PBXGroup;
 			children = (
-				4D2121F9D04153BCFCF729C58513282E /* GXAudioRecord.podspec */,
-				5428E6F05E82DD9CBC4810D80AB18999 /* LICENSE */,
-				24E3AE08E7AB2C7BBD4E00F1CCD86FB5 /* README.md */,
+				19E32CBF57B9AA8786896685D8025DBF /* GXAudioRecord.podspec */,
+				BAB0729D3023EA56F23E411AB06550AB /* LICENSE */,
+				47FEF85B32EDB987BE707C5CE6E7F79B /* README.md */,
 			);
 			name = Pod;
+			sourceTree = "<group>";
+		};
+		F2790E6D4AF5547F8D3D02FE4339B694 /* GXAudioRecord */ = {
+			isa = PBXGroup;
+			children = (
+				7747BED6D6AF8F2F93ECA040D42926B5 /* AQPlayerManager.h */,
+				A69E1FFB8153E4EADDCFC06AA0051017 /* AQPlayerManager.m */,
+				2B7DC79536EF46992D2E2ADF6561293D /* AQRecorderManager.h */,
+				0C2F2483D37DC7385D0851D0421E143A /* AQRecorderManager.mm */,
+				0CE852EE11F3D4F543655C9F4033E829 /* AQUnitTools.h */,
+				EE3BBEC460FB78148B1BD7BFE4CB020E /* AQUnitTools.m */,
+				E064794CF85FDF8F1BA8ED4E6D4FFEE3 /* GGXAudioConvertor.h */,
+				C1FC5504E30016E6D5F44917D08DBC15 /* GGXAudioConvertor.m */,
+				A8A00A6F9F13046033690E97266495C2 /* GGXAudioQueueHeader.h */,
+				45DD47EAEC4213A6A98861189910A3BA /* GGXFileManeger.h */,
+				D62E560723155FD0EB93524F4085E831 /* GGXFileManeger.m */,
+				1BD79303BB2EFFD5F0D8B4808C5394CF /* JHAudioRecorder.h */,
+				68325C3F8F0F3FB029BE776555C3C829 /* JHAudioRecorder.m */,
+				EDAE47D935AF0E0C3B0F7B5EC94D2928 /* MusicControl.h */,
+				B8D78BDEC7B10EAD0667B589F521A19C /* MusicControl.m */,
+				BC5DC627BD8B2514BDDFD1469942F1EA /* MusicModel.h */,
+				9F7AD23C936DA85D394C421FC40140D8 /* MusicModel.m */,
+				7031C483DB37B6D6EF75DEB83E5D7BEB /* ParsingAudioHander.h */,
+				2DD7BC4D06A4F7F83B6167943457686B /* ParsingAudioHander.m */,
+				4EB5F02A12EB942EC4D8BDB04649D2BC /* ReplaceMe.m */,
+				62BD9EF893F4DC7FC460EA706BC9CDD3 /* lame */,
+				E2F51B1015F1122459F991BBFE826B16 /* Pod */,
+				FCE27BEE6563D1A17D36A04C831AA5E0 /* Support Files */,
+			);
+			name = GXAudioRecord;
+			path = ../..;
 			sourceTree = "<group>";
 		};
 		F4F09DBECA9DA51BA2AFE7F9FAF7779F /* Core */ = {
@@ -544,27 +544,24 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
+		FCE27BEE6563D1A17D36A04C831AA5E0 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				B74C13E8FA13D78D1683D7B779BD94B6 /* GXAudioRecord.modulemap */,
+				C2A2DA7097FCC5AE9F24E72A3F2D1B17 /* GXAudioRecord-dummy.m */,
+				8F94B50C8853B7CD2AD3DC64ABFF47E9 /* GXAudioRecord-Info.plist */,
+				1439B0E06E6A1E6308480FCD2F8E6015 /* GXAudioRecord-prefix.pch */,
+				894B10F36D8DBA653A7C870A837C554C /* GXAudioRecord-umbrella.h */,
+				F8AB01ECAA9E8507549B247236D71AD7 /* GXAudioRecord.debug.xcconfig */,
+				B2F033F60D62A18A7949F5FEBBC97313 /* GXAudioRecord.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/GXAudioRecord";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		02DB60644F4A9350576815F8FD9D65D4 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7339F405B514AF27B7344BC601D3CA82 /* AQPlayerManager.h in Headers */,
-				F0DB928AF4BCAFF11F507660F6A92ABE /* AQRecorderManager.h in Headers */,
-				A4268FC01D50C9435435251A4890DCA5 /* AQUnitTools.h in Headers */,
-				6E38D68EB96744FA889D4E992D90BC08 /* GGXAudioConvertor.h in Headers */,
-				AFE161D84F08665997A46D5D583414D9 /* GGXAudioQueueHeader.h in Headers */,
-				DFFD9C82100F8E861DEA064C1ECE0E24 /* GGXFileManeger.h in Headers */,
-				FF858D879B1506FF84205EA7B696554C /* GXAudioRecord-umbrella.h in Headers */,
-				A7337F37111957AE93BCEDF2174BB363 /* JHAudioRecorder.h in Headers */,
-				AA8F30926A5290F23C1DDBE4954BF639 /* MusicControl.h in Headers */,
-				C8E562B7D69F050D8138922C63CF0698 /* MusicModel.h in Headers */,
-				9CA79C855B9D8F578B857FF83701C9D6 /* ParsingAudioHander.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		14F563BA9EA50A036A5ECB425957D89D /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -619,6 +616,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E2F98C15965B75F6FADA0DD9DF59322D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3EFA6D420BEC596FF8259FCD0377430 /* AQPlayerManager.h in Headers */,
+				EEE040155D673A8D3E6482FE0F52F318 /* AQRecorderManager.h in Headers */,
+				FEAD6E5C59D2DA942A154478FEC9A225 /* AQUnitTools.h in Headers */,
+				9DA0E7BE382A3293A889000CCEF806D9 /* GGXAudioConvertor.h in Headers */,
+				CF29613B3CE137E7635FFD3638D94BC5 /* GGXAudioQueueHeader.h in Headers */,
+				77DAB9A794AB41FFF1809D4503C4DC9B /* GGXFileManeger.h in Headers */,
+				3BD4596BA8F391ACEDC8978969F6CFC3 /* GXAudioRecord-umbrella.h in Headers */,
+				A66B4D69C7E0AE5CCC88C8EBBBC24405 /* JHAudioRecorder.h in Headers */,
+				B4C96B4268538942ACFD2EB74C201294 /* lame.h in Headers */,
+				5F260ECC7D60DFFEC6F8CACDD11E7F64 /* MusicControl.h in Headers */,
+				644FE7ABDDC7CF682D946AFC589EF2AC /* MusicModel.h in Headers */,
+				38FC202406D0AFE7B5AC5D4A8510ED88 /* ParsingAudioHander.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -634,8 +650,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				FF972042644FC0211910C21177269B28 /* PBXTargetDependency */,
-				1FCD6A1BD2810F96476A77981B57A173 /* PBXTargetDependency */,
+				E768E203295F71FEE4A9E546A0CC3C7C /* PBXTargetDependency */,
+				FA2C792889B821BE8F7CC7B11A4EC904 /* PBXTargetDependency */,
 			);
 			name = "Pods-GXAudioRecord_Example";
 			productName = Pods_GXAudioRecord_Example;
@@ -680,12 +696,12 @@
 		};
 		A4AE189AF27B4ED4D6C0C33C1628E7D1 /* GXAudioRecord */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 69384C4DD5869356D170065356B9DEEA /* Build configuration list for PBXNativeTarget "GXAudioRecord" */;
+			buildConfigurationList = BED903865C986637D1B3903228D0EF4B /* Build configuration list for PBXNativeTarget "GXAudioRecord" */;
 			buildPhases = (
-				02DB60644F4A9350576815F8FD9D65D4 /* Headers */,
-				26C366F83CA86F4A515E4A6D9C0D9510 /* Sources */,
-				C4F8ECFCFFD0A48C6C4729CA4E3A6EDE /* Frameworks */,
-				D46BA92EFDBA466FBFA025F445CF67B9 /* Resources */,
+				E2F98C15965B75F6FADA0DD9DF59322D /* Headers */,
+				16217EF326FC932046F3E4D6CB4603F1 /* Sources */,
+				114234CDA8EE28C5260487BE62103345 /* Frameworks */,
+				4D3F505E1CD995DC534600154EB4B631 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -708,8 +724,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				CD37F777BF9E69D960BB084A56BAE506 /* PBXTargetDependency */,
-				92B4EE3FB7BB59EA6E4E50C95FBBBA09 /* PBXTargetDependency */,
+				70772D03C7327593F6C30737470F8820 /* PBXTargetDependency */,
+				357FB78B856A649E1B6747C721C1DF98 /* PBXTargetDependency */,
 			);
 			name = "Pods-GXAudioRecord_Tests";
 			productName = Pods_GXAudioRecord_Tests;
@@ -762,14 +778,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		68BCE6265407AF8CA9C5966BA38EE83C /* Resources */ = {
+		4D3F505E1CD995DC534600154EB4B631 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D46BA92EFDBA466FBFA025F445CF67B9 /* Resources */ = {
+		68BCE6265407AF8CA9C5966BA38EE83C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -786,21 +802,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		26C366F83CA86F4A515E4A6D9C0D9510 /* Sources */ = {
+		16217EF326FC932046F3E4D6CB4603F1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD0651BC14330FBEBD9036C3F07E874B /* AQPlayerManager.m in Sources */,
-				B978C54D9C8D69D8214507D1E7F4D0E9 /* AQRecorderManager.mm in Sources */,
-				869E9B35E07C863A39DC1262F33EA4E4 /* AQUnitTools.m in Sources */,
-				1CE50789EBA14E26B00307EC8CD1011E /* GGXAudioConvertor.m in Sources */,
-				91638107B7FD9E20F95889386A131550 /* GGXFileManeger.m in Sources */,
-				4DBB07A53DEADB82B26DC81FE7710D27 /* GXAudioRecord-dummy.m in Sources */,
-				BB3AF125BE7C415AC10ABA21C8D12FFD /* JHAudioRecorder.m in Sources */,
-				C8C77845E72E0CF80A39FA6698991DA2 /* MusicControl.m in Sources */,
-				1FACFE40B63602C23665BD8629A866ED /* MusicModel.m in Sources */,
-				86DE42CEDFF56585FF3369D7BC2C92D4 /* ParsingAudioHander.m in Sources */,
-				1E7878DAD30F8B8ECE9FCE62486F9E06 /* ReplaceMe.m in Sources */,
+				BFACE5955D0399EA9780B70E559D5C6D /* AQPlayerManager.m in Sources */,
+				D86052B5FBE0D2DED4AD671DA2C3CFFB /* AQRecorderManager.mm in Sources */,
+				7B47FE64E3D437AE91F02B3EADAF2F83 /* AQUnitTools.m in Sources */,
+				96C1B3E74459DDD6D9C5F6C37799AD3B /* GGXAudioConvertor.m in Sources */,
+				0B04274A91E2B7FF578D66C00AC47351 /* GGXFileManeger.m in Sources */,
+				4772F3F1933A24FB73E53DCCA1156791 /* GXAudioRecord-dummy.m in Sources */,
+				C66B580F4C2CBF9F423B2454C4B671CB /* JHAudioRecorder.m in Sources */,
+				BED957A7F9197025ACEDBC23868152B7 /* libmp3lame.a in Sources */,
+				1B15BA2522F6AB687E58AE15FF01801A /* MusicControl.m in Sources */,
+				77875C7CB0FE8D5A62774DB25957C2AE /* MusicModel.m in Sources */,
+				A4174EBEB9024AD6195A79DA44706E36 /* ParsingAudioHander.m in Sources */,
+				312E455F1EAD686D9F00CF2FF6A98623 /* ReplaceMe.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -857,29 +874,29 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		1FCD6A1BD2810F96476A77981B57A173 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Masonry;
-			target = 55AF53E6C77A10ED4985E04D74A8878E /* Masonry */;
-			targetProxy = FFE3C2DD34A6DB73DCD53017CBB08F30 /* PBXContainerItemProxy */;
-		};
-		92B4EE3FB7BB59EA6E4E50C95FBBBA09 /* PBXTargetDependency */ = {
+		357FB78B856A649E1B6747C721C1DF98 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Pods-GXAudioRecord_Example";
 			target = 1AD1091604ECB06E61E6956CE5943D1F /* Pods-GXAudioRecord_Example */;
-			targetProxy = 4F8439BEAC7745D06A82A68FB5E74C12 /* PBXContainerItemProxy */;
+			targetProxy = B45E87147A9B6B6592E2B490A2AD0439 /* PBXContainerItemProxy */;
 		};
-		CD37F777BF9E69D960BB084A56BAE506 /* PBXTargetDependency */ = {
+		70772D03C7327593F6C30737470F8820 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = FBSnapshotTestCase;
 			target = 98A98149697C80CEF8D5772791E92E66 /* FBSnapshotTestCase */;
-			targetProxy = 905A269A1721F097E3DA41653923DEE9 /* PBXContainerItemProxy */;
+			targetProxy = 45E3202563313E7E89B5A80BF4A9A028 /* PBXContainerItemProxy */;
 		};
-		FF972042644FC0211910C21177269B28 /* PBXTargetDependency */ = {
+		E768E203295F71FEE4A9E546A0CC3C7C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = GXAudioRecord;
 			target = A4AE189AF27B4ED4D6C0C33C1628E7D1 /* GXAudioRecord */;
-			targetProxy = FA06F882DCAE274A54C791319806EED2 /* PBXContainerItemProxy */;
+			targetProxy = C4A20576A2CD6F17798BC37A78808950 /* PBXContainerItemProxy */;
+		};
+		FA2C792889B821BE8F7CC7B11A4EC904 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Masonry;
+			target = 55AF53E6C77A10ED4985E04D74A8878E /* Masonry */;
+			targetProxy = EBF412275E0DB805774B57CE600977D7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -914,6 +931,37 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
+		};
+		1184FE48595C0D1CB5BC8513BEDF7C6D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F8AB01ECAA9E8507549B247236D71AD7 /* GXAudioRecord.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/GXAudioRecord/GXAudioRecord-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/GXAudioRecord/GXAudioRecord-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/GXAudioRecord/GXAudioRecord.modulemap";
+				PRODUCT_MODULE_NAME = GXAudioRecord;
+				PRODUCT_NAME = GXAudioRecord;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
 		};
 		3D9983BD21EE340ECD92E22A68A43535 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1172,9 +1220,9 @@
 			};
 			name = Release;
 		};
-		A8ACF278299EB31713AEE90A41B80F22 /* Release */ = {
+		AA1FA590E16FC231EFFD5746FBD2A49D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 54655BE10191147656A58218E8129B69 /* GXAudioRecord.release.xcconfig */;
+			baseConfigurationReference = B2F033F60D62A18A7949F5FEBBC97313 /* GXAudioRecord.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1300,37 +1348,6 @@
 			};
 			name = Debug;
 		};
-		DEFE94F637DF92983CCC6C190D7FAF2C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 51334C08C8099734EF74BAF7C895B253 /* GXAudioRecord.debug.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/GXAudioRecord/GXAudioRecord-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/GXAudioRecord/GXAudioRecord-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/GXAudioRecord/GXAudioRecord.modulemap";
-				PRODUCT_MODULE_NAME = GXAudioRecord;
-				PRODUCT_NAME = GXAudioRecord;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1361,20 +1378,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		69384C4DD5869356D170065356B9DEEA /* Build configuration list for PBXNativeTarget "GXAudioRecord" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				DEFE94F637DF92983CCC6C190D7FAF2C /* Debug */,
-				A8ACF278299EB31713AEE90A41B80F22 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		B365A871A568644D26323405B1D9F754 /* Build configuration list for PBXNativeTarget "Pods-GXAudioRecord_Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6CCB37D5BD3DC757BA612BE7DD6A3F59 /* Debug */,
 				A46F4349DA80FDB2367932F7CE08C10B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BED903865C986637D1B3903228D0EF4B /* Build configuration list for PBXNativeTarget "GXAudioRecord" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1184FE48595C0D1CB5BC8513BEDF7C6D /* Debug */,
+				AA1FA590E16FC231EFFD5746FBD2A49D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

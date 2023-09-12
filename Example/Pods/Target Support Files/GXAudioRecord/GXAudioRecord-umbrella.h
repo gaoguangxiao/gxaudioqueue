@@ -17,6 +17,7 @@
 #import "GGXAudioQueueHeader.h"
 #import "GGXFileManeger.h"
 #import "JHAudioRecorder.h"
+#import "lame.h"
 #import "MusicControl.h"
 #import "MusicModel.h"
 #import "ParsingAudioHander.h"

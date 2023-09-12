@@ -9,6 +9,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import "GGXAudioQueueHeader.h"
+#import "lame.h"
 @implementation GGXAudioConvertor
 
 //导出M4A
@@ -87,7 +88,7 @@
     /** 配置音频参数 */
     NSDictionary *outputSettings = [NSDictionary dictionaryWithObjectsAndKeys:
                                     [NSNumber numberWithInt:kAudioFormatLinearPCM], AVFormatIDKey,
-                                    [NSNumber numberWithFloat:kDefaultSampleRate/2], AVSampleRateKey,
+                                    [NSNumber numberWithFloat:kDefaultSampleRate], AVSampleRateKey,
                                     [NSNumber numberWithInt:2], AVNumberOfChannelsKey,
                                     channelLayoutAsData, AVChannelLayoutKey,
                                     [NSNumber numberWithInt:16], AVLinearPCMBitDepthKey,
@@ -124,14 +125,6 @@
                 [assetWriter finishWritingWithCompletionHandler:^{
                 }];
                 [assetReader cancelReading];
-                
-//                NSDictionary *outputFileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[outputURL path] error:nil];
-//                NSLog(@"FlyElephant %lld",[outputFileAttributes fileSize]);
-//                // 删除原始音源
-//                if ([fm fileExistsAtPath:originalPath])
-//                {
-//                    [fm removeItemAtPath:originalPath error:nil];
-//                }
                 success(outputPath);
                 break;
             }
@@ -145,53 +138,53 @@
                 failure:(void(^)(NSError *error))failure {
     
     [self convertM4AToWAV:originalPath outPath:outputPath success:^(NSString * _Nonnull outputPath) {
-        //        [self convertPCMToMp3:outputPath
-        //                                   success:^(NSString * _Nonnull mp3Path) {
-        //            success(mp3Path);
-        //        } failure:^(NSError * _Nonnull error) {
-        //            failure(error);
-        //        }];
+        [self convertPCMToMp3:originalPath outPath:outputPath success:^(NSString *outPath) {
+            success(outPath);
+        } failure:^(NSError *error) {
+            failure(error);
+        }];
     } failure:^(NSError * _Nonnull error) {
         
     }];
 }
 
 // wav 转 mp3
-//+ (void)convertPCMToMp3:(NSString *)pcmFilePath
-//                success:(void(^)(NSString *outPath))success
-//                failure:(void(^)(NSError *error))failure {
-//
-//    // 判断输入路径是否存在
-//    NSFileManager *fm = [NSFileManager defaultManager];
-//    if (![fm fileExistsAtPath:pcmFilePath])
-//    {
++ (void)convertPCMToMp3:(NSString *)pcmFilePath
+                outPath:(NSString *)outputPath
+                success:(void(^)(NSString *outPath))success
+                failure:(void(^)(NSError *error))failure {
+    
+    // 判断输入路径是否存在
+    NSFileManager *fm = [NSFileManager defaultManager];
+    if (![fm fileExistsAtPath:pcmFilePath])
+    {
 //        NSLog(@"文件不存在");
-//        return ;
-//    }
-//
-//    // 输出路径
-//    NSString *mp3FilePath = [[pcmFilePath stringByDeletingPathExtension] stringByAppendingString:@".mp3"];
-//    @try {
-//
-//        int channel = 1;
-//        int read, write;
-//        FILE *pcm = fopen([pcmFilePath cStringUsingEncoding:1], "rb");  //source 被转换的音频文件位置
-//        if (!pcm) {
-//            return;
-//        }
-//
-//        // 删除头，否则在前一秒钟会有杂音
-//        fseek(pcm, 4*1024, SEEK_CUR);                                   //skip file header
-//        FILE *mp3 = fopen([mp3FilePath cStringUsingEncoding:1], "wb");  //output 输出生成的Mp3文件位置
-//
-//        const int PCM_SIZE = 8192;
-//        const int MP3_SIZE = 8192;
-//        short int pcm_buffer[PCM_SIZE*2];
-//        unsigned char mp3_buffer[MP3_SIZE];
-//
+        return ;
+    }
+    
+    // 输出路径
+    NSString *mp3FilePath = [[pcmFilePath stringByDeletingPathExtension] stringByAppendingString:@".mp3"];
+    @try {
+        
+        int channel = 1;
+        int read, write;
+        FILE *pcm = fopen([pcmFilePath cStringUsingEncoding:1], "rb");  //source 被转换的音频文件位置
+        if (!pcm) {
+            return;
+        }
+        
+        // 删除头，否则在前一秒钟会有杂音
+        fseek(pcm, 4*1024, SEEK_CUR);                                   //skip file header
+        FILE *mp3 = fopen([mp3FilePath cStringUsingEncoding:1], "wb");  //output 输出生成的Mp3文件位置
+        
+        const int PCM_SIZE = 8192;
+        const int MP3_SIZE = 8192;
+        short int pcm_buffer[PCM_SIZE*2];
+        unsigned char mp3_buffer[MP3_SIZE];
+        
 //        lame_t lame = lame_init();
 //        lame_set_num_channels(lame,channel);
-//        lame_set_in_samplerate(lame, kMSBAudioSampleRate);
+//        lame_set_in_samplerate(lame, kDefaultSampleRate);
 //        //        lame_set_out_samplerate(lame, kMSBAudioSampleRate/2); //设置输出数据采样率，默认和输入的一致
 //        //关键这一句！！！！！！！！！！！！
 //        lame_set_VBR_mean_bitrate_kbps(lame, 24);
@@ -231,25 +224,18 @@
 //        lame_close(lame);
 //        fclose(mp3);
 //        fclose(pcm);
-//    } @catch (NSException *exception) {
-//        MSBAudioLog(@"%@", [exception description]);
-//        if (failure) {
-//            failure(nil);
-//        }
-//    } @finally {
-//        MSBAudioLog(@"PCM转换MP3转换成功");
-//        // 删除原始音源 wav
-//        if ([fm fileExistsAtPath:pcmFilePath]) {
-////            [fm removeItemAtPath:pcmFilePath error:nil];
-//        }
-//        if (success) {
-//            success(mp3FilePath);
-//        }
-//    }
-//
-//    double time = [MSBAudioConvertor audioDurationFromUrl:mp3FilePath];
-//    NSLog(@"当前转换的mp3时长是：%li",time);
-//}
+    } @catch (NSException *exception) {
+        NSLog(@"%@", [exception description]);
+        if (failure) {
+            failure(nil);
+        }
+    } @finally {
+        NSLog(@"PCM转换MP3转换成功");
+        if (success) {
+            success(mp3FilePath);
+        }
+    }
+}
 
 
 @end

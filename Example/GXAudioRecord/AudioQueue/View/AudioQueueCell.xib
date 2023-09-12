@@ -9,24 +9,24 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="195" id="KOk-L3-qCf" customClass="AudioQueueCell">
-            <rect key="frame" x="0.0" y="0.0" width="413" height="195"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="358" id="KOk-L3-qCf" customClass="AudioQueueCell">
+            <rect key="frame" x="0.0" y="0.0" width="446" height="358"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KOk-L3-qCf" id="VnA-Li-99l">
-                <rect key="frame" x="0.0" y="0.0" width="413" height="195"/>
+                <rect key="frame" x="0.0" y="0.0" width="446" height="358"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KTE-zD-ugd">
-                        <rect key="frame" x="10" y="20" width="42" height="15"/>
+                        <rect key="frame" x="10" y="20" width="42" height="128"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H8P-8u-Wgq">
-                        <rect key="frame" x="10" y="45" width="393" height="40"/>
+                        <rect key="frame" x="10" y="158" width="426" height="40"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p0X-P5-kwb">
-                                <rect key="frame" x="10" y="2.6666666666666643" width="94" height="35"/>
+                                <rect key="frame" x="10" y="2.6666666666666572" width="94" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="播放音频"/>
                                 <connections>
@@ -34,7 +34,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="移除音频前后静音" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DTg-Re-jpH">
-                                <rect key="frame" x="260" y="11" width="123" height="18"/>
+                                <rect key="frame" x="293" y="11" width="123" height="18"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -50,16 +50,16 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eni-58-0ad">
-                        <rect key="frame" x="10" y="95" width="393" height="40"/>
+                        <rect key="frame" x="10" y="208" width="426" height="40"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y34-dR-T4R">
-                                <rect key="frame" x="341" y="9.6666666666666714" width="42" height="21"/>
+                                <rect key="frame" x="374" y="9.6666666666666572" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cVh-cm-lkw">
-                                <rect key="frame" x="10" y="2.6666666666666714" width="133.66666666666666" height="35"/>
+                                <rect key="frame" x="10" y="2.6666666666666572" width="133.66666666666666" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="caf-&gt;m4a转码"/>
                                 <connections>
@@ -88,10 +88,10 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K31-IE-Wal">
-                        <rect key="frame" x="10" y="145" width="393" height="40"/>
+                        <rect key="frame" x="10" y="258" width="426" height="40"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hcx-Qy-lD4">
-                                <rect key="frame" x="10" y="2.6666666666666572" width="105.33333333333333" height="35"/>
+                                <rect key="frame" x="10" y="2.6666666666666856" width="105.33333333333333" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="m4a-&gt;wav"/>
                                 <connections>
@@ -104,7 +104,7 @@
                                 <buttonConfiguration key="configuration" style="plain" title="获取音频分贝"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8B0-su-VZg">
-                                <rect key="frame" x="341" y="9.6666666666666572" width="42" height="21"/>
+                                <rect key="frame" x="374" y="9.6666666666666856" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -122,21 +122,59 @@
                             <constraint firstItem="QLM-FS-GNK" firstAttribute="top" secondItem="K31-IE-Wal" secondAttribute="top" id="yQe-fk-Yzh"/>
                         </constraints>
                     </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zpC-Q7-UMf">
+                        <rect key="frame" x="10" y="308" width="426" height="40"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CBN-0W-4ud">
+                                <rect key="frame" x="9.9999999999999929" y="2.6666666666666856" width="110.33333333333331" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="m4a-&gt;mp3"/>
+                                <connections>
+                                    <action selector="m4aToMp3:" destination="KOk-L3-qCf" eventType="touchUpInside" id="xAF-AH-IDB"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3jW-SF-NnC">
+                                <rect key="frame" x="130.33333333333334" y="0.0" width="128.00000000000003" height="40"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="获取音频分贝"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QRS-vY-13J">
+                                <rect key="frame" x="374" y="9.6666666666666856" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="QRS-vY-13J" firstAttribute="centerY" secondItem="zpC-Q7-UMf" secondAttribute="centerY" id="6Rp-qE-9rh"/>
+                            <constraint firstAttribute="bottom" secondItem="3jW-SF-NnC" secondAttribute="bottom" id="CQi-0Z-zqB"/>
+                            <constraint firstItem="CBN-0W-4ud" firstAttribute="leading" secondItem="zpC-Q7-UMf" secondAttribute="leading" constant="10" id="FUm-Rr-Zn8"/>
+                            <constraint firstAttribute="trailing" secondItem="QRS-vY-13J" secondAttribute="trailing" constant="10" id="H2U-JL-KXl"/>
+                            <constraint firstItem="CBN-0W-4ud" firstAttribute="centerY" secondItem="zpC-Q7-UMf" secondAttribute="centerY" id="MKZ-sm-a0I"/>
+                            <constraint firstItem="3jW-SF-NnC" firstAttribute="top" secondItem="zpC-Q7-UMf" secondAttribute="top" id="MvA-eT-na1"/>
+                            <constraint firstItem="3jW-SF-NnC" firstAttribute="leading" secondItem="CBN-0W-4ud" secondAttribute="trailing" constant="10" id="XAV-Ka-8sT"/>
+                            <constraint firstAttribute="height" constant="40" id="dUn-1l-X7L"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
+                    <constraint firstItem="zpC-Q7-UMf" firstAttribute="leading" secondItem="VnA-Li-99l" secondAttribute="leading" constant="10" id="3IB-Ym-T6W"/>
                     <constraint firstItem="Eni-58-0ad" firstAttribute="leading" secondItem="H8P-8u-Wgq" secondAttribute="leading" id="76d-jU-1Ce"/>
                     <constraint firstItem="H8P-8u-Wgq" firstAttribute="leading" secondItem="VnA-Li-99l" secondAttribute="leading" constant="10" id="C22-2p-T6g"/>
+                    <constraint firstItem="K31-IE-Wal" firstAttribute="top" secondItem="Eni-58-0ad" secondAttribute="bottom" constant="10" id="Fsz-rE-ZKH"/>
                     <constraint firstItem="KTE-zD-ugd" firstAttribute="leading" secondItem="VnA-Li-99l" secondAttribute="leading" constant="10" id="GKG-1x-g2t"/>
                     <constraint firstItem="Eni-58-0ad" firstAttribute="trailing" secondItem="H8P-8u-Wgq" secondAttribute="trailing" id="Ngz-rT-G5e"/>
                     <constraint firstAttribute="trailing" secondItem="H8P-8u-Wgq" secondAttribute="trailing" constant="10" id="Q7H-wH-OUX"/>
                     <constraint firstAttribute="trailing" secondItem="K31-IE-Wal" secondAttribute="trailing" constant="10" id="ZHi-Jm-jwo"/>
                     <constraint firstItem="KTE-zD-ugd" firstAttribute="top" secondItem="VnA-Li-99l" secondAttribute="top" constant="20" id="aeO-sQ-Q96"/>
+                    <constraint firstItem="zpC-Q7-UMf" firstAttribute="top" secondItem="K31-IE-Wal" secondAttribute="bottom" constant="10" id="afX-V4-o3y"/>
                     <constraint firstItem="H8P-8u-Wgq" firstAttribute="top" secondItem="KTE-zD-ugd" secondAttribute="bottom" constant="10" id="bz2-no-Taf"/>
                     <constraint firstItem="K31-IE-Wal" firstAttribute="leading" secondItem="VnA-Li-99l" secondAttribute="leading" constant="10" id="eSv-uB-JGG"/>
-                    <constraint firstAttribute="bottom" secondItem="K31-IE-Wal" secondAttribute="bottom" constant="10" id="eVo-O1-FNi"/>
+                    <constraint firstAttribute="trailing" secondItem="zpC-Q7-UMf" secondAttribute="trailing" constant="10" id="fYJ-Fc-k8o"/>
                     <constraint firstItem="Eni-58-0ad" firstAttribute="top" secondItem="H8P-8u-Wgq" secondAttribute="bottom" constant="10" id="hma-sP-AI4"/>
-                    <constraint firstAttribute="bottom" secondItem="Eni-58-0ad" secondAttribute="bottom" constant="60" id="lRX-5n-FiQ"/>
+                    <constraint firstAttribute="bottom" secondItem="zpC-Q7-UMf" secondAttribute="bottom" constant="10" id="oFU-Xq-E6X"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -144,7 +182,7 @@
                 <outlet property="m4aPath" destination="Y34-dR-T4R" id="pnI-zH-PsN"/>
                 <outlet property="wavPath" destination="8B0-su-VZg" id="ceb-MU-pp8"/>
             </connections>
-            <point key="canvasLocation" x="-54.198473282442748" y="40.492957746478872"/>
+            <point key="canvasLocation" x="-29.007633587786259" y="97.183098591549296"/>
         </tableViewCell>
     </objects>
 </document>

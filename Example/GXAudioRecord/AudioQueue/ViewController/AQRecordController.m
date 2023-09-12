@@ -89,6 +89,7 @@
     } else {
         //生成录制路径
         NSString *audioFormat = @"caf";
+        audioFormat = @"wav";
         self.recordFilePath = [GGXFileManeger.shared createFilePathWithFormat:audioFormat];
         [self.btnRecord setTitle:@"结束录制" forState:UIControlStateNormal];
         //
