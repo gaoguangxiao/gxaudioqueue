@@ -12,6 +12,7 @@
 		1E4B83A32A985F2F00A85B53 /* MusicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E4B839B2A985F2F00A85B53 /* MusicModel.m */; };
 		1E4B83A42A985F2F00A85B53 /* AQRecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E4B839D2A985F2F00A85B53 /* AQRecordController.m */; };
 		1E4B83A52A985F2F00A85B53 /* AQRecordListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E4B839E2A985F2F00A85B53 /* AQRecordListViewController.m */; };
+		1E85C5262AF23ED700D66EFC /* tailorAudio.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1E85C5252AF23ED700D66EFC /* tailorAudio.wav */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -52,6 +53,7 @@
 		1E4B839E2A985F2F00A85B53 /* AQRecordListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AQRecordListViewController.m; sourceTree = "<group>"; };
 		1E4B839F2A985F2F00A85B53 /* AQRecordListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AQRecordListViewController.h; sourceTree = "<group>"; };
 		1E4B83A02A985F2F00A85B53 /* AQRecordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AQRecordController.h; sourceTree = "<group>"; };
+		1E85C5252AF23ED700D66EFC /* tailorAudio.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tailorAudio.wav; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* GXAudioRecord_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GXAudioRecord_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -184,6 +186,7 @@
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
 				6003F5A5195388D20070C39A /* GGXViewController.h */,
 				6003F5A6195388D20070C39A /* GGXViewController.m */,
+				1E85C5252AF23ED700D66EFC /* tailorAudio.wav */,
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
@@ -330,6 +333,7 @@
 			files = (
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
+				1E85C5262AF23ED700D66EFC /* tailorAudio.wav in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 				1E4B83A12A985F2F00A85B53 /* AudioQueueCell.xib in Resources */,

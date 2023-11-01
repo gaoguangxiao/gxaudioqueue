@@ -12,6 +12,7 @@
 #import <Masonry/Masonry.h>
 #import "AQRecordListViewController.h"
 #import "JHAudioRecorder.h"
+#import "GGXAudioConvertor.h"
 @interface AQRecordController ()<UITableViewDataSource,UITableViewDelegate,GGXAudioQueueDataSource>
 
 @property (nonatomic, strong) UILabel *levekDBTxt;
@@ -26,6 +27,8 @@
 @property (nonatomic, strong) UIButton *playRecord;
 
 @property (nonatomic, strong) UIButton *recordFileBtn;
+//裁剪音频
+@property (nonatomic, strong) UIButton *cutRecordFile;
 
 @property (nonatomic, strong) AQRecorderManager *recorderMgr;
 
@@ -63,6 +66,13 @@
         make.centerY.mas_equalTo(0);
     }];
     
+    [self.view addSubview:self.cutRecordFile];
+    [self.cutRecordFile mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(self.btnRecord.mas_left).offset(10);
+        make.size.mas_equalTo(CGSizeMake(100, 40));
+        make.top.mas_equalTo(self.btnRecord.mas_top).offset(10);
+    }];
+    
     [self.view addSubview:self.playRecord];
     [self.playRecord mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(0);
@@ -76,7 +86,6 @@
         make.size.mas_equalTo(CGSizeMake(100, 40));
         make.top.mas_equalTo(self.playRecord.mas_bottom).offset(10);
     }];
-    
 }
 
 - (void)recordAction:(UIButton *)btn {
@@ -104,6 +113,36 @@
     [JHAudioRecorder.shareAudioRecorder playRecordingWith:self.recordFilePath];
 }
 
+//裁剪音频
+- (void)tailorAudioFile {
+   
+    NSString *inputPath = [[NSBundle mainBundle]pathForResource:@"tailorAudio" ofType:@"wav"];
+    
+    NSString *outwavPath = [GGXFileManeger.shared createFilePathWithFormat:@"wav"];
+    
+    AudioChannelLayout channelLayout;
+    memset(&channelLayout, 0, sizeof(AudioChannelLayout));
+    channelLayout.mChannelLayoutTag = kAudioChannelLayoutTag_Stereo;
+    
+    NSData *channelLayoutAsData = [NSData dataWithBytes:&channelLayout length:sizeof(AudioChannelLayout)];
+    /** 配置音频参数 */
+    NSDictionary *outputSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [NSNumber numberWithInt:kAudioFormatLinearPCM], AVFormatIDKey,
+                                    [NSNumber numberWithFloat:kDefaultSampleRate], AVSampleRateKey,
+                                    channelLayoutAsData, AVChannelLayoutKey,
+                                    [NSNumber numberWithInt:16], AVLinearPCMBitDepthKey,
+                                    [NSNumber numberWithBool:NO], AVLinearPCMIsNonInterleaved,
+                                    [NSNumber numberWithBool:NO],AVLinearPCMIsFloatKey,
+                                    [NSNumber numberWithBool:NO], AVLinearPCMIsBigEndianKey,
+                                    nil];
+//    AVLinearPCMIsFloatKey 是否支持浮点处理
+//    AVLinearPCMIsBigEndianKey 大端模式 小端模式
+    
+    [GGXAudioConvertor tailorAudioTimeRange:CMTimeRangeMake(CMTimeMake(3, 1), CMTimeMakeWithSeconds(6.0, 600)) outSettings:outputSettings inputPath:inputPath outPath:outwavPath andComplete:^(NSString * _Nonnull outputPath) {
+        NSLog(@"outputPath:%@",outputPath);
+    }];
+}
+     
 - (void)recordFileAction:(UIButton *)sender {
     AQRecordListViewController *Vc = [AQRecordListViewController new];
     [self.navigationController pushViewController:Vc animated:YES];
@@ -188,6 +227,19 @@
     }
     return _recordFileBtn;
 }
+
+- (UIButton *)cutRecordFile {
+    if (!_cutRecordFile) {
+        _cutRecordFile = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_cutRecordFile setTitle:@"裁剪音频文件" forState:UIControlStateNormal];
+        [_cutRecordFile setTitleColor:UIColor.redColor forState:UIControlStateNormal];
+        [_cutRecordFile addTarget:self action:@selector(tailorAudioFile) forControlEvents:UIControlEventTouchUpInside];
+        _cutRecordFile.titleLabel.font = [UIFont systemFontOfSize:15];
+    }
+    return _cutRecordFile;
+}
+
+
 
 - (AQRecorderManager *)recorderMgr {
     if (!_recorderMgr) {

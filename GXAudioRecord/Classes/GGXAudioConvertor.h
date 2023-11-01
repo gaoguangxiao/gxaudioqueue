@@ -14,9 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 
-
-
-
 +(void)convertCAFToM4A:(CMTime)source endTime:(CMTime)end inputPath:(NSURL *)inputpath outPath:(NSURL *)outPath andComplete:(void (^ _Nullable)(id _Nonnull))block;
 
 
@@ -40,6 +37,16 @@ NS_ASSUME_NONNULL_BEGIN
                 success:(void(^)(NSString *outputPath))success
                 failure:(void(^)(NSError *error))failure;
 
+
+/// 裁剪音频
+/// - Parameters:
+///   - timeRange: <#timeRange description#>
+///   - outputSettings: <#outputSettings description#>
+///   - originalPath: <#originalPath description#>
+///   - outputPath: <#outputPath description#>
+///   - block: <#block description#>
+///   
++(void)tailorAudioTimeRange:(CMTimeRange)timeRange outSettings:(NSDictionary *)outputSettings inputPath:(NSString *)originalPath outPath:(NSString *)outputPath andComplete:(void (^ _Nullable)(id _Nonnull))block;
 
 /// m4a转mp3
 /// - Parameters:

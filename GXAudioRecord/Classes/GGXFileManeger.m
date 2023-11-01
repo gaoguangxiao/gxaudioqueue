@@ -79,7 +79,7 @@
  */
 - (NSString *)createFileNamePrefix {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyyMMddHHmmssSSS"];//zzz
+    [dateFormatter setDateFormat:@"yyyy-MM-dd_HH-mm-ss"];//zzz
     NSString *destDateString = [dateFormatter stringFromDate:[NSDate date]];
     return destDateString;
 }

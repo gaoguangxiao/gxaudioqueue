@@ -369,11 +369,14 @@ OSStatus SetMagicCookieForFile (
     //设置音量检测是否开启
     [self setEnableUpdateLevelMetering];
     
+    AudioFileTypeID fileTypeID = [self getAudioFileByPath:filePath];
+    
     self.LocalfilePath = filePath;
     //    NSLog(@"----- %@", filePath);
     CFURLRef audioFileURL = CFURLCreateWithString(kCFAllocatorDefault, (CFStringRef)filePath, NULL);
+
     OSStatus fileStatus = AudioFileCreateWithURL(audioFileURL,
-                                                 kAudioFileCAFType,
+                                                 fileTypeID,
                                                  &aqData.mDataFormat,
                                                  kAudioFileFlags_EraseFile,
                                                  &aqData.mAudioFile);
@@ -511,6 +514,16 @@ OSStatus SetMagicCookieForFile (
 
 - (Float32 )getCurrentPower {
     return [AQUnitTools getCurrentPower:aqData.mQueue andDataFormat:aqData.mDataFormat];
+}
+
+- (AudioFileTypeID)getAudioFileByPath:(NSString *)path{
+    if ([path.pathExtension isEqualToString:@"wav"]) {
+        return kAudioFileWAVEType;
+    } else if ([path.pathExtension isEqualToString:@"caf"]) {
+        return kAudioFileCAFType;
+    }
+    
+    return kAudioFileWAVEType;
 }
 
 - (void)addPoint:(NSTimer *)timer {

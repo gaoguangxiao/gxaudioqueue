@@ -19,7 +19,7 @@
     [self convertCAFToM4A:kCMTimeZero endTime:audioAsset.duration inputPath:path outPath:outPath andComplete:block];
 }
 
-+(void)convertCAFToM4A:(CMTime)source endTime:(CMTime)end inputPath:(NSURL *)inputpath outPath:(NSURL *)outPath andComplete:(void (^ _Nullable)(id _Nonnull))block{
++(void)convertWAVToM4A:(CMTime)source endTime:(CMTime)end inputPath:(NSURL *)inputpath outPath:(NSURL *)outPath andComplete:(void (^ _Nullable)(id _Nonnull))block{
     //音频输出会话
     AVURLAsset *audioAsset = [AVURLAsset assetWithURL:inputpath];
     //音频输出会话
@@ -42,11 +42,86 @@
     }];
 }
 
+//裁剪音频
++(void)tailorAudioTimeRange:(CMTimeRange)timeRange outSettings:(NSDictionary *)outputSettings inputPath:(NSString *)originalPath outPath:(NSString *)outputPath andComplete:(void (^ _Nullable)(id _Nonnull))block {
+    NSFileManager *fm = [NSFileManager defaultManager];
+    if (![fm fileExistsAtPath:originalPath]) {
+        NSLog(@"文件不存在");
+        return ;
+    }
+    NSError *error = nil;
+    NSURL *originalUrl = [NSURL fileURLWithPath:originalPath];
+    NSURL *outputURL = [NSURL fileURLWithPath:outputPath];
+    if ([fm fileExistsAtPath:outputPath]) {
+        NSLog(@"outPutUrl：文件存在，删除");
+        [fm removeItemAtPath:outputPath error:&error];
+    }
+    
+    AVURLAsset *songAsset = [AVURLAsset URLAssetWithURL:originalUrl options:nil];    //读取原始文件信息
+    AVAssetReader *assetReader = [AVAssetReader assetReaderWithAsset:songAsset error:&error];
+    if (error) {
+        NSLog(@"error: %@", error);
+        return;
+    }
+    assetReader.timeRange = timeRange;
+    AVAssetReaderOutput *assetReaderOutput = [AVAssetReaderAudioMixOutput
+                                              assetReaderAudioMixOutputWithAudioTracks:songAsset.tracks
+                                              audioSettings: nil];
+    if (![assetReader canAddOutput:assetReaderOutput]) {
+        NSLog(@"can't add reader output... die!");
+        return;
+    }
+    assetReaderOutput.alwaysCopiesSampleData = YES;//是否总是拷贝采样数据。如果要修改读取的采样数据，可以设置 YES，否则就设置 NO，这样性能会更好。
+    [assetReader addOutput:assetReaderOutput];
+    
+    AVAssetWriter *assetWriter = [AVAssetWriter assetWriterWithURL:outputURL fileType:AVFileTypeCoreAudioFormat error:&error];
+    if (error) {
+        NSLog(@"error: %@", error);
+        return;
+    }
+    AVAssetWriterInput *assetWriterInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeAudio                                                                                outputSettings:outputSettings];
+    if ([assetWriter canAddInput:assetWriterInput]) {
+        [assetWriter addInput:assetWriterInput];
+    } else {
+        NSLog(@"can't add asset writer input... die!");
+        return;
+    }
+    assetWriterInput.expectsMediaDataInRealTime = NO;
+    [assetWriter startWriting];
+    [assetReader startReading];
+    
+    AVAssetTrack *soundTrack = [songAsset.tracks objectAtIndex:0];
+    CMTime _startTime = CMTimeMakeWithSeconds(0, soundTrack.naturalTimeScale);
+    [assetWriter startSessionAtSourceTime:_startTime];
+    
+    __block UInt64 convertedByteCount = 0;
+    dispatch_queue_t mediaInputQueue = dispatch_queue_create("mediaInputQueue", NULL);
+//    `requestMediaDataWhenReadyOnQueue` AVAssetWriterInput 在方便的时候去请求数据并写入输出文件。在对接拉取式的数据源时，可以用这个方法。
+    [assetWriterInput requestMediaDataWhenReadyOnQueue:mediaInputQueue  usingBlock: ^{
+        while (assetWriterInput.readyForMoreMediaData) {//表示AVAssetWriterInput 是否已经准备好接受媒体数据
+            CMSampleBufferRef nextBuffer = [assetReaderOutput copyNextSampleBuffer];            
+            if (nextBuffer) {
+                // append buffer
+                [assetWriterInput appendSampleBuffer: nextBuffer];
+                convertedByteCount += CMSampleBufferGetTotalSampleSize (nextBuffer);
+            } else {
+                [assetWriterInput markAsFinished];
+                [assetWriter finishWritingWithCompletionHandler:^{
+                }];
+                [assetReader cancelReading];
+                block(outputPath);
+                break;
+            }
+        }
+    }];
+}
+
 //m4a转成wav
 + (void)convertM4AToWAV:(NSString *)originalPath
                 outPath:(NSString *)outputPath
                 success:(void(^)(NSString *outputPath))success
                 failure:(void(^)(NSError *error))failure {
+    
     NSFileManager *fm = [NSFileManager defaultManager];
     if (![fm fileExistsAtPath:originalPath]) {
         NSLog(@"文件不存在");
@@ -103,7 +178,6 @@
         NSLog(@"can't add asset writer input... die!");
         return;
     }
-    assetWriterInput.expectsMediaDataInRealTime = NO;
     [assetWriter startWriting];
     [assetReader startReading];
     
