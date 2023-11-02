@@ -129,12 +129,14 @@
     NSDictionary *outputSettings = [NSDictionary dictionaryWithObjectsAndKeys:
                                     [NSNumber numberWithInt:kAudioFormatLinearPCM], AVFormatIDKey,
                                     [NSNumber numberWithFloat:kDefaultSampleRate], AVSampleRateKey,
+                                    [NSNumber numberWithInt:2], AVNumberOfChannelsKey,
                                     channelLayoutAsData, AVChannelLayoutKey,
                                     [NSNumber numberWithInt:16], AVLinearPCMBitDepthKey,
                                     [NSNumber numberWithBool:NO], AVLinearPCMIsNonInterleaved,
                                     [NSNumber numberWithBool:NO],AVLinearPCMIsFloatKey,
                                     [NSNumber numberWithBool:NO], AVLinearPCMIsBigEndianKey,
                                     nil];
+//    AVLinearPCMIsNonInterleaved
 //    AVLinearPCMIsFloatKey 是否支持浮点处理
 //    AVLinearPCMIsBigEndianKey 大端模式 小端模式
     
@@ -165,6 +167,10 @@
     self.levekDBTxt.text = [NSString stringWithFormat:@"音量：%.2f",audioPeak];
 }
 
+- (void)recorderManager:(AQRecorderManager *)recorderManager andFilePath:(NSString *)filePath {
+    
+    NSLog(@"录制完毕的路径:%@",filePath);
+}
 
 //-recordma
 #pragma mark - getter
@@ -245,7 +251,9 @@
     if (!_recorderMgr) {
         _recorderMgr = [[AQRecorderManager alloc] initAudioFormatType:AudioFormatLinearPCM sampleRate:8000.0 channels:1 bitsPerChannel:16];
         _recorderMgr.isEnableMeter = YES;
+        _recorderMgr.isCutsilentHeadTail = YES;
         _recorderMgr.aqDataSource = self;
+        _recorderMgr.stopRecordDBLevel = -15;
     }
     return _recorderMgr;
 }

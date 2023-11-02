@@ -30,13 +30,20 @@
 ///是否开启音量检查
 @property (nonatomic, assign) BOOL isEnableMeter;
 
-///设置自动停止线单位DB
-@property (nonatomic, assign) NSInteger stopRecordDBLevel;
+///设置自动停止线单位DB 默认-50
+@property (nonatomic, assign) float stopRecordDBLevel;
 
 ///是否开启自动停止录制 默认NO
 @property (nonatomic, assign) BOOL isAutoStopRecord;
 
-///是否裁剪停止线之外的首位
+///自动停止录制时长 默认3秒
+@property (nonatomic, assign) float stopRecordMaxTime;
+
+/**
+ * 是否裁剪停止线之外的首尾 需要开启音量检查，stopRecordDBLevel默认3db
+ * 设置fause
+ */
+///
 @property (nonatomic, assign) BOOL isCutsilentHeadTail;
 
 //默认

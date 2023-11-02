@@ -11,6 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "GGXFileManeger.h"
 #import "AQUnitTools.h"
+#import "GGXAudioConvertor.h"
 /// 自定义结构体
 static const int kNumberBuffers = 3;
 typedef struct AQRecorderState {
@@ -157,7 +158,6 @@ static void HandleInputBuffer (
     }
     
     //获取音频总时长
-    //    NSLog(@"时长：%@",inStartTime);
     //将buffer给audio queue
     //用于音频数据使用完毕，需要重新放回音频队列以存储新的音频数据
     //    inBuffer 等待入队的音频数据
@@ -272,6 +272,10 @@ OSStatus SetMagicCookieForFile (
 
 - (void)initRecord {
     aqData.recorderManager = self;
+    
+    self.isCutsilentHeadTail = NO;
+    
+    self.stopRecordDBLevel = kDefaultMaxPeak;
 }
 
 - (void)setAudioFormatType:(AudioFormatType)audioFormatType
@@ -298,6 +302,19 @@ OSStatus SetMagicCookieForFile (
     }
 }
 
+- (void)setIsEnableMeter:(BOOL)isEnableMeter {
+    _isEnableMeter = isEnableMeter;
+}
+
+- (void)setIsCutsilentHeadTail:(BOOL)isCutsilentHeadTail {
+    _isCutsilentHeadTail = isCutsilentHeadTail;
+}
+
+- (void)setStopRecordDBLevel:(float)stopRecordDBLevel {
+    _stopRecordDBLevel = stopRecordDBLevel;
+}
+
+#pragma mark - 录音功能
 - (void)initAudioQueueBeforeRecord {
     //1、创建音频队列
     /*
@@ -410,7 +427,7 @@ OSStatus SetMagicCookieForFile (
     if (self.isEnableMeter) {
         float avaValue = [self getCurrentPower];
         //如果音量足够 开始写入数据
-        if (avaValue >= kDefaultMaxPeak) {
+        if (avaValue >= self.stopRecordDBLevel) {
             if (aqData.mIsWritePackets) {
                 //正在写入数据
                 //音量大于阈值时，结束倒计时
@@ -448,9 +465,6 @@ OSStatus SetMagicCookieForFile (
         }
     }
 }
-- (void)setIsEnableMeter:(BOOL)isEnableMeter {
-    _isEnableMeter = isEnableMeter;
-}
 
 - (void)setEnableUpdateLevelMetering {
     UInt32 val = self.isEnableMeter ? 1 : 0;
@@ -484,18 +498,47 @@ OSStatus SetMagicCookieForFile (
     AudioQueueDispose(aqData.mQueue, true);
     AudioFileClose(aqData.mAudioFile);
     
-    //关闭时间，手动停止录制，如果
+    //停止时低音倒计时
     [self removeTimer];
     
-    //停止录制监听
+    //停止录制监听倒计时
     [self removeRecordTimer];
     
-    NSLog(@"头部剪辑：%.2f",CMTimeGetSeconds(self.startTime));
-    NSLog(@"尾部剪辑：%.2f",CMTimeGetSeconds(self.endTime));
-    if (self.aqDataSource && [self.aqDataSource respondsToSelector:@selector(recorderManager:didOutputAudiofile:andEndTime:andFilePath:)]) {
-        [self.aqDataSource recorderManager:self didOutputAudiofile:self.startTime andEndTime:self.endTime andFilePath:[NSURL fileURLWithPath:self.LocalfilePath]];
+    if (self.isCutsilentHeadTail) {
+        //需要裁剪
+        NSLog(@"头部剪辑：%.2f",CMTimeGetSeconds(self.startTime));
+        NSLog(@"尾部剪辑：%.2f",CMTimeGetSeconds(self.endTime));
+        //内部裁剪
+        NSString *outwavPath = [GGXFileManeger.shared createFilePathWithFormat:@"wav"];
+        
+        AudioChannelLayout channelLayout;
+        memset(&channelLayout, 0, sizeof(AudioChannelLayout));
+        channelLayout.mChannelLayoutTag = kAudioChannelLayoutTag_Stereo;
+        
+        NSData *channelLayoutAsData = [NSData dataWithBytes:&channelLayout length:sizeof(AudioChannelLayout)];
+        /** 配置音频参数 */
+        NSDictionary *outputSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        [NSNumber numberWithInt:aqData.mDataFormat.mFormatID], AVFormatIDKey,
+                                        [NSNumber numberWithFloat:aqData.mDataFormat.mSampleRate], AVSampleRateKey,
+                                        channelLayoutAsData, AVChannelLayoutKey,
+                                        [NSNumber numberWithInt:aqData.mDataFormat.mBitsPerChannel], AVLinearPCMBitDepthKey,
+                                        [NSNumber numberWithBool:NO], AVLinearPCMIsNonInterleaved,
+                                        [NSNumber numberWithBool:NO],AVLinearPCMIsFloatKey,
+                                        [NSNumber numberWithBool:NO], AVLinearPCMIsBigEndianKey,
+                                        nil];
+//         AVLinearPCMIsNonInterleaved 是否允许音频交叉他的值
+//        AVLinearPCMIsFloatKey 是否支持浮点处理
+//        AVLinearPCMIsBigEndianKey 大端模式 小端模式。内存的组织形式
+        [GGXAudioConvertor tailorAudioTimeRange:CMTimeRangeMake(self.startTime, self.endTime) outSettings:outputSettings inputPath:self.LocalfilePath outPath:outwavPath andComplete:^(NSString * _Nonnull outputPath) {
+            //输出的路径
+            NSLog(@"outputPath:%@",outputPath);
+        }];
+    } else {
+        
+        if (self.aqDataSource && [self.aqDataSource respondsToSelector:@selector(recorderManager:didOutputAudiofile:andEndTime:andFilePath:)]) {
+            [self.aqDataSource recorderManager:self didOutputAudiofile:self.startTime andEndTime:self.endTime andFilePath:[NSURL fileURLWithPath:self.LocalfilePath]];
+        }
     }
-    
 }
 
 //获取当前录制时间

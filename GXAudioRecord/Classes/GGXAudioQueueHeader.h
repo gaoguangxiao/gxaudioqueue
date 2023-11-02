@@ -13,6 +13,7 @@
 #define kDefaultBitsPerChannel 16 //采样/量化 位深
 
 //#define kDefaultMaxPeak 0.2 //阈值 0.2 对应metellevel
+//#define kDefaultMaxPeak -20 //电脑模拟器采集时，设置-20即可
 //#define kDefaultMaxPeak -60 //采集设备为6 对应metellevelDB -60
 #define kDefaultMaxPeak -50 //采集设备为7 对应metellevelDB -50
 
@@ -35,6 +36,13 @@ typedef NS_ENUM(NSInteger, AudioFormatType) {
 
 
 - (void)recorderManager:(AQRecorderManager *_Nonnull)recorderManager didOutputAudiofile:(CMTime )sTime andEndTime:(CMTime)eTime andFilePath:(NSURL *_Nullable)filePath;
+
+
+/// 录制结束的路径抛出
+/// - Parameters:
+///   - recorderManager:
+///   - filePath: 路径
+- (void)recorderManager:(AQRecorderManager *)recorderManager andFilePath:(NSString *)filePath;
 
 ///  时间
 /// - Parameters:

@@ -71,15 +71,15 @@
         NSLog(@"can't add reader output... die!");
         return;
     }
-    assetReaderOutput.alwaysCopiesSampleData = YES;//是否总是拷贝采样数据。如果要修改读取的采样数据，可以设置 YES，否则就设置 NO，这样性能会更好。
+    assetReaderOutput.alwaysCopiesSampleData = NO;//是否总是拷贝采样数据。如果要修改读取的采样数据，可以设置 YES，否则就设置 NO，这样性能会更好。
     [assetReader addOutput:assetReaderOutput];
     
-    AVAssetWriter *assetWriter = [AVAssetWriter assetWriterWithURL:outputURL fileType:AVFileTypeCoreAudioFormat error:&error];
+    AVAssetWriter *assetWriter = [AVAssetWriter assetWriterWithURL:outputURL fileType:AVFileTypeWAVE error:&error];
     if (error) {
         NSLog(@"error: %@", error);
         return;
     }
-    AVAssetWriterInput *assetWriterInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeAudio                                                                                outputSettings:outputSettings];
+    AVAssetWriterInput *assetWriterInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeAudio outputSettings:outputSettings];
     if ([assetWriter canAddInput:assetWriterInput]) {
         [assetWriter addInput:assetWriterInput];
     } else {
