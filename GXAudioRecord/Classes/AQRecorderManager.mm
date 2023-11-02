@@ -511,20 +511,15 @@ OSStatus SetMagicCookieForFile (
         //内部裁剪
         NSString *outwavPath = [GGXFileManeger.shared createFilePathWithFormat:@"wav"];
         
-        AudioChannelLayout channelLayout;
-        memset(&channelLayout, 0, sizeof(AudioChannelLayout));
-        channelLayout.mChannelLayoutTag = kAudioChannelLayoutTag_Stereo;
-        
-        NSData *channelLayoutAsData = [NSData dataWithBytes:&channelLayout length:sizeof(AudioChannelLayout)];
         /** 配置音频参数 */
         NSDictionary *outputSettings = [NSDictionary dictionaryWithObjectsAndKeys:
                                         [NSNumber numberWithInt:aqData.mDataFormat.mFormatID], AVFormatIDKey,
                                         [NSNumber numberWithFloat:aqData.mDataFormat.mSampleRate], AVSampleRateKey,
-                                        channelLayoutAsData, AVChannelLayoutKey,
                                         [NSNumber numberWithInt:aqData.mDataFormat.mBitsPerChannel], AVLinearPCMBitDepthKey,
                                         [NSNumber numberWithBool:NO], AVLinearPCMIsNonInterleaved,
                                         [NSNumber numberWithBool:NO],AVLinearPCMIsFloatKey,
                                         [NSNumber numberWithBool:NO], AVLinearPCMIsBigEndianKey,
+                                        [NSNumber numberWithInt:aqData.mDataFormat.mChannelsPerFrame],AVNumberOfChannelsKey,
                                         nil];
 //         AVLinearPCMIsNonInterleaved 是否允许音频交叉他的值
 //        AVLinearPCMIsFloatKey 是否支持浮点处理
@@ -532,6 +527,10 @@ OSStatus SetMagicCookieForFile (
         [GGXAudioConvertor tailorAudioTimeRange:CMTimeRangeMake(self.startTime, self.endTime) outSettings:outputSettings inputPath:self.LocalfilePath outPath:outwavPath andComplete:^(NSString * _Nonnull outputPath) {
             //输出的路径
             NSLog(@"outputPath:%@",outputPath);
+            if (self.aqDataSource && [self.aqDataSource respondsToSelector:@selector(recorderManager:andFilePath:)]) {
+                [self.aqDataSource recorderManager:self andFilePath:outputPath];
+            }
+
         }];
     } else {
         
