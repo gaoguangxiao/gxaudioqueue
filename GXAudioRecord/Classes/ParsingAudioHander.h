@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray<NSNumber *> *)getRecorderDataFromURL:(NSURL *)url;
 
-- (void)pcmDB:(NSURL *)aUrl;
+- (NSArray *)pcmDB:(NSURL *)aUrl;
 
 - (void)synthetiAudioWithAudioPath:(NSString *)audioPath bgPath:(NSString *)bgPath outPath:(NSString *)outPath completion:(void (^_Nullable)(BOOL isSucess,NSString * path))completion;
 

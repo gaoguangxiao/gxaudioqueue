@@ -9,6 +9,7 @@
 #import "GGXFileManeger.h"
 #import "AQRecorderManager.h"
 #import "AQPlayerManager.h"
+#import "ParsingAudioHander.h"
 #import <Masonry/Masonry.h>
 #import "AQRecordListViewController.h"
 #import "JHAudioRecorder.h"
@@ -30,10 +31,12 @@
 //裁剪音频
 @property (nonatomic, strong) UIButton *cutRecordFile;
 
+//获取一段音频信息
+@property (nonatomic, strong) UIButton *audioFileInfo;
+
 @property (nonatomic, strong) AQRecorderManager *recorderMgr;
 
 @property (nonatomic, strong) AQPlayerManager *playerManager;
-
 
 @end
 
@@ -71,6 +74,13 @@
         make.right.mas_equalTo(self.btnRecord.mas_left).offset(10);
         make.size.mas_equalTo(CGSizeMake(100, 40));
         make.top.mas_equalTo(self.btnRecord.mas_top).offset(10);
+    }];
+    
+    [self.view addSubview:self.audioFileInfo];
+    [self.audioFileInfo mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(self.cutRecordFile.mas_right);
+        make.size.mas_equalTo(CGSizeMake(100, 40));
+        make.top.mas_equalTo(self.cutRecordFile.mas_bottom).offset(10);
     }];
     
     [self.view addSubview:self.playRecord];
@@ -120,17 +130,17 @@
     
     NSString *outwavPath = [GGXFileManeger.shared createFilePathWithFormat:@"wav"];
     
-    AudioChannelLayout channelLayout;
-    memset(&channelLayout, 0, sizeof(AudioChannelLayout));
-    channelLayout.mChannelLayoutTag = kAudioChannelLayoutTag_Stereo;
-    
-    NSData *channelLayoutAsData = [NSData dataWithBytes:&channelLayout length:sizeof(AudioChannelLayout)];
+//    AudioChannelLayout channelLayout;
+//    memset(&channelLayout, 0, sizeof(AudioChannelLayout));
+//    channelLayout.mChannelLayoutTag = kAudioChannelLayoutTag_Stereo;
+//    
+//    NSData *channelLayoutAsData = [NSData dataWithBytes:&channelLayout length:sizeof(AudioChannelLayout)];
     /** 配置音频参数 */
     NSDictionary *outputSettings = [NSDictionary dictionaryWithObjectsAndKeys:
                                     [NSNumber numberWithInt:kAudioFormatLinearPCM], AVFormatIDKey,
                                     [NSNumber numberWithFloat:kDefaultSampleRate], AVSampleRateKey,
-                                    [NSNumber numberWithInt:2], AVNumberOfChannelsKey,
-                                    channelLayoutAsData, AVChannelLayoutKey,
+                                    [NSNumber numberWithInt:1], AVNumberOfChannelsKey,
+//                                    channelLayoutAsData, AVChannelLayoutKey,
                                     [NSNumber numberWithInt:16], AVLinearPCMBitDepthKey,
                                     [NSNumber numberWithBool:NO], AVLinearPCMIsNonInterleaved,
                                     [NSNumber numberWithBool:NO],AVLinearPCMIsFloatKey,
@@ -144,7 +154,21 @@
         NSLog(@"outputPath:%@",outputPath);
     }];
 }
+    
+- (void)getAudioFileInfo {
+    NSLog(@"获取音频文件信息");
+    
+    NSString *inputPath = [[NSBundle mainBundle]pathForResource:@"tailorAudio" ofType:@"wav"];
+    NSURL *url = [NSURL fileURLWithPath:inputPath];
      
+    ParsingAudioHander *audioHander =  [ParsingAudioHander new];
+    NSArray *datas = [audioHander getRecorderDataFromURL:url];
+    
+//    NSLog(@"%@",datas);
+    datas = [audioHander pcmDB:url];
+//    NSLog(@"%@",datas);
+}
+
 - (void)recordFileAction:(UIButton *)sender {
     AQRecordListViewController *Vc = [AQRecordListViewController new];
     [self.navigationController pushViewController:Vc animated:YES];
@@ -245,6 +269,16 @@
     return _cutRecordFile;
 }
 
+- (UIButton *)audioFileInfo {
+    if (!_audioFileInfo) {
+        _audioFileInfo = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_audioFileInfo setTitle:@"获取音频信息" forState:UIControlStateNormal];
+        [_audioFileInfo setTitleColor:UIColor.redColor forState:UIControlStateNormal];
+        [_audioFileInfo addTarget:self action:@selector(getAudioFileInfo) forControlEvents:UIControlEventTouchUpInside];
+        _audioFileInfo.titleLabel.font = [UIFont systemFontOfSize:15];
+    }
+    return _audioFileInfo;
+}
 
 
 - (AQRecorderManager *)recorderMgr {

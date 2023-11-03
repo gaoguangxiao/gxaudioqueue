@@ -18,7 +18,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    [self pushVc:nil];
 }
+
 - (IBAction)pushVc:(id)sender {
     AQRecordController *Vc = [AQRecordController new];
     [self.navigationController pushViewController:Vc animated:YES];
