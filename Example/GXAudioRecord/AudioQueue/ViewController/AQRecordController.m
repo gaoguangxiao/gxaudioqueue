@@ -31,6 +31,9 @@
 //裁剪音频
 @property (nonatomic, strong) UIButton *cutRecordFile;
 
+//播放音频
+//@property (nonatomic, strong) UIButton *cutRecordFile;
+
 //获取一段音频信息
 @property (nonatomic, strong) UIButton *audioFileInfo;
 
@@ -106,6 +109,15 @@
         [self.recorderMgr stopRecord];
         
     } else {
+        
+        if (@available(iOS 17.0, *)) {
+            [AVAudioApplication requestRecordPermissionWithCompletionHandler:^(BOOL granted) {
+                NSLog(@"录制权限:%d",granted);
+            }];
+        } else {
+            // Fallback on earlier versions
+        }
+        
         //生成录制路径
         NSString *audioFormat = @"caf";
         audioFormat = @"wav";
@@ -119,8 +131,13 @@
 - (void)playRecordFileAction {
     //获取当前录制文件
 //    [self.playerManager startPlay:self.recordFilePath];
-    NSLog(@"%@",self.recordFilePath);
     [JHAudioRecorder.shareAudioRecorder playRecordingWith:self.recordFilePath];
+//    NSLog(@"%@",self.recordFilePath);
+    
+//    NSString *inputPath = [[NSBundle mainBundle]pathForResource:@"music-Loop" ofType:@"mp3"];
+//    [JHAudioRecorder.shareAudioRecorder playRecordingWith:inputPath];
+    
+//    [self.playerManager startPlay:@"http://192.168.50.165:8081/static/music-Loop.mp3"];
 }
 
 //裁剪音频
@@ -161,6 +178,7 @@
     NSString *inputPath = [[NSBundle mainBundle]pathForResource:@"tailorAudio" ofType:@"wav"];
     NSURL *url = [NSURL fileURLWithPath:inputPath];
      
+    url = [NSURL URLWithString:@"http://192.168.50.165:8081/static/question.fccbbee5.mp3"];
     ParsingAudioHander *audioHander =  [ParsingAudioHander new];
     NSArray *datas = [audioHander getRecorderDataFromURL:url];
     
@@ -294,7 +312,7 @@
 
 - (AQPlayerManager *)playerManager {
     if (!_playerManager) {
-        _playerManager = [[AQPlayerManager alloc] initAudioFormatType:AudioFormatLinearPCM sampleRate:8000.0 channels:1 bitsPerChannel:16];
+        _playerManager = [[AQPlayerManager alloc] init];
     }
     return _playerManager;
 }

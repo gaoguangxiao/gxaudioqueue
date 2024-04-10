@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -33,6 +33,11 @@
                                     <action selector="playAction:" destination="KOk-L3-qCf" eventType="touchUpInside" id="3uC-jR-I0S"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wBk-xw-iBX">
+                                <rect key="frame" x="114" y="2.6666666666666572" width="94" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="停止音频"/>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="移除音频前后静音" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DTg-Re-jpH">
                                 <rect key="frame" x="293" y="11" width="123" height="18"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -44,7 +49,9 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="DTg-Re-jpH" secondAttribute="trailing" constant="10" id="5IJ-L3-F3o"/>
                             <constraint firstItem="p0X-P5-kwb" firstAttribute="centerY" secondItem="H8P-8u-Wgq" secondAttribute="centerY" id="80Z-8f-4nY"/>
+                            <constraint firstItem="wBk-xw-iBX" firstAttribute="leading" secondItem="p0X-P5-kwb" secondAttribute="trailing" constant="10" id="8K9-pg-odw"/>
                             <constraint firstAttribute="height" constant="40" id="C9r-hA-zQ4"/>
+                            <constraint firstItem="wBk-xw-iBX" firstAttribute="centerY" secondItem="H8P-8u-Wgq" secondAttribute="centerY" id="XLG-Vs-gBF"/>
                             <constraint firstItem="p0X-P5-kwb" firstAttribute="leading" secondItem="H8P-8u-Wgq" secondAttribute="leading" constant="10" id="kUL-Bs-ToA"/>
                             <constraint firstItem="DTg-Re-jpH" firstAttribute="centerY" secondItem="H8P-8u-Wgq" secondAttribute="centerY" id="uLG-Yw-Lkg"/>
                         </constraints>

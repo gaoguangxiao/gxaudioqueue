@@ -18,7 +18,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    [self pushVc:nil];
+//    [self pushVc:nil];
 }
 
 - (IBAction)pushVc:(id)sender {

@@ -128,7 +128,7 @@ static JHAudioRecorder *_instance;
     
 
     self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
-    
+    self.audioPlayer.numberOfLoops = -1;
     if (!error&&self.audioPlayer) {
         self.audioPlayer.numberOfLoops = 0;
         self.audioPlayer.meteringEnabled = YES;

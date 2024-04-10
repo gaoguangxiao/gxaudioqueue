@@ -52,11 +52,36 @@ void caculate_bm_db(void * const data ,size_t length ,int64_t timestamp, Channel
         for (int pos = 0; pos < traversalTimes; pos += 2, ++curData) {
             int data = *curData;
             { // 音量调整
+                
+//                double addDepth  =  pow(10, KDefaultADDDb/20);
+//                double addDepthPref = addDepth * KMaxDepthPREF;
+
+//                printf("增幅：%ld",addDepthPref);            //转化DB +
+                if (data > 0) {
+                    NSInteger cDB = 20*log10((data)/KMaxDepthPREF);
+                    NSInteger ncDB = cDB + 10;
+                    double addDepth =  pow(10, ncDB/20);
+                    double addDepthPref = addDepth * KMaxDepthPREF;
+                    if (data > 0) {
+                        data = data + addDepthPref;
+                    } else {
+                        data = data - addDepthPref;
+                    }
+                } else {
+                    
+                }
+                
+//                NSLog(@"当前录制:%ld",(long)cDB);
+//                NSLog(@"当前增益录制:%ld",(long)ncDB);
+                
                 if (data > maxDepthPref) {
                     data = maxDepthPref;
                 } else if (data < -maxDepthPref) {
                     data = -maxDepthPref;
                 }
+                
+    
+                
             }
             *curData = data;
             if(data > max) max = data;
@@ -136,6 +161,8 @@ static void HandleInputBuffer (
     double maxDepth  =  pow(10, KDefaultLimitMaxDb/20);
     double maxDepthPref = maxDepth * KMaxDepthPREF;
     caculate_bm_db(inBuffer->mAudioData, inBuffer->mAudioDataByteSize, 0, k_Mono, channelValue,true,maxDepthPref);
+    
+    //提升录音分贝
 //    NSLog(@"根据AudioData计算的分贝%.2f",channelValue[0]);
 
     //mAudioFile 要写入的音频文件

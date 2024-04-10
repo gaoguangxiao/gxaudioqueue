@@ -28,8 +28,7 @@
 - (NSArray *)getRecorderDataFromURL:(NSURL *)url {
     self.url = url;
     NSMutableData *data = [[NSMutableData alloc]init];     //用于保存音频数据
-    AVAsset *asset = [AVAsset assetWithURL:url];           //获取文件
-  
+    AVURLAsset *asset = [AVURLAsset assetWithURL:url];           //获取文件
     NSError *error;
     AVAssetReader *reader = [[AVAssetReader alloc]initWithAsset:asset error:&error]; //创建读取
     if (!reader) {
@@ -51,9 +50,10 @@
     [reader addOutput:output];
     [reader startReading];
     //读取是一个持续的过程，每次只读取后面对应的大小的数据。当读取的状态发生改变时，其status属性会发生对应的改变，我们可以凭此判断是否完成文件读取
+//    AVAudioPlayer(
     while (reader.status == AVAssetReaderStatusReading) {
 //      每个出口分别获取媒体数据,
-        CMSampleBufferRef  sampleBuffer = [output copyNextSampleBuffer]; //读取到数据
+        CMSampleBufferRef  sampleBuffer = [output copyNextSampleBuffer]; //读取到数据,这个结构在iOS表示一帧音频/视频数据
 //        recorder?.averagePower(forChannel: 0) ?? 0
         
         if (sampleBuffer) {
@@ -74,8 +74,10 @@
     if (reader.status == AVAssetReaderStatusCompleted) {
         self.audioData = data;
         self.assetTime = asset.duration;
-//        float duroin = CMTimeGetSeconds(self.assetTime);//获取音频时长 转换为秒
-        NSLog(@"使用assetRead的data：%@",data);
+        
+//        NSData *zdata = [NSData dataWithContentsOfURL:url];//845,678
+        float duration = CMTimeGetSeconds(self.assetTime);//获取音频时长 转换为秒
+        NSLog(@"使用AssetTrack的duration：%f",duration);
         return [self cutAudioData:CGSizeMake(60, 60)];
     }else{
         
@@ -83,9 +85,20 @@
         return nil;
     }
     
+    /**
+     
+     NSData *zdata = [NSData dataWithContentsOfURL:url];
+     
+     使用`NSData`实例方法`dataWithContentsOfURL`读取文件的data，是文件二进制数据，而使用`AVAssetReaderTrackOutput`的实例方法copyNextSampleBuffer`获取的`CMSampleBufferRef`是采样PCM数据，通过`CMBlockBufferCopyDataBytes`方法将采样数据可追加到字节数组中，通过`appendBytes`将字节数据追加到NSMutableData中
+     */
+    
 }
 
 - (NSArray *)pcmDB:(NSURL *)aUrl {
+    
+    //一段音频文件有几帧构成
+//    可以通过`AVAudioFile`的`length`获取，该音频文件的帧数，422817
+    
     //读取文件
     NSError *errorone;
     AVAudioFile *drumLoopFile = [[AVAudioFile alloc] initForReading:aUrl error:&errorone];
@@ -95,23 +108,35 @@
     }
     /*
      drumLoopFile.processingFormat
-     streamDescription->mBytesPerFrame：4
+     streamDescription->mBytesPerFrame：4//每帧4个字节，
      streamDescription->mBitsPerChannel：32 对应的是采样位深
      */
     AVAudioFormat *processingFormt = drumLoopFile.processingFormat;
     /*
      * drumLoopFile.fileFormat
-     streamDescription->mBytesPerFrame：2
+     streamDescription->mBytesPerFrame：2 //每帧2个字节
      streamDescription->mBitsPerChannel：16
-     得到的
+     得到的 2 * 
+     
+     根据帧数，声道数 * 采样率 * (每帧多少字节)  每声道的位数 计算音频
+     其中每帧多少字节，可以为 mBitsPerChannel/8 字节
      */
     AVAudioFormat *fileFormat = drumLoopFile.fileFormat;
+    
     AVAudioFramePosition aFramePosition = drumLoopFile.length;//422817
+    NSLog(@"该%@由%lld帧构成",aUrl,aFramePosition);
+    
+    AVAudioFormat *pcmFormat = fileFormat;
     //    file.
-    AVAudioPCMBuffer *pcmBuffer = [[AVAudioPCMBuffer alloc] initWithPCMFormat:processingFormt frameCapacity:(AVAudioFrameCount)aFramePosition];
+    AVAudioPCMBuffer *pcmBuffer = [[AVAudioPCMBuffer alloc] initWithPCMFormat:pcmFormat frameCapacity:(AVAudioFrameCount)aFramePosition];
     //将音频读入`AVAudioPCMBuffer`中
     [drumLoopFile readIntoBuffer:pcmBuffer error:nil];
     const AudioBufferList *audioBufferList = pcmBuffer.audioBufferList;
+//    计算一帧多少字节，声道数 * 每声道的位数/8 可得出 mBytesPreFrame
+//    float formatValue = pcmFormat.streamDescription->mBitsPerChannel;//kb
+    float aformatValue = pcmFormat.streamDescription->mBytesPerFrame * aFramePosition;
+    NSLog(@"该音频由%f字节构成",aformatValue);
+//    float bytes = aformatValue/1000;//计算多少兆
 //    buffer->mBuffers
 //    AudioBufferList audioBufferList = *(pcmBuffer.mutableAudioBufferList);
     AudioBuffer audiobuffer = audioBufferList->mBuffers[0];//单声道
@@ -119,24 +144,11 @@
     
     void* __nullable mData = audiobuffer.mData;
     NSMutableData *mtData = [NSMutableData new];
-//    NSData *rawAAC = [NSData dataWithBytes:mData length:mDataByteSize];
+//    NSData *mtData = [NSData dataWithBytes:mData length:mDataByteSize];
     [mtData appendBytes:mData length:mDataByteSize];
     
-    //一帧有多少字节
-//     CMBlockBufferRef blockBuffer;
-//     CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer(ref, NULL, &audioBufferList, sizeof(audioBufferList), NULL, NULL, 0, &blockBuffer);
-       // NSLog(@"%@",blockBuffer);
     self.audioData = mtData;
     
-    if (processingFormt.commonFormat == AVAudioPCMFormatInt32) {
-        
-    }
-    NSInteger samCount = mtData.length/processingFormt.commonFormat;//
-    NSLog(@"使用：samCount：%ld",samCount);
-//    audioBufferList->mBuffers;
-//    audioBufferList->mNumberBuffers;
-//    playerLoopBuffer.audioBufferList;
-//    int16_t lp = pcmBuffer.int16ChannelData;
     NSLog(@"使用：AVAudioPCMBuffer读取data：%@",mtData);
     return [self cutAudioData:CGSizeMake(60, 60)];
 //    playerLoopBuffer.is
@@ -163,7 +175,9 @@
 - (NSArray *)cutAudioData:(CGSize)size {
     NSMutableArray *filteredSamplesMA = [[NSMutableArray alloc]init];
 //    NSData *data = [self getRecorderDataFromURL:self.url];
+    //data
     NSData *data = self.audioData;
+//    NSLog(@"%@--%ld",data.bytes,data.length/1024);
     NSUInteger sampleCount = data.length / sizeof(SInt16);//计算所有数据个数，通过data长度
     //需要的个数 每秒划分10个
     Float64 count = CMTimeGetSeconds(self.assetTime) * 10;

@@ -21,6 +21,7 @@ typedef struct AQPlayerState {
     UInt32                        mNumPacketsToRead;              // 8
     AudioStreamPacketDescription  *mPacketDescs;                  // 9
     bool                          mIsRunning;                     // 10
+    Float64                       duration;                       // 11 音频时长
 } AQPlayerState;
 
 //The Playback Audio Queue Callback
@@ -32,16 +33,20 @@ static void HandleOutputBuffer(void* aqData,
     
     UInt32 numBytesReadFromFile;
     UInt32 numPackets = pAqData->mNumPacketsToRead;
-    CheckError(AudioFileReadPackets(pAqData->mAudioFile,false,&numBytesReadFromFile,pAqData->mPacketDescs,pAqData->mCurrentPacket,&numPackets,inBuffer->mAudioData), "AudioFileReadPackets");
+    CheckPlayError(AudioFileReadPackets(pAqData->mAudioFile,
+                                    false,
+                                    &numBytesReadFromFile,
+                                    pAqData->mPacketDescs,
+                                    pAqData->mCurrentPacket,
+                                    &numPackets,
+                                    inBuffer->mAudioData), "AudioFileReadPackets");
     
     if (numPackets > 0) {
         inBuffer->mAudioDataByteSize = numBytesReadFromFile;
         AudioQueueEnqueueBuffer(inAQ,inBuffer,(pAqData->mPacketDescs ? numPackets : 0),pAqData->mPacketDescs);
         pAqData->mCurrentPacket += numPackets;
     } else {
-        if (pAqData->mIsRunning) {
-            
-        }
+        
         AudioQueueStop(inAQ,false);
         pAqData->mIsRunning = false;
     }
@@ -93,51 +98,52 @@ static void MyCopyEncoderCookieToQueue(AudioFileID theFile,AudioQueueRef queue) 
 @end
 
 @implementation AQPlayerManager
-- (instancetype)initAudioFormatType:(AudioFormatType)audioFormatType sampleRate:(Float64)sampleRate channels:(UInt32)channels bitsPerChannel:(UInt32)bitsPerChannel {
-    self = [super init];
-    if (self) {
-        [self initPlay];
-        
-        [self setAudioFormatType:audioFormatType
-                      sampleRate:sampleRate
-                        channels:channels
-                  bitsPerChannel:bitsPerChannel];
-    }
-    return self;
-}
+
+//- (instancetype)initAudioFormatType:(AudioFormatType)audioFormatType sampleRate:(Float64)sampleRate channels:(UInt32)channels bitsPerChannel:(UInt32)bitsPerChannel {
+//    self = [super init];
+//    if (self) {
+//        [self initPlay];
+//        
+//        [self setAudioFormatType:audioFormatType
+//                      sampleRate:sampleRate
+//                        channels:channels
+//                  bitsPerChannel:bitsPerChannel];
+//    }
+//    return self;
+//}
 
 - (void)initPlay {
     
 }
 
-- (void)setAudioFormatType:(AudioFormatType)audioFormatType
-                sampleRate:(Float64)sampleRate
-                  channels:(UInt32)channels
-            bitsPerChannel:(UInt32)bitsPerChannel {
-    aqData.mDataFormat.mSampleRate = sampleRate > 0 ? sampleRate : kDefaultSampleRate;
-    aqData.mDataFormat.mChannelsPerFrame = channels > 0 ? channels : kDefaultChannels;
-    
-    if (audioFormatType == AudioFormatLinearPCM) {
-        
-        aqData.mDataFormat.mFormatID = kAudioFormatLinearPCM;
-        aqData.mDataFormat.mBitsPerChannel = bitsPerChannel > 0 ? bitsPerChannel : kDefaultBitsPerChannel;
-        aqData.mDataFormat.mBytesPerPacket =
-        aqData.mDataFormat.mBytesPerFrame = (aqData.mDataFormat.mBitsPerChannel / 8) * aqData.mDataFormat.mChannelsPerFrame;
-        aqData.mDataFormat.mFramesPerPacket = 1;
-        aqData.mDataFormat.mFormatFlags = kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked;
-        
-    } else if (audioFormatType == AudioFormatMPEG4AAC) {
-        
-        aqData.mDataFormat.mFormatID = kAudioFormatMPEG4AAC;
-        aqData.mDataFormat.mFormatFlags = kMPEG4Object_AAC_Main;
-        
-    }
-}
+//- (void)setAudioFormatType:(AudioFormatType)audioFormatType
+//                sampleRate:(Float64)sampleRate
+//                  channels:(UInt32)channels
+//            bitsPerChannel:(UInt32)bitsPerChannel {
+//    aqData.mDataFormat.mSampleRate = sampleRate > 0 ? sampleRate : kDefaultSampleRate;
+//    aqData.mDataFormat.mChannelsPerFrame = channels > 0 ? channels : kDefaultChannels;
+//    
+//    if (audioFormatType == AudioFormatLinearPCM) {
+//        
+//        aqData.mDataFormat.mFormatID = kAudioFormatLinearPCM;
+//        aqData.mDataFormat.mBitsPerChannel = bitsPerChannel > 0 ? bitsPerChannel : kDefaultBitsPerChannel;
+//        aqData.mDataFormat.mBytesPerPacket =
+//        aqData.mDataFormat.mBytesPerFrame = (aqData.mDataFormat.mBitsPerChannel / 8) * aqData.mDataFormat.mChannelsPerFrame;
+//        aqData.mDataFormat.mFramesPerPacket = 1;
+//        aqData.mDataFormat.mFormatFlags = kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked;
+//        
+//    } else if (audioFormatType == AudioFormatMPEG4AAC) {
+//        
+//        aqData.mDataFormat.mFormatID = kAudioFormatMPEG4AAC;
+//        aqData.mDataFormat.mFormatFlags = kMPEG4Object_AAC_Main;
+//        
+//    }
+//}
 
 - (void)startPlay:(NSString *)filePath {
 
     //1、获取文件路径
-    NSLog(@"----- %@", filePath);
+//    NSLog(@"----- %@", filePath);
     if (!filePath) {
         return;
     }
@@ -198,9 +204,7 @@ static void MyCopyEncoderCookieToQueue(AudioFileID theFile,AudioQueueRef queue) 
     //6、设置播放音频队列大小
     UInt32 maxPacketSize;
     UInt32 propertySize = sizeof(maxPacketSize);
-    CheckError(AudioFileGetProperty(aqData.mAudioFile,kAudioFilePropertyPacketSizeUpperBound,&propertySize,&maxPacketSize),"AudioFileGetProperty");
-    
-   
+    CheckPlayError(AudioFileGetProperty(aqData.mAudioFile,kAudioFilePropertyPacketSizeUpperBound,&propertySize,&maxPacketSize),"AudioFileGetProperty");
     
     // 设置缓冲区大小
     DeriveBufferSize (                                   // 6
@@ -219,8 +223,7 @@ static void MyCopyEncoderCookieToQueue(AudioFileID theFile,AudioQueueRef queue) 
     }
     
     
-    
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:nil];
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
     
     //Set a Magic Cookie for a Playback Audio Queue
@@ -230,12 +233,14 @@ static void MyCopyEncoderCookieToQueue(AudioFileID theFile,AudioQueueRef queue) 
     aqData.mCurrentPacket = 0;
     
     for (int i = 0; i < kNumberBuffers; ++i) {
-        CheckError(AudioQueueAllocateBuffer(aqData.mQueue,aqData.bufferByteSize,&aqData.mBuffers[i]),"AudioQueueAllocateBuffer");
+        CheckPlayError(AudioQueueAllocateBuffer(aqData.mQueue,
+                                            aqData.bufferByteSize,
+                                            &aqData.mBuffers[i]),"AudioQueueAllocateBuffer");
         HandleOutputBuffer(&aqData,aqData.mQueue,aqData.mBuffers[i]);
     }
     
     
-    Float32 gain = 10.0;
+    Float32 gain = 1.0;
     // Optionally, allow user to override gain setting here
     AudioQueueSetParameter (
                             aqData.mQueue,
@@ -243,19 +248,16 @@ static void MyCopyEncoderCookieToQueue(AudioFileID theFile,AudioQueueRef queue) 
                             gain
                             );
     
-    
     //Start and Run an Audio Queue
     aqData.mIsRunning = true;
-    CheckError(AudioQueueStart(aqData.mQueue,NULL),"AudioQueueStart failed");
+    CheckPlayError(AudioQueueStart(aqData.mQueue,NULL),"AudioQueueStart failed");
 
     //开启音量检测
     UInt32 val = 1;
-    CheckError(AudioQueueSetProperty(aqData.mQueue,
+    CheckPlayError(AudioQueueSetProperty(aqData.mQueue,
                                      kAudioQueueProperty_EnableLevelMetering,
                                      &val,
                                      sizeof(UInt32)), "EnableLevelMetering");
-    
-    printf("Playing...\n");
 
     do {
         CFRunLoopRunInMode(kCFRunLoopDefaultMode,0.25,false);
@@ -283,10 +285,43 @@ static void MyCopyEncoderCookieToQueue(AudioFileID theFile,AudioQueueRef queue) 
 - (void)playTimeAdd {
     
     float avaValue = [AQUnitTools getCurrentPower:aqData.mQueue andDataFormat:aqData.mDataFormat];
-    if (self.aqDataSource && [self.aqDataSource respondsToSelector:@selector(didOutputAudioPeakPower:)]) {
-        [self.aqDataSource didOutputAudioPeakPower:avaValue];
+    if (self.aqDelegate && [self.aqDelegate respondsToSelector:@selector(didOutputAudioPeakPower:)]) {
+        [self.aqDelegate didOutputAudioPeakPower:avaValue];
+    }
+
+    if (aqData.mIsRunning) {
+        
+        
+    } else {
+        //
+        AudioQueueDispose(aqData.mQueue, true);
+        AudioFileClose(aqData.mAudioFile);
+        
+        [self removePlayTimer];
+        
+        if (self.aqDelegate && [self.aqDelegate respondsToSelector:@selector(playAudioFinish)]) {
+            [self.aqDelegate playAudioFinish];
+        }
+    }
+    //播放
+}
+
+#pragma mark - property
+- (NSTimeInterval)playedAudioTime {
+    if (aqData.mDataFormat.mSampleRate == 0)
+    {
+        return 0;
     }
     
+    NSTimeInterval _playedAudioTime = 0.0;
+    AudioTimeStamp time;
+    OSStatus status = AudioQueueGetCurrentTime(aqData.mQueue, NULL, &time, NULL);
+    if (status == noErr)
+    {
+        _playedAudioTime = time.mSampleTime / aqData.mDataFormat.mSampleRate;
+    }
+    
+    return _playedAudioTime;
 }
 
 - (void)removePlayTimer {
@@ -296,7 +331,7 @@ static void MyCopyEncoderCookieToQueue(AudioFileID theFile,AudioQueueRef queue) 
 
 - (void)addPlayTimer{
     if (!_playTimer) {
-        _playTimer = [NSTimer scheduledTimerWithTimeInterval:.1f target:self selector:@selector(playTimeAdd) userInfo:nil repeats:YES];
+        _playTimer = [NSTimer scheduledTimerWithTimeInterval:.02f target:self selector:@selector(playTimeAdd) userInfo:nil repeats:YES];
         [[NSRunLoop mainRunLoop] addTimer:_playTimer forMode:NSRunLoopCommonModes];
     }
 }

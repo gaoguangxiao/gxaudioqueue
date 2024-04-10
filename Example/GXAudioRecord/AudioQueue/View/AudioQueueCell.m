@@ -12,7 +12,7 @@
 #import "JHAudioRecorder.h"
 
 #import "GGXAudioConvertor.h"
-@interface AudioQueueCell ()
+@interface AudioQueueCell ()<GGXAudioQueuePlayOperation>
 @property (weak, nonatomic) IBOutlet UILabel *m4aPath;
 @property (weak, nonatomic) IBOutlet UILabel *wavPath;
 
@@ -40,11 +40,12 @@
 }
 - (IBAction)playAction:(id)sender {
     NSString *filePath = [GGXFileManeger.shared getFilePath:self.audioName.text];
-    //    [self.playerManager startPlay:filePath];
     NSLog(@"%@",filePath);
-    JHAudioRecorder *audio = [JHAudioRecorder shareAudioRecorder];
-    audio.delegate = self;
-    [audio playRecordingWith:filePath];
+    
+    [self.playerManager startPlay:filePath];
+//    JHAudioRecorder *audio = [JHAudioRecorder shareAudioRecorder];
+//    audio.delegate = self;
+//    [audio playRecordingWith:filePath];
 }
 
 -(void)reloadValueWithArr:(NSArray *)valueArr{
@@ -101,8 +102,6 @@
     }
     
     NSLog(@"原始路径：%@",filePath);
-    
-    
 }
 
 - (IBAction)GainDBPcm:(id)sender {
@@ -117,9 +116,14 @@
     //    NSLog(@"PCM分贝：%@",datas);
 }
 
+- (void)playAudioFinish {
+    NSLog(@"播放完毕");
+}
+
 - (AQPlayerManager *)playerManager {
     if (!_playerManager) {
-        _playerManager = [[AQPlayerManager alloc] initAudioFormatType:AudioFormatLinearPCM sampleRate:8000.0 channels:1 bitsPerChannel:16];
+        _playerManager = [[AQPlayerManager alloc] init];
+        _playerManager.aqDelegate = self;
     }
     return _playerManager;
 }

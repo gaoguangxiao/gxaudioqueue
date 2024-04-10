@@ -19,7 +19,8 @@
 
 #define KMaxDepthPREF 32767
 #define KDefaultLimitMaxDb -3.0
-
+//增长10db
+#define KDefaultADDDb -3
 //横线间隔
 #define kAudioPlayerLineSpacing 4
 
@@ -34,7 +35,6 @@ typedef NS_ENUM(NSInteger, AudioFormatType) {
 
 - (void)didOutputAudioPeakPower:(float)audioPeak;
 
-
 - (void)recorderManager:(AQRecorderManager *_Nonnull)recorderManager didOutputAudiofile:(CMTime )sTime andEndTime:(CMTime)eTime andFilePath:(NSURL *_Nullable)filePath;
 
 
@@ -42,23 +42,20 @@ typedef NS_ENUM(NSInteger, AudioFormatType) {
 /// - Parameters:
 ///   - recorderManager:
 ///   - filePath: 路径
-- (void)recorderManager:(AQRecorderManager *)recorderManager andFilePath:(NSString *)filePath;
-
-///  时间
-/// - Parameters:
-///   - recorderManager: <#recorderManager description#>
-///   - endTime: <#endTime description#>
+- (void)recorderManager:(AQRecorderManager *_Nullable)recorderManager andFilePath:(NSString *_Nonnull)filePath;
 
 @end
 
+//
 @protocol GGXAudioQueueOperation <NSObject>
 
 - (void)recorderStopRecordForLowPeak;
 
-- (void)startRecordWithFilePath:(NSString *)filePath;
+- (void)startRecordWithFilePath:(NSString *_Nullable)filePath;
 
-- (void)startPlay:(NSString *)filePath;
+- (void)startPlay:(NSString *_Nullable)filePath;
 @end
+
 
 #pragma mark utility functions
 static void CheckError(OSStatus error, const char *operation) {
