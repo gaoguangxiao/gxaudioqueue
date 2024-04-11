@@ -99,6 +99,16 @@ static void MyCopyEncoderCookieToQueue(AudioFileID theFile,AudioQueueRef queue) 
 
 @implementation AQPlayerManager
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        
+        [self initPlay];
+    }
+    return self;
+}
+
 //- (instancetype)initAudioFormatType:(AudioFormatType)audioFormatType sampleRate:(Float64)sampleRate channels:(UInt32)channels bitsPerChannel:(UInt32)bitsPerChannel {
 //    self = [super init];
 //    if (self) {
@@ -114,6 +124,9 @@ static void MyCopyEncoderCookieToQueue(AudioFileID theFile,AudioQueueRef queue) 
 
 - (void)initPlay {
     
+    self.volume = 1.0;
+    
+    self.avAudioSessionPermission = AQPlayAudioPermissionAll;
 }
 
 //- (void)setAudioFormatType:(AudioFormatType)audioFormatType
@@ -139,6 +152,24 @@ static void MyCopyEncoderCookieToQueue(AudioFileID theFile,AudioQueueRef queue) 
 //        
 //    }
 //}
+
+- (void)setVolume:(float)volume {
+    _volume = volume;
+}
+
+- (void)setAvAudioSessionPermission:(AQPlayAudioPermission)avAudioSessionPermission {
+
+    _avAudioSessionPermission = avAudioSessionPermission;
+    
+    if (_avAudioSessionPermission == AQPlayAudioPermissionNone) {
+       
+    } else if (_avAudioSessionPermission == AQPlayAudioPermissionAll) {
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+        [[AVAudioSession sharedInstance] setActive:YES error:nil];
+    } else if (self.avAudioSessionPermission == AQPlayAudioPermissionSetActive) {
+        [[AVAudioSession sharedInstance] setActive:YES error:nil];
+    }
+}
 
 - (void)startPlay:(NSString *)filePath {
 
@@ -222,10 +253,6 @@ static void MyCopyEncoderCookieToQueue(AudioFileID theFile,AudioQueueRef queue) 
         aqData.mPacketDescs = NULL;
     }
     
-    
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
-    [[AVAudioSession sharedInstance] setActive:YES error:nil];
-    
     //Set a Magic Cookie for a Playback Audio Queue
     MyCopyEncoderCookieToQueue(aqData.mAudioFile, aqData.mQueue);
 
@@ -240,7 +267,7 @@ static void MyCopyEncoderCookieToQueue(AudioFileID theFile,AudioQueueRef queue) 
     }
     
     
-    Float32 gain = 1.0;
+    Float32 gain = self.volume;
     // Optionally, allow user to override gain setting here
     AudioQueueSetParameter (
                             aqData.mQueue,
@@ -267,14 +294,15 @@ static void MyCopyEncoderCookieToQueue(AudioFileID theFile,AudioQueueRef queue) 
     
     [self addPlayTimer];
 }
+
 - (void)stopPlayer {
     aqData.mIsRunning = false;
     AudioQueueStop(aqData.mQueue, true);
     
     // 录音结束后再次调用magic cookies，一些编码器会在录音停止后更新magic cookies数据
-    if (aqData.mDataFormat.mFormatID != kAudioFormatLinearPCM) {
+//    if (aqData.mDataFormat.mFormatID != kAudioFormatLinearPCM) {
 //        SetMagicCookieForFile(aqData.mQueue, aqData.mAudioFile);
-    }
+//    }
     
     AudioQueueDispose(aqData.mQueue, true);
     AudioFileClose(aqData.mAudioFile);

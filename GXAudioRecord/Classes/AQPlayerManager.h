@@ -17,14 +17,33 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+typedef NS_ENUM(NSInteger, AQPlayAudioPermission)
+{
+    //不容许SDK对AVAudioSession 进行更改, 由App进行SetActive和SetCategory
+    AQPlayAudioPermissionNone = 1 << 0,
+    //容许SDK对AVAudioSession进行SetCategory和Options。
+    AQPlayAudioPermissionSetCategoryOptions = 1 << 1,
+    //容许SDK对AVAudioSession进行SetActive。
+    AQPlayAudioPermissionSetActive = 1 << 2,
+    //容许SDK对AVAudioSession同时进行SetCategory和SetActive，默认值
+    AQPlayAudioPermissionAll = AQPlayAudioPermissionSetCategoryOptions | AQPlayAudioPermissionSetActive,
+};
+
+
 @interface AQPlayerManager : NSObject
 
 ///数据源代理
 @property (nonatomic, weak) id<GGXAudioQueuePlayOperation>aqDelegate;
 
+// 播放音量
+@property (nonatomic, assign) float volume;
+
+//默认值AQPlayAudioPermissionAll
+@property (nonatomic, assign) AQPlayAudioPermission avAudioSessionPermission; //
 
 - (void)startPlay:(NSString *)filePath;
 
+- (void)stopPlayer;
 @end
 
 NS_ASSUME_NONNULL_END
