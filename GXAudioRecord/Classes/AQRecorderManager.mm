@@ -41,25 +41,44 @@ enum ChannelCount
     k_Stereo
 };
 
+void caculate_bm_dbV2(void * const data, UInt32 numberOfSamples) {
+    float gain = 3.0f; // 增益因子
+    //限幅
+    double maxDepth  =  pow(10, KDefaultLimitMaxDb/20);
+    double maxDepthPref = maxDepth * KMaxDepthPREF;
+//    NSLog(@"限制分贝转采样值 %f",maxDepthPref);//0.7
+    SInt16 *curData = (SInt16 *)data;
+    for (int pos = 0; pos < numberOfSamples; pos += 2, ++curData) {
+        SInt16 data = *curData;
+        data *= gain;
+        if (data > maxDepthPref) {
+//            NSLog(@"太大了 %hd",data);
+            data = maxDepthPref;
+        } else if (data < -maxDepthPref) {
+//            NSLog(@"太小了 %hd",data);
+            data = -maxDepthPref;
+        }
+        *curData = data;
+    }
+}
+
 void caculate_bm_db(void * const data ,size_t length ,int64_t timestamp, ChannelCount channelModel,
                     float channelValue[2],bool isAudioUnit,double maxDepthPref) {
     int16_t *curData = (int16_t *)data;
     
     if (channelModel == k_Mono) {
-        int     sDbChnnel     = 0;
-        int16_t max           = 0;
+//        int     sDbChnnel     = 0;
+//        int16_t max           = 0;
         size_t traversalTimes = length;
         for (int pos = 0; pos < traversalTimes; pos += 2, ++curData) {
             int data = *curData;
-            { // 音量调整
-                
-//                double addDepth  =  pow(10, KDefaultADDDb/20);
-//                double addDepthPref = addDepth * KMaxDepthPREF;
-
-//                printf("增幅：%ld",addDepthPref);            //转化DB +
+            NSLog(@"data is :%ld",(long)data);
+            {
                 if (data > 0) {
-                    NSInteger cDB = 20*log10((data)/KMaxDepthPREF);
+                    NSInteger cDB = 20*log10(data);//当前分贝
                     NSInteger ncDB = cDB + 10;
+                    NSLog(@"当前录制:%ld",(long)cDB);
+                    NSLog(@"当前增益录制:%ld",(long)ncDB);
                     double addDepth =  pow(10, ncDB/20);
                     double addDepthPref = addDepth * KMaxDepthPREF;
                     if (data > 0) {
@@ -71,29 +90,23 @@ void caculate_bm_db(void * const data ,size_t length ,int64_t timestamp, Channel
                     
                 }
                 
-//                NSLog(@"当前录制:%ld",(long)cDB);
-//                NSLog(@"当前增益录制:%ld",(long)ncDB);
-                
                 if (data > maxDepthPref) {
                     data = maxDepthPref;
                 } else if (data < -maxDepthPref) {
                     data = -maxDepthPref;
                 }
-                
-    
-                
             }
             *curData = data;
-            if(data > max) max = data;
+//            if(data > max) max = data;
         }
         
-        if(max < 1) {
-            sDbChnnel = -100;
-        }else {
-            sDbChnnel = (20*log10((0.0 + max)/32767) - 0.5);
-        }
-        
-        channelValue[0] = channelValue[1] = sDbChnnel;
+//        if(max < 1) {
+//            sDbChnnel = -100;
+//        }else {
+//            sDbChnnel = (20*log10((max)/32767) - 0.5);
+//        }
+//        
+//        channelValue[0] = sDbChnnel;
         
     } else if (channelModel == k_Stereo){
         int sDbChA = 0;
@@ -157,14 +170,16 @@ static void HandleInputBuffer (
     }
     //获取音量
     // Get DB
-    float channelValue[2];
-    double maxDepth  =  pow(10, KDefaultLimitMaxDb/20);
-    double maxDepthPref = maxDepth * KMaxDepthPREF;
-    caculate_bm_db(inBuffer->mAudioData, inBuffer->mAudioDataByteSize, 0, k_Mono, channelValue,true,maxDepthPref);
+//    float channelValue[2];
+//    double maxDepth  =  pow(10, KDefaultLimitMaxDb/20);
+//    double maxDepthPref = maxDepth * KMaxDepthPREF;
+//    caculate_bm_db(inBuffer->mAudioData, inBuffer->mAudioDataByteSize, 0, k_Mono, channelValue,true,maxDepthPref);
+    
+    caculate_bm_dbV2((SInt16 *)inBuffer->mAudioData,inBuffer->mAudioDataByteSize);
     
     //提升录音分贝
-//    NSLog(@"根据AudioData计算的分贝%.2f",channelValue[0]);
-
+    //    NSLog(@"根据AudioData计算的分贝%.2f",channelValue[0]);
+    
     //mAudioFile 要写入的音频文件
     //false 写入文件不需要缓存文件
     //mAudioDataByteSize 被写入文件大小
@@ -399,7 +414,7 @@ OSStatus SetMagicCookieForFile (
 - (void)startRecordWithFilePath:(NSString *)filePath {
     
     //设置会话
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:nil];
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
     
     //    UInt32 dataFormatSize = sizeof(aqData.mDataFormat);
@@ -418,7 +433,7 @@ OSStatus SetMagicCookieForFile (
     self.LocalfilePath = filePath;
     //    NSLog(@"----- %@", filePath);
     CFURLRef audioFileURL = CFURLCreateWithString(kCFAllocatorDefault, (CFStringRef)filePath, NULL);
-
+    
     OSStatus fileStatus = AudioFileCreateWithURL(audioFileURL,
                                                  fileTypeID,
                                                  &aqData.mDataFormat,
@@ -548,16 +563,16 @@ OSStatus SetMagicCookieForFile (
                                         [NSNumber numberWithBool:NO], AVLinearPCMIsBigEndianKey,
                                         [NSNumber numberWithInt:aqData.mDataFormat.mChannelsPerFrame],AVNumberOfChannelsKey,
                                         nil];
-//         AVLinearPCMIsNonInterleaved 是否允许音频交叉他的值
-//        AVLinearPCMIsFloatKey 是否支持浮点处理
-//        AVLinearPCMIsBigEndianKey 大端模式 小端模式。内存的组织形式
+        //         AVLinearPCMIsNonInterleaved 是否允许音频交叉他的值
+        //        AVLinearPCMIsFloatKey 是否支持浮点处理
+        //        AVLinearPCMIsBigEndianKey 大端模式 小端模式。内存的组织形式
         [GGXAudioConvertor tailorAudioTimeRange:CMTimeRangeMake(self.startTime, self.endTime) outSettings:outputSettings inputPath:self.LocalfilePath outPath:outwavPath andComplete:^(NSString * _Nonnull outputPath) {
             //输出的路径
             NSLog(@"outputPath:%@",outputPath);
             if (self.aqDataSource && [self.aqDataSource respondsToSelector:@selector(recorderManager:andFilePath:)]) {
                 [self.aqDataSource recorderManager:self andFilePath:outputPath];
             }
-
+            
         }];
     } else {
         
