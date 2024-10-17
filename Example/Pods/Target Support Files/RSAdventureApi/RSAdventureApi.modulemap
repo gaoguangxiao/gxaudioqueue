@@ -1,0 +1,6 @@
+framework module RSAdventureApi {
+  umbrella header "RSAdventureApi-umbrella.h"
+
+  export *
+  module * { export * }
+}

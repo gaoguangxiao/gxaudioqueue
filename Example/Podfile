@@ -1,13 +1,24 @@
+source 'https://github.com/CocoaPods/Specs.git'
+source 'http://gitlab.risekid.cn/ce/ios-bridge/rs-trunk.git'
+
 use_frameworks!
 
-platform :ios, '10.0'
+platform :ios, '13.0'
 
 target 'GXAudioRecord_Example' do
   pod 'GXAudioRecord', :path => '../'
   pod 'Masonry'
+
+  pod 'TAISDK_iOS'
+  pod 'RSAdventureApi', :path => '~/Desktop/SourceTree/rs_bridge/rsadventureapi'
+#  pod 'AFServiceNet', :path => '~/Desktop/GitManager/AFServiceNet'
+  
   target 'GXAudioRecord_Tests' do
     inherit! :search_paths
 
     pod 'FBSnapshotTestCase'
+    
+#    pod 'QCloudRealTime'
+
   end
 end

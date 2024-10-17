@@ -1,0 +1,6 @@
+framework module GGXRSA {
+  umbrella header "GGXRSA-umbrella.h"
+
+  export *
+  module * { export * }
+}

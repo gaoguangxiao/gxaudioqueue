@@ -1,31 +1,118 @@
 PODS:
+  - Alamofire (5.10.0)
   - FBSnapshotTestCase (2.1.4):
     - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
   - FBSnapshotTestCase/Core (2.1.4)
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
-  - GXAudioRecord (0.1.6)
+  - GGXRSA (0.1.2)
+  - GGXSwiftExtension (0.6.9)
+  - GXAudioRecord (0.1.9)
+  - GXSwiftNetwork (0.3.1):
+    - Moya
+    - PKHUD
+    - SmartCodable
+  - KeychainAccess (4.2.2)
   - Masonry (1.1.0)
+  - Moya (15.0.0):
+    - Moya/Core (= 15.0.0)
+  - Moya/Core (15.0.0):
+    - Alamofire (~> 5.0)
+  - PKHUD (5.3.0)
+  - PTDebugView (0.1.9):
+    - GGXSwiftExtension
+  - ReachabilitySwift (5.2.4)
+  - RSAdventureApi (0.0.2):
+    - GGXRSA
+    - GXSwiftNetwork
+    - RSBridgeCore
+  - RSBridgeCore (1.1.5):
+    - KeychainAccess
+    - RxCocoa
+    - SmartCodable
+    - ZKBaseSwiftProject
+  - RxCocoa (6.8.0):
+    - RxRelay (= 6.8.0)
+    - RxSwift (= 6.8.0)
+  - RxRelay (6.8.0):
+    - RxSwift (= 6.8.0)
+  - RxSwift (6.8.0)
+  - SmartCodable (4.2.4)
+  - SnapKit (5.7.1)
+  - TAISDK_iOS (1.2.3.114):
+    - TIWLogger_iOS (~> 1.0.1.80)
+  - TIWLogger_iOS (1.0.1.85)
+  - ZKBaseSwiftProject (1.0.9):
+    - GGXSwiftExtension
+    - KeychainAccess
+    - PKHUD
+    - PTDebugView
+    - ReachabilitySwift
+    - RxCocoa
+    - RxSwift
+    - SnapKit
 
 DEPENDENCIES:
   - FBSnapshotTestCase
   - GXAudioRecord (from `../`)
   - Masonry
+  - RSAdventureApi (from `~/Desktop/SourceTree/rs_bridge/rsadventureapi`)
+  - TAISDK_iOS
 
 SPEC REPOS:
-  trunk:
+  http://gitlab.risekid.cn/ce/ios-bridge/rs-trunk.git:
+    - RSBridgeCore
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
     - FBSnapshotTestCase
+    - GGXRSA
+    - GGXSwiftExtension
+    - GXSwiftNetwork
+    - KeychainAccess
     - Masonry
+    - Moya
+    - PKHUD
+    - PTDebugView
+    - ReachabilitySwift
+    - RxCocoa
+    - RxRelay
+    - RxSwift
+    - SmartCodable
+    - SnapKit
+    - TAISDK_iOS
+    - TIWLogger_iOS
+    - ZKBaseSwiftProject
 
 EXTERNAL SOURCES:
   GXAudioRecord:
     :path: "../"
+  RSAdventureApi:
+    :path: "~/Desktop/SourceTree/rs_bridge/rsadventureapi"
 
 SPEC CHECKSUMS:
+  Alamofire: cd0b98508df05796dd2ff278f3bb055a631b5390
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
-  GXAudioRecord: 45380055223fbfa334237e3f2fab6a060c3be8e5
+  GGXRSA: b5b3527dba4f129d139d383cc46d5cc84ddf30ad
+  GGXSwiftExtension: 73e8c8f42907f695aa0ab56b26677eb988a8c401
+  GXAudioRecord: 1b664bd9146a2727f06021fdaa9934723a583a58
+  GXSwiftNetwork: fb84d4270e8d40b5aa8b2bcacbeb90fba6c6a667
+  KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
+  PKHUD: 98f3e4bc904b9c916f1c5bb6d765365b5357291b
+  PTDebugView: c719fbcf92bbcad675a9fba8a6206e863d8d021c
+  ReachabilitySwift: 32793e867593cfc1177f5d16491e3a197d2fccda
+  RSAdventureApi: db98891935e11b89d2c7fe3432d329fc6d84747a
+  RSBridgeCore: 5f4890ab23d7ea3d41f598d5c61c07058347cd49
+  RxCocoa: 2d33c1e1e5d66492052ad46b11024ae287572880
+  RxRelay: 335c78b926a2aea8d863a6d25f1ed3b5ad8e8705
+  RxSwift: 4e28be97cbcfeee614af26d83415febbf2bf6f45
+  SmartCodable: 601f939946db454ad8ea0acb1fbbfe14dd70a3af
+  SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
+  TAISDK_iOS: 7a604f164751a6eca6a214ff3cb1cc3b4612dce4
+  TIWLogger_iOS: fa8e961adfdb65efb9f06bd9ad57f39f8b63a02a
+  ZKBaseSwiftProject: 04cb3fb43a971c6bf0eb4ae718210b114c03daf9
 
-PODFILE CHECKSUM: 30c65690f6c08df826e38fe52fb60d0e1d10a78b
+PODFILE CHECKSUM: b09b5fa886f22acf0ff97337246e434bc6a6e926
 
-COCOAPODS: 1.14.2
+COCOAPODS: 1.15.2

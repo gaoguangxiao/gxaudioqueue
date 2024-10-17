@@ -14,6 +14,9 @@
 #import "AQRecordListViewController.h"
 #import "JHAudioRecorder.h"
 #import "GGXAudioConvertor.h"
+
+#import <TAISDK/TAIOralEvaluation.h>
+
 @interface AQRecordController ()<UITableViewDataSource,UITableViewDelegate,GGXAudioQueueDataSource>
 
 @property (nonatomic, strong) UILabel *levekDBTxt;
@@ -41,6 +44,7 @@
 
 @property (nonatomic, strong) AQPlayerManager *playerManager;
 
+@property (strong, nonatomic) TAIOralEvaluation *oralEvaluation; //评分相关
 @end
 
 @implementation AQRecordController
@@ -214,6 +218,101 @@
     NSLog(@"录制完毕的路径:%@",filePath);
 }
 
+- (void)onLocalRecord:(NSString *)wavPath {
+//    self.responseTextView.text = @"";
+    TAIOralEvaluationParam *param = [[TAIOralEvaluationParam alloc] init];
+    param.sessionId = [[NSUUID UUID] UUIDString];
+//    param.appId = [PrivateInfo shareInstance].appId;
+//    param.soeAppId = [PrivateInfo shareInstance].soeAppId;
+//    param.token = [PrivateInfo shareInstance].token;
+//    param.secretId = [PrivateInfo shareInstance].secretId;
+//    param.secretKey = [PrivateInfo shareInstance].secretKey;
+    param.workMode = TAIOralEvaluationWorkMode_Once;
+    param.evalMode = TAIOralEvaluationEvalMode_Sentence;
+    param.serverType = TAIOralEvaluationServerType_English;
+    param.scoreCoeff = 1.0;
+    param.fileType = TAIOralEvaluationFileType_Wav;
+    param.storageMode = TAIOralEvaluationStorageMode_Disable;
+    param.textMode = TAIOralEvaluationTextMode_Noraml;
+    param.refText = @"I am tiger.";
+    
+    [self loadCerData];
+    
+//    NSString *mp3Path = [[NSBundle mainBundle] pathForResource:@"hello_guagua" ofType:@"mp3"];
+//    TAIOralEvaluationData *data = [[TAIOralEvaluationData alloc] init];
+//    data.seqId = 1;
+//    data.bEnd = YES;
+//    data.audio = [NSData dataWithContentsOfFile:mp3Path];
+    
+//    NSString *wavPath = [[NSBundle mainBundle] pathForResource:@"2024-10-16_10-00-27" ofType:@"wav"];
+    TAIOralEvaluationData *data = [[TAIOralEvaluationData alloc] init];
+    data.seqId = 1;
+    data.bEnd = YES;
+    data.audio = [NSData dataWithContentsOfFile:wavPath];
+    __weak typeof(self) ws = self;
+    [self.oralEvaluation oralEvaluation:param data:data callback:^(TAIError *error) {
+//        [ws setResponse:[NSString stringWithFormat:@"oralEvaluation:%@", error]];
+    }];
+}
+
+#pragma mark - oral evaluation delegate
+- (void)oralEvaluation:(TAIOralEvaluation *)oralEvaluation onEvaluateData:(TAIOralEvaluationData *)data result:(TAIOralEvaluationRet *)result error:(TAIError *)error
+{
+    if(error.code != TAIErrCode_Succ){
+//        [_recordButton setTitle:@"开始录制" forState:UIControlStateNormal];
+    }
+    NSString *log = [NSString stringWithFormat:@"oralEvaluation:seq:%ld, end:%ld, error:%@, ret:%@", (long)data.seqId, (long)data.bEnd, error, result];
+    [self setResponse:log];
+}
+
+- (void)onEndOfSpeechInOralEvaluation:(TAIOralEvaluation *)oralEvaluation
+{
+    [self setResponse:@"onEndOfSpeech"];
+//    [self onRecord:nil];
+}
+
+- (void)oralEvaluation:(TAIOralEvaluation *)oralEvaluation onVolumeChanged:(NSInteger)volume
+{
+    NSLog(@"oralEvaluation-onVolumeChanged: %ld",volume);
+//    self.progressView.progress = volume / 120.0;
+}
+
+- (void)setResponse:(NSString *)string
+{
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSS"];
+    NSString *text = [NSString stringWithFormat:@"%@ %@", [format stringFromDate:[NSDate date]], string];
+//    _responseTextView.text = text;
+    NSLog(@"%@",text);
+}
+
+
+- (void)loadCerData {
+    
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//        NSString *url = [NSString stringWithFormat:@"/wap/api/certificate/tencent"];
+//        CGDataResult *r = [Service loadNetWorkingMethodisPost:NO ByParameters:@{} andBymethodName:url];;
+//        NSArray *list = [NSArray yy_modelArrayWithClass:PopupMenusModel.class json:r.dataList];
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            self.pickView.tag = 2;
+//            self.pickView.hidden = NO;
+//            self.pickView.dataList = list.mutableCopy;
+//        });
+//    });
+    
+    
+//    [self showAnimated:YES title:@"" whileExecutingBlock:^CGDataResult *{
+//        return [Service loadNetWorkingMethodisPost:NO ByParameters:@{} andBymethodName:url];
+//    } completionBlock:^(BOOL b, CGDataResult *r) {
+////        r = [TESTDATA testData:@"audioRecordDetail.json"];
+//        if (r.dataList) {
+//            RSAudioDetailModel *apModel = [RSAudioDetailModel yy_modelWithDictionary:r.dataList];
+//            [self.audioContentView fillWithData:apModel];
+//            [self.operationAudioView fillWithData:apModel];
+//        }
+//    }];
+}
+
 //-recordma
 #pragma mark - getter
 - (UILabel *)levekDBTxt {
@@ -317,4 +416,12 @@
     return _playerManager;
 }
 
+- (TAIOralEvaluation *)oralEvaluation
+{
+    if(!_oralEvaluation){
+        _oralEvaluation = [[TAIOralEvaluation alloc] init];
+        _oralEvaluation.delegate = self;
+    }
+    return _oralEvaluation;
+}
 @end

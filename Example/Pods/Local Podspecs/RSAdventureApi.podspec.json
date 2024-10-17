@@ -1,0 +1,35 @@
+{
+  "name": "RSAdventureApi",
+  "version": "0.0.2",
+  "summary": "feat:权限public处理",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "http://gitlab.risekid.cn/ce/ios-bridge/rsadventureapi",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "gaoguangxiao125@sina.com": "gaoguangxiao125@sina.com"
+  },
+  "source": {
+    "git": "http://gitlab.risekid.cn/ce/ios-bridge/rsadventureapi.git",
+    "tag": "0.0.2"
+  },
+  "platforms": {
+    "ios": "13.0"
+  },
+  "swift_versions": "5.0",
+  "source_files": "RSAdventureApi/Classes/**/*",
+  "dependencies": {
+    "GXSwiftNetwork": [
+
+    ],
+    "GGXRSA": [
+
+    ],
+    "RSBridgeCore": [
+
+    ]
+  },
+  "swift_version": "5.0"
+}
