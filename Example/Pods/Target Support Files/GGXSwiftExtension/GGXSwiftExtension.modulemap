@@ -1,6 +1,0 @@
-framework module GGXSwiftExtension {
-  umbrella header "GGXSwiftExtension-umbrella.h"
-
-  export *
-  module * { export * }
-}

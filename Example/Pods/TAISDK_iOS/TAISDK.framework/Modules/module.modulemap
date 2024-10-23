@@ -1,6 +1,0 @@
-framework module TAISDK {
-  umbrella header "TAISDK.h"
-  export *
-
-  module * { export * }
-}

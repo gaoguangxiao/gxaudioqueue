@@ -156,15 +156,17 @@
         return;
     }
     AudioChannelLayout channelLayout;
+    //memset用于将channelLayout结构初始化为零，确保没有未定义的值。
     memset(&channelLayout, 0, sizeof(AudioChannelLayout));
-    channelLayout.mChannelLayoutTag = kAudioChannelLayoutTag_Stereo;
-    
+    //mChannelLayoutTag设置为kAudioChannelLayoutTag_Mono，表示使用单声道布局。
+    channelLayout.mChannelLayoutTag = kAudioChannelLayoutTag_Mono;//
+    //这行代码将channelLayout结构转换为NSData对象，以便可以将其用作音频设置的一部分。
     NSData *channelLayoutAsData = [NSData dataWithBytes:&channelLayout length:sizeof(AudioChannelLayout)];
     /** 配置音频参数 */
     NSDictionary *outputSettings = [NSDictionary dictionaryWithObjectsAndKeys:
                                     [NSNumber numberWithInt:kAudioFormatLinearPCM], AVFormatIDKey,
                                     [NSNumber numberWithFloat:kDefaultSampleRate], AVSampleRateKey,
-                                    [NSNumber numberWithInt:2], AVNumberOfChannelsKey,
+                                    [NSNumber numberWithInt:kDefaultChannels], AVNumberOfChannelsKey,
                                     channelLayoutAsData, AVChannelLayoutKey,
                                     [NSNumber numberWithInt:16], AVLinearPCMBitDepthKey,
                                     [NSNumber numberWithBool:NO], AVLinearPCMIsNonInterleaved,

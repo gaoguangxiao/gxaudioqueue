@@ -9,8 +9,8 @@ target 'GXAudioRecord_Example' do
   pod 'GXAudioRecord', :path => '../'
   pod 'Masonry'
 
-  pod 'TAISDK_iOS'
-  pod 'RSAdventureApi', :path => '~/Desktop/SourceTree/rs_bridge/rsadventureapi'
+#  pod 'TAISDK_iOS'
+#  pod 'RSAdventureApi', :path => '~/Desktop/SourceTree/rs_bridge/rsadventureapi'
 #  pod 'AFServiceNet', :path => '~/Desktop/GitManager/AFServiceNet'
   
   target 'GXAudioRecord_Tests' do

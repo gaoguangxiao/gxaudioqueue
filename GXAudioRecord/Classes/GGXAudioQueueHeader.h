@@ -8,7 +8,7 @@
 #ifndef GGXAudioQueueHeader_h
 #define GGXAudioQueueHeader_h
 
-#define kDefaultSampleRate 44100 //采样率
+#define kDefaultSampleRate 16000 //采样率
 #define kDefaultChannels 1 //声道数
 #define kDefaultBitsPerChannel 16 //采样/量化 位深
 
