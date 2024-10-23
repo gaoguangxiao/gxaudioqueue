@@ -13,7 +13,7 @@ DEPENDENCIES:
   - Masonry
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - FBSnapshotTestCase
     - Masonry
 
@@ -26,6 +26,6 @@ SPEC CHECKSUMS:
   GXAudioRecord: 45380055223fbfa334237e3f2fab6a060c3be8e5
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
 
-PODFILE CHECKSUM: 30c65690f6c08df826e38fe52fb60d0e1d10a78b
+PODFILE CHECKSUM: 7f94de13bebab014ddfc6a31132e493a49b58285
 
-COCOAPODS: 1.14.2
+COCOAPODS: 1.15.2

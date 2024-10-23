@@ -14,6 +14,7 @@
 #import "AQRecordListViewController.h"
 #import "JHAudioRecorder.h"
 #import "GGXAudioConvertor.h"
+
 @interface AQRecordController ()<UITableViewDataSource,UITableViewDelegate,GGXAudioQueueDataSource>
 
 @property (nonatomic, strong) UILabel *levekDBTxt;

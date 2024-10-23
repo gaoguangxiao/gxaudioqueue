@@ -13,6 +13,8 @@
 		1E4B83A42A985F2F00A85B53 /* AQRecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E4B839D2A985F2F00A85B53 /* AQRecordController.m */; };
 		1E4B83A52A985F2F00A85B53 /* AQRecordListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E4B839E2A985F2F00A85B53 /* AQRecordListViewController.m */; };
 		1E637EEA2B0F6F2700F80128 /* music-Loop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1E637EE92B0F6F2700F80128 /* music-Loop.mp3 */; };
+		1E7AB8482CBFA879008767D9 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E7AB8462CBFA65E008767D9 /* libc++.tbd */; };
+		1E7AB84B2CBFACE8008767D9 /* SOE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7AB84A2CBFACE8008767D9 /* SOE.swift */; };
 		1E85C5262AF23ED700D66EFC /* tailorAudio.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1E85C5252AF23ED700D66EFC /* tailorAudio.wav */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
@@ -55,6 +57,9 @@
 		1E4B839F2A985F2F00A85B53 /* AQRecordListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AQRecordListViewController.h; sourceTree = "<group>"; };
 		1E4B83A02A985F2F00A85B53 /* AQRecordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AQRecordController.h; sourceTree = "<group>"; };
 		1E637EE92B0F6F2700F80128 /* music-Loop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "music-Loop.mp3"; sourceTree = "<group>"; };
+		1E7AB8462CBFA65E008767D9 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		1E7AB8492CBFACE8008767D9 /* GXAudioRecord_Example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GXAudioRecord_Example-Bridging-Header.h"; sourceTree = "<group>"; };
+		1E7AB84A2CBFACE8008767D9 /* SOE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SOE.swift; sourceTree = "<group>"; };
 		1E85C5252AF23ED700D66EFC /* tailorAudio.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tailorAudio.wav; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* GXAudioRecord_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GXAudioRecord_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -93,6 +98,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
+				1E7AB8482CBFA879008767D9 /* libc++.tbd in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
 				69DAEAF0F325732594556137 /* Pods_GXAudioRecord_Example.framework in Frameworks */,
@@ -169,6 +175,7 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1E7AB8462CBFA65E008767D9 /* libc++.tbd */,
 				6003F58D195388D20070C39A /* Foundation.framework */,
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
@@ -188,11 +195,13 @@
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
 				6003F5A5195388D20070C39A /* GGXViewController.h */,
 				6003F5A6195388D20070C39A /* GGXViewController.m */,
+				1E7AB84A2CBFACE8008767D9 /* SOE.swift */,
 				1E85C5252AF23ED700D66EFC /* tailorAudio.wav */,
 				1E637EE92B0F6F2700F80128 /* music-Loop.mp3 */,
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
+				1E7AB8492CBFACE8008767D9 /* GXAudioRecord_Example-Bridging-Header.h */,
 			);
 			name = "Example for GXAudioRecord";
 			path = GXAudioRecord;
@@ -303,6 +312,7 @@
 				TargetAttributes = {
 					6003F589195388D20070C39A = {
 						DevelopmentTeam = MC9Q66TLXQ;
+						LastSwiftMigration = 1600;
 					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
@@ -447,6 +457,7 @@
 				1E4B83A42A985F2F00A85B53 /* AQRecordController.m in Sources */,
 				6003F59E195388D20070C39A /* GGXAppDelegate.m in Sources */,
 				6003F5A7195388D20070C39A /* GGXViewController.m in Sources */,
+				1E7AB84B2CBFACE8008767D9 /* SOE.swift in Sources */,
 				1E4B83A32A985F2F00A85B53 /* MusicModel.m in Sources */,
 				1E4B83A52A985F2F00A85B53 /* AQRecordListViewController.m in Sources */,
 				1E4B83A22A985F2F00A85B53 /* AudioQueueCell.m in Sources */,
@@ -578,13 +589,17 @@
 			baseConfigurationReference = 79B928C3139D5669930A8106 /* Pods-GXAudioRecord_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = MC9Q66TLXQ;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GXAudioRecord/GXAudioRecord-Prefix.pch";
 				INFOPLIST_FILE = "GXAudioRecord/GXAudioRecord-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "GXAudioRecord/GXAudioRecord_Example-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = app;
 			};
@@ -595,13 +610,16 @@
 			baseConfigurationReference = C7CBD36B40159EF7B82FB68D /* Pods-GXAudioRecord_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = MC9Q66TLXQ;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GXAudioRecord/GXAudioRecord-Prefix.pch";
 				INFOPLIST_FILE = "GXAudioRecord/GXAudioRecord-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "GXAudioRecord/GXAudioRecord_Example-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = app;
 			};

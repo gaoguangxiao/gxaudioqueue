@@ -77,8 +77,8 @@ void caculate_bm_db(void * const data ,size_t length ,int64_t timestamp, Channel
                 if (data > 0) {
                     NSInteger cDB = 20*log10(data);//当前分贝
                     NSInteger ncDB = cDB + 10;
-                    NSLog(@"当前录制:%ld",(long)cDB);
-                    NSLog(@"当前增益录制:%ld",(long)ncDB);
+//                    NSLog(@"当前录制:%ld",(long)cDB);
+//                    NSLog(@"当前增益录制:%ld",(long)ncDB);
                     double addDepth =  pow(10, ncDB/20);
                     double addDepthPref = addDepth * KMaxDepthPREF;
                     if (data > 0) {
