@@ -157,16 +157,22 @@ static void HandleInputBuffer (
                                AudioQueueRef                        inAQ,
                                AudioQueueBufferRef                  inBuffer,
                                const AudioTimeStamp                 *inStartTime,
-                               UInt32                               inNumPackets,
+                               UInt32                               inNumberFrames,
                                const AudioStreamPacketDescription   *inPacketDesc
                                ) {
     AQRecorderState *pAqData = (AQRecorderState *)aqData;
     
     AQRecorderManager *audioRecorder = pAqData->recorderManager;
     
+//    AudioBufferList bufferList;
+//    bufferList.mNumberBuffers = 1;
+//    bufferList.mBuffers[0].mDataByteSize = inNumberFrames * sizeof(SInt16);// 设置数据大小
+//    bufferList.mBuffers[0].mNumberChannels = 1;
+//    bufferList.mBuffers[0].mData = malloc(inNumberFrames * sizeof(SInt16));// 为 mData
+    
     //    se inBuffer->mUserData;
-    if (inNumPackets == 0 && pAqData->mDataFormat.mBytesPerPacket != 0) {
-        inNumPackets = inBuffer->mAudioDataByteSize / pAqData->mDataFormat.mBytesPerPacket;
+    if (inNumberFrames == 0 && pAqData->mDataFormat.mBytesPerPacket != 0) {
+        inNumberFrames = inBuffer->mAudioDataByteSize / pAqData->mDataFormat.mBytesPerPacket;
     }
     //获取音量
     // Get DB
@@ -177,6 +183,10 @@ static void HandleInputBuffer (
     
     caculate_bm_dbV2((SInt16 *)inBuffer->mAudioData,inBuffer->mAudioDataByteSize);
     
+    NSData *audioTmp = [NSData dataWithBytes:inBuffer->mAudioData
+                                      length:inBuffer->mAudioDataByteSize];
+    //传递音频流
+    [audioRecorder.aqDataSource writeFileWithioNumPackets:audioTmp inPacketDesc:inPacketDesc];;
     //提升录音分贝
     //    NSLog(@"根据AudioData计算的分贝%.2f",channelValue[0]);
     
@@ -189,10 +199,10 @@ static void HandleInputBuffer (
                                                  inBuffer->mAudioDataByteSize,
                                                  inPacketDesc,
                                                  pAqData->mCurrentPacket,
-                                                 &inNumPackets,
+                                                 &inNumberFrames,
                                                  inBuffer->mAudioData);
     if (writeStatus == noErr) {
-        pAqData->mCurrentPacket += inNumPackets;
+        pAqData->mCurrentPacket += inNumberFrames;
     }
     
     if (pAqData->mIsRunning == false) {
@@ -414,7 +424,8 @@ OSStatus SetMagicCookieForFile (
 - (void)startRecordWithFilePath:(NSString *)filePath {
     
     //设置会话
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+//    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:nil];
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
     
     //    UInt32 dataFormatSize = sizeof(aqData.mDataFormat);

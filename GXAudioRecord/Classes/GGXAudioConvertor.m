@@ -150,7 +150,7 @@
     }
     [assetReader addOutput:assetReaderOutput];
     
-    AVAssetWriter *assetWriter = [AVAssetWriter assetWriterWithURL:outputURL fileType:AVFileTypeCoreAudioFormat error:&error];
+    AVAssetWriter *assetWriter = [AVAssetWriter assetWriterWithURL:outputURL fileType:AVFileTypeWAVE error:&error];
     if (error) {
         NSLog(@"error: %@", error);
         return;

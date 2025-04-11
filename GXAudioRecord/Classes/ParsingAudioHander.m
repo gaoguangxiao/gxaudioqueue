@@ -7,7 +7,6 @@
 
 #import "ParsingAudioHander.h"
 #import <AVFoundation/AVFoundation.h>
-#import "MusicModel.h"
 #import "GGXFileManeger.h"
 #import "GGXAudioQueueHeader.h"
 @interface ParsingAudioHander()
@@ -34,15 +33,15 @@
     if (!reader) {
         NSLog(@"%@",[error localizedDescription]);
     }
-//    reader.timeRange 设置读取范围
+    //    reader.timeRange 设置读取范围
     AVAssetTrack *track = [[asset tracksWithMediaType:AVMediaTypeAudio] firstObject];//从媒体中得到声音轨道
     
     //读取配置 资源应该来自URL磁盘本身
-//    NSDictionary *dic   = @{AVFormatIDKey            :@(kAudioFormatLinearPCM),
-//                            AVLinearPCMIsBigEndianKey:@NO,
-//                            AVLinearPCMIsFloatKey    :@NO,
-//                            AVLinearPCMBitDepthKey   :@(16)
-//                            };
+    //    NSDictionary *dic   = @{AVFormatIDKey            :@(kAudioFormatLinearPCM),
+    //                            AVLinearPCMIsBigEndianKey:@NO,
+    //                            AVLinearPCMIsFloatKey    :@NO,
+    //                            AVLinearPCMBitDepthKey   :@(16)
+    //                            };
     
     //在创建asset reader之后，至少设置一个output来接受读取的媒体数据
     AVAssetReaderTrackOutput *output = [[AVAssetReaderTrackOutput alloc]initWithTrack:track outputSettings:nil];
@@ -50,18 +49,18 @@
     [reader addOutput:output];
     [reader startReading];
     //读取是一个持续的过程，每次只读取后面对应的大小的数据。当读取的状态发生改变时，其status属性会发生对应的改变，我们可以凭此判断是否完成文件读取
-//    AVAudioPlayer(
+    //    AVAudioPlayer(
     while (reader.status == AVAssetReaderStatusReading) {
-//      每个出口分别获取媒体数据,
+        //      每个出口分别获取媒体数据,
         CMSampleBufferRef  sampleBuffer = [output copyNextSampleBuffer]; //读取到数据,这个结构在iOS表示一帧音频/视频数据
-//        recorder?.averagePower(forChannel: 0) ?? 0
+        //        recorder?.averagePower(forChannel: 0) ?? 0
         
         if (sampleBuffer) {
             
             CMBlockBufferRef blockBUfferRef = CMSampleBufferGetDataBuffer(sampleBuffer);//取出数据
             size_t length = CMBlockBufferGetDataLength(blockBUfferRef);
             //和上面方法获取数值一样，只是不同类的方法
-//            NSInteger audioDataSize = CMSampleBufferGetTotalSampleSize(sampleBuffer);
+            //            NSInteger audioDataSize = CMSampleBufferGetTotalSampleSize(sampleBuffer);
             //返回一个大小，size_t针对不同的品台有不同的实现，扩展性更好
             SInt16 sampleBytes[length];
             CMBlockBufferCopyDataBytes(blockBUfferRef, 0, length, sampleBytes); //将数据放入数组
@@ -75,7 +74,7 @@
         self.audioData = data;
         self.assetTime = asset.duration;
         
-//        NSData *zdata = [NSData dataWithContentsOfURL:url];//845,678
+        //        NSData *zdata = [NSData dataWithContentsOfURL:url];//845,678
         float duration = CMTimeGetSeconds(self.assetTime);//获取音频时长 转换为秒
         NSLog(@"使用AssetTrack的duration：%f",duration);
         return [self cutAudioData:CGSizeMake(60, 60)];
@@ -94,10 +93,136 @@
     
 }
 
+-(int) calculateDBFromInt16AudioBufferPCMDB:(NSData *)buffer {
+    // 计算 AudioBuffer 中数据的大小
+    //    NSUInteger dataSize = audioBuffer.mDataByteSize;
+    //    NSData *buffer = [NSData dataWithBytes:audioBuffer.mData length:dataSize];
+    long long sum = 0; // 存储样本绝对值的总和
+    short *pos = (short *)buffer.bytes; // 将 NSData 的字节转为 short 指针
+    //    SInt16 *curData = (SInt16 *)audioBuffer.mData; // 获取音频数据指针
+    // 遍历所有样本
+    for (int i = 0; i < buffer.length / 2; i++) {
+        sum += abs(*pos); // 计算每个样本的绝对值并累加
+        pos++; // 移动到下一个样本
+    }
+    
+    // 计算 dB 值
+    int db = (int)(sum * 600 / (buffer.length / 2 * 32767));
+    if (db >= 120) {
+        db = 120; // 限制最大值为 120
+    }
+    return db; // 返回计算出的 dB 值
+}
+
+// 计算 RMS
+- (float)calculateRMSFromAudioData:(SInt16 *)data frameSize:(AVAudioFrameCount)frameSize {
+    float sum = 0.0;
+    
+    for (AVAudioFrameCount i = 0; i < frameSize; i++) {
+        sum += data[i] * data[i]; // 计算平方和
+    }
+    
+    float rms = sqrt(sum / frameSize); // 取平方根，计算 RMS
+    return rms;
+}
+
+// 将 RMS 转换为分贝
+- (float)calculateDecibelsFromRMS:(float)rms {
+    if (rms == 0) {
+        return -INFINITY; // 避免对 0 取 log
+    }
+    return 20 * log10(rms);
+}
+
+- (NSArray<MusicModel *> *)calculateDBDecibelValuesFromBuffer:(NSURL *)aUrl {
+    
+    NSError *error = nil;
+    
+    AVAudioFile *audioFile = [[AVAudioFile alloc] initForReading:aUrl error:&error];
+    if (error) {
+        //        completion(nil, error);
+        return @[];
+    }
+    
+    // 获取音频文件的长度（以帧为单位）
+    AVAudioFrameCount frameCount = (AVAudioFrameCount)audioFile.length;
+    // 获取音频格式
+    AVAudioFormat *format = audioFile.processingFormat;
+    //计算时长（以毫秒秒为单位）
+    NSTimeInterval duration = (double)frameCount / format.sampleRate * 1000;
+    
+    // 创建 AVAudioPCMBuffer
+    AVAudioPCMBuffer *pcmBuffer = [[AVAudioPCMBuffer alloc] initWithPCMFormat:format frameCapacity:(AVAudioFrameCount)audioFile.length];
+    // 从音频文件读取数据
+    [audioFile readIntoBuffer:pcmBuffer error:&error];
+    
+    // 创建AudioBuffer
+    AudioBuffer audiobuffer = pcmBuffer.audioBufferList->mBuffers[0];
+    // 音频数据
+    void* __nullable mData = audiobuffer.mData;
+    // 音频数据大小
+    UInt32 mDataByteSize = audiobuffer.mDataByteSize;
+    
+    //分块大小为 1024 帧
+    //    NSUInteger binSize = 1024; //将数据分割为一个个小包
+    size_t bytesPerFrame = format.streamDescription->mBytesPerFrame; // 假设 16 位 PCM，每个采样点 2 字节
+    
+    size_t chunkSize = 512; // 分块大小为 1024 帧
+    
+    NSMutableArray<MusicModel *> *decibelValues = [NSMutableArray array];
+    
+    // 设置分帧长度（例如 1024 个帧，约等于 23ms 的音频数据）
+    AVAudioFrameCount frameSize = 1024;
+    AVAudioFrameCount totalFrameCount = pcmBuffer.frameLength;
+    
+    // 遍历所有音频数据并逐帧处理
+    for (AVAudioFrameCount i = 0; i < totalFrameCount; i += frameSize) {
+        // 计算当前帧大小，确保不会超出总帧数
+        AVAudioFrameCount currentFrameSize = MIN(frameSize, totalFrameCount - i);
+        
+        // 获取该帧的音频数据
+        SInt16 *data = mData + i;
+        
+        // 处理该帧，例如计算 RMS 值
+        float rms = [self calculateRMSFromAudioData:data frameSize:currentFrameSize];
+        float db = [self calculateDecibelsFromRMS:rms];
+        
+        // 这里可以将分贝值存储到数组或绘制到图表
+        NSLog(@"Frame %d: RMS = %f, dB = %f", i / frameSize, rms, db);
+        MusicModel *model = [MusicModel new];
+        //            int db = [self calculateDBFromInt16AudioBufferPCMDB:mtData];
+        model.value = db;
+        [decibelValues addObject:model];
+        
+        
+    }
+    //    size_t currentSize = 0;
+    //    for (int i = 0; i < frameCount; i += chunkSize) {
+    //        NSMutableData *mtData = [NSMutableData new];
+    //        // 确保不会读取超过 mData 的范围
+    ////        size_t bytesToCopy = MIN(chunkSize, mDataByteSize - i);
+    //        size_t currentChunkSize = MIN(chunkSize, frameCount - i); // 确保不会超过总帧数
+    //
+    //        // 获取当前块的起始地址
+    ////        void *chunkStart = mData + i;
+    //        void *chunkStart = mData + (i * bytesPerFrame);
+    ////        size_t currentChunkSize = currentChunkSize * bytesPerFrame;
+    //        // 将当前块的数据复制到 mtData 中
+    //        [mtData appendBytes:chunkStart length:currentChunkSize * bytesPerFrame];
+    //
+    //        MusicModel *model = [MusicModel new];
+    //        int db = [self calculateDBFromInt16AudioBufferPCMDB:mtData];
+    //        model.value = db;
+    //        [decibelValues addObject:model];
+    //    }
+    
+    return [decibelValues copy]; // 返回分贝值数组
+}
+
 - (NSArray *)pcmDB:(NSURL *)aUrl {
     
     //一段音频文件有几帧构成
-//    可以通过`AVAudioFile`的`length`获取，该音频文件的帧数，422817
+    //    可以通过`AVAudioFile`的`length`获取，该音频文件的帧数，422817
     
     //读取文件
     NSError *errorone;
@@ -116,7 +241,7 @@
      * drumLoopFile.fileFormat
      streamDescription->mBytesPerFrame：2 //每帧2个字节
      streamDescription->mBitsPerChannel：16
-     得到的 2 * 
+     得到的 2 *
      
      根据帧数，声道数 * 采样率 * (每帧多少字节)  每声道的位数 计算音频
      其中每帧多少字节，可以为 mBitsPerChannel/8 字节
@@ -132,26 +257,31 @@
     //将音频读入`AVAudioPCMBuffer`中
     [drumLoopFile readIntoBuffer:pcmBuffer error:nil];
     const AudioBufferList *audioBufferList = pcmBuffer.audioBufferList;
-//    计算一帧多少字节，声道数 * 每声道的位数/8 可得出 mBytesPreFrame
-//    float formatValue = pcmFormat.streamDescription->mBitsPerChannel;//kb
+    //    计算一帧多少字节，声道数 * 每声道的位数/8 可得出 mBytesPreFrame
+    //    float formatValue = pcmFormat.streamDescription->mBitsPerChannel;//kb
     float aformatValue = pcmFormat.streamDescription->mBytesPerFrame * aFramePosition;
     NSLog(@"该音频由%f字节构成",aformatValue);
-//    float bytes = aformatValue/1000;//计算多少兆
-//    buffer->mBuffers
-//    AudioBufferList audioBufferList = *(pcmBuffer.mutableAudioBufferList);
+    //    float bytes = aformatValue/1000;//计算多少兆
+    //    buffer->mBuffers
+    //    AudioBufferList audioBufferList = *(pcmBuffer.mutableAudioBufferList);
     AudioBuffer audiobuffer = audioBufferList->mBuffers[0];//单声道
     UInt32 mDataByteSize = audiobuffer.mDataByteSize;//音频大小//1691268
     
+    int frameCount = (int)pcmBuffer.frameLength;
+    
     void* __nullable mData = audiobuffer.mData;
     NSMutableData *mtData = [NSMutableData new];
-//    NSData *mtData = [NSData dataWithBytes:mData length:mDataByteSize];
+    //    NSData *mtData = [NSData dataWithBytes:mData length:mDataByteSize];
     [mtData appendBytes:mData length:mDataByteSize];
     
     self.audioData = mtData;
     
+    AVURLAsset *asset = [AVURLAsset assetWithURL:aUrl];           //获取文件
+    self.assetTime = asset.duration;
+    
     NSLog(@"使用：AVAudioPCMBuffer读取data：%@",mtData);
     return [self cutAudioData:CGSizeMake(60, 60)];
-//    playerLoopBuffer.is
+    //    playerLoopBuffer.is
 }
 
 - (int)hal_get_ai_frame_db:(const unsigned char *)pcmdata and:(size_t)size{
@@ -163,7 +293,7 @@
         memcpy(&tmp, addr +  i, sizeof(short)); //获取2个字节的大小(值)
         sum += abs(tmp); //绝对值求和
     }
-
+    
     sum = sum / (size / 2); //求平均值(2个字节表示一个振幅，所以振幅个数为：size/2个
     if(sum) {
         return  (int)(20.0 * log10(sum));
@@ -174,14 +304,14 @@
 //缩减音频 (size为将要绘制波纹的view的尺寸，不需要请忽略)
 - (NSArray *)cutAudioData:(CGSize)size {
     NSMutableArray *filteredSamplesMA = [[NSMutableArray alloc]init];
-//    NSData *data = [self getRecorderDataFromURL:self.url];
+    //    NSData *data = [self getRecorderDataFromURL:self.url];
     //data
     NSData *data = self.audioData;
-//    NSLog(@"%@--%ld",data.bytes,data.length/1024);
+    //    NSLog(@"%@--%ld",data.bytes,data.length/1024);
     NSUInteger sampleCount = data.length / sizeof(SInt16);//计算所有数据个数，通过data长度
     //需要的个数 每秒划分10个
     Float64 count = CMTimeGetSeconds(self.assetTime) * 10;
-
+    
     NSUInteger binSize = sampleCount; //将数据分割为一个个小包
     
     SInt16 *bytes = (SInt16 *)data.bytes; //总的数据个数
@@ -201,7 +331,7 @@
         float g_frame_db = (int)(20.0 * log10(value));
         //低于某个值记录时间
         MusicModel *model = [MusicModel new];
-//        kAudioPlayerLineSpacing
+        //        kAudioPlayerLineSpacing
         model.value = value;
         model.time  = i/binSize * kAudioPlayerLineSpacing;//
         model.peakPower = g_frame_db;
@@ -214,9 +344,9 @@
         }
     }
     
-//    NSLog(@"录音文件总时间：%.2f",CMTimeGetSeconds(self.assetTime));
-//    NSLog(@"录音文件开始时间：%.2f",CMTimeGetSeconds(self.startTime));
-//    NSLog(@"录音文件结束时间：%.2f",CMTimeGetSeconds(self.endTime));
+    //    NSLog(@"录音文件总时间：%.2f",CMTimeGetSeconds(self.assetTime));
+    //    NSLog(@"录音文件开始时间：%.2f",CMTimeGetSeconds(self.startTime));
+    //    NSLog(@"录音文件结束时间：%.2f",CMTimeGetSeconds(self.endTime));
     
     //计算比例因子
     CGFloat scaleFactor = (size.height * 0.5)/maxSample;
@@ -224,7 +354,7 @@
     for (NSUInteger i = 0; i < filteredSamplesMA.count; i++) {
         MusicModel *model = filteredSamplesMA[i];
         model.value = model.value * scaleFactor;
-//        filteredSamplesMA[i] = @([filteredSamplesMA[i] integerValue] * scaleFactor);
+        //        filteredSamplesMA[i] = @([filteredSamplesMA[i] integerValue] * scaleFactor);
     }
     
     return filteredSamplesMA;
@@ -264,13 +394,13 @@
 
 
 - (void)synthetiAudioWithAudioPath:(NSString *)audioPath bgPath:(NSString *)bgPath outPath:(NSString *)outPath completion:(void (^)(BOOL isSucess,NSString * path))completion{
-        
+    
     NSString *auidoPath1 = audioPath;
     NSString *audioPath2 = bgPath;
-
+    
     AVURLAsset *audioAsset1 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:auidoPath1]];
     AVURLAsset *audioAsset2 = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:audioPath2]];
- 
+    
     
     
     AVMutableComposition *composition = [AVMutableComposition composition];    // 音频轨道
@@ -279,28 +409,28 @@
     // 音频素材轨道
     AVAssetTrack *audioAssetTrack1 = [[audioAsset1 tracksWithMediaType:AVMediaTypeAudio] firstObject];
     AVAssetTrack *audioAssetTrack2 = [[audioAsset2 tracksWithMediaType:AVMediaTypeAudio] firstObject];
-//    audioAssetTrack2.preferredVolume = 0.5;
+    //    audioAssetTrack2.preferredVolume = 0.5;
     
     AVMutableAudioMixInputParameters *newAudioInputParams = [AVMutableAudioMixInputParameters audioMixInputParametersWithTrack:audioTrack2] ;
-       [newAudioInputParams setVolumeRampFromStartVolume:0.1 toEndVolume:.5f timeRange:CMTimeRangeMake(kCMTimeZero, audioAsset2.duration)];
-       [newAudioInputParams setTrackID:audioTrack2.trackID];
+    [newAudioInputParams setVolumeRampFromStartVolume:0.1 toEndVolume:.5f timeRange:CMTimeRangeMake(kCMTimeZero, audioAsset2.duration)];
+    [newAudioInputParams setTrackID:audioTrack2.trackID];
     
-
-     
+    
+    
     AVMutableAudioMix *mix = [AVMutableAudioMix audioMix];
     
     
     
     //得到对应轨道中的音频声音信息，并更改
-       AVMutableAudioMixInputParameters *parameters1 = [AVMutableAudioMixInputParameters audioMixInputParametersWithTrack:audioTrack1];
+    AVMutableAudioMixInputParameters *parameters1 = [AVMutableAudioMixInputParameters audioMixInputParametersWithTrack:audioTrack1];
     
     //得到对应轨道中的音频声音信息，并更改
-       AVMutableAudioMixInputParameters *parameters2 = [AVMutableAudioMixInputParameters audioMixInputParametersWithTrack:audioTrack2];
-       [parameters2 setVolume:0.2 atTime:kCMTimeZero];    //从audio1开始让声音变为0.2
-       [parameters2 setVolumeRampFromStartVolume:0.2 toEndVolume:0.2 timeRange:CMTimeRangeMake(kCMTimeZero, audioAsset2.duration)];  //在range这个时间段让声音音量平滑的从02变为0.2
+    AVMutableAudioMixInputParameters *parameters2 = [AVMutableAudioMixInputParameters audioMixInputParametersWithTrack:audioTrack2];
+    [parameters2 setVolume:0.2 atTime:kCMTimeZero];    //从audio1开始让声音变为0.2
+    [parameters2 setVolumeRampFromStartVolume:0.2 toEndVolume:0.2 timeRange:CMTimeRangeMake(kCMTimeZero, audioAsset2.duration)];  //在range这个时间段让声音音量平滑的从02变为0.2
     
     mix.inputParameters = @[parameters1,parameters2];
-       
+    
     float time1 = CMTimeGetSeconds(audioAsset1.duration);
     float time2 = CMTimeGetSeconds(audioAsset2.duration);
     
@@ -322,7 +452,7 @@
             CMTime residueTime = CMTimeMake(residue * audioAsset2.duration.timescale, audioAsset2.duration.timescale);
             
             NSError *error;
-           BOOL fail = [audioTrack2 insertTimeRange:CMTimeRangeMake(time, residueTime) ofTrack:audioAssetTrack2 atTime:time error:&error];
+            BOOL fail = [audioTrack2 insertTimeRange:CMTimeRangeMake(time, residueTime) ofTrack:audioAssetTrack2 atTime:time error:&error];
             if (!fail) {
                 NSLog(@"插入失败======%@",error);
             }
@@ -350,7 +480,7 @@
 }
 
 
- 
+
 @end
 
- 
+

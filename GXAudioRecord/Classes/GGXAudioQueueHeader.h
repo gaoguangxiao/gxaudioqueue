@@ -44,6 +44,10 @@ typedef NS_ENUM(NSInteger, AudioFormatType) {
 ///   - filePath: 路径
 - (void)recorderManager:(AQRecorderManager *_Nullable)recorderManager andFilePath:(NSString *_Nonnull)filePath;
 
+/// 录制的音频流
+- (void)writeFileWithioNumPackets:(NSData *)audioData
+                   inPacketDesc:(nullable const AudioStreamPacketDescription*)inPacketDesc;
+
 @end
 
 //

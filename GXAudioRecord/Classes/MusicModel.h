@@ -11,7 +11,7 @@
 @interface MusicModel : NSObject
 
 @property(nonatomic,assign)float value;//取值0~1之间
-@property(nonatomic,assign)Float64 time;//时间
+@property(nonatomic, assign)float time;//时间
 
 @property (nonatomic, assign) float peakPower;
 

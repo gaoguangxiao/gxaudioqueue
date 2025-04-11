@@ -7,11 +7,14 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreMedia/CoreMedia.h>
+#import "MusicModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ParsingAudioHander : NSObject
 
 - (NSArray<NSNumber *> *)getRecorderDataFromURL:(NSURL *)url;
+
+- (NSArray<MusicModel *> *)calculateDBDecibelValuesFromBuffer:(NSURL *)aUrl;
 
 - (NSArray *)pcmDB:(NSURL *)aUrl;
 
