@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'GXAudioRecord'
-  s.version          = '0.2.2'
+  s.version          = '0.2.3'
   s.summary          = '静默时间'
 
 # This description is used to generate tags and improve search results.
