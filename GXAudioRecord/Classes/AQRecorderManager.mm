@@ -27,7 +27,7 @@ typedef struct AQRecorderState {
     
     //    CMTime
     bool                         mIsEndTime;     //是否开始进入结尾倒计时
-    float                        mMaxEndDownTime;//3秒
+//    float                        mMaxEndDownTime;//3秒
     float                        mEndDownTimeIndex;//
     
     AQRecorderManager            *recorderManager;//类实例
@@ -327,6 +327,8 @@ OSStatus SetMagicCookieForFile (
     
     self.isCutsilentHeadTail = NO;
     
+    self.sliceTime = 3.0;
+    
     self.stopRecordDBLevel = kDefaultMaxPeak;
 }
 
@@ -364,6 +366,11 @@ OSStatus SetMagicCookieForFile (
 
 - (void)setStopRecordDBLevel:(float)stopRecordDBLevel {
     _stopRecordDBLevel = stopRecordDBLevel;
+}
+
+- (void)setSliceTime:(float)sliceTime {
+    _sliceTime = sliceTime;
+    
 }
 
 #pragma mark - 录音功能
@@ -458,7 +465,7 @@ OSStatus SetMagicCookieForFile (
     
     aqData.mIsEndTime        = false;//
     aqData.mEndDownTimeIndex = 0;
-    aqData.mMaxEndDownTime   = 3;
+//    aqData.mMaxEndDownTime   = _sliceTime;
     
     aqData.mIsWritePackets = false;
     
@@ -479,13 +486,14 @@ OSStatus SetMagicCookieForFile (
     //    AudioTimeStamp *ats =  (AudioTimeStamp *)inStartTime;
     if (self.isEnableMeter) {
         float avaValue = [self getCurrentPower];
+//        NSLog(@"当前音量: %.2f，静音限制：%.2f",avaValue,_stopRecordDBLevel);
         //如果音量足够 开始写入数据
         if (avaValue >= self.stopRecordDBLevel) {
             if (aqData.mIsWritePackets) {
                 //正在写入数据
                 //音量大于阈值时，结束倒计时
                 aqData.mIsEndTime = false;
-                [self removeTimer];
+                [self removeBassTimer];
             } else {
                 
                 Float64 timeInterval = [self getRecordTime];
@@ -552,7 +560,7 @@ OSStatus SetMagicCookieForFile (
     AudioFileClose(aqData.mAudioFile);
     
     //停止时低音倒计时
-    [self removeTimer];
+    [self removeBassTimer];
     
     //停止录制监听倒计时
     [self removeRecordTimer];
@@ -624,19 +632,19 @@ OSStatus SetMagicCookieForFile (
 - (void)addPoint:(NSTimer *)timer {
     aqData.mEndDownTimeIndex += 0.1;
     
-    NSLog(@"结束倒计时：%.2f",aqData.mEndDownTimeIndex);
-    if (aqData.mEndDownTimeIndex >= aqData.mMaxEndDownTime) {
-        NSLog(@"停止录制");
-        [self stopRecord];
-        
+//    NSLog(@"静音倒计时：%.2f-目标静音时间：%.2f",aqData.mEndDownTimeIndex,_sliceTime);
+    if (aqData.mEndDownTimeIndex >= _sliceTime) {
+//        NSLog(@"停止录制");
+//        [self stopRecord];//回调结果，但不停止
         if (self.aqDelegate && [self.aqDelegate respondsToSelector:@selector(recorderStopRecordForLowPeak)]) {
             [self.aqDelegate recorderStopRecordForLowPeak];
         }
+        aqData.mEndDownTimeIndex = 0;
     }
 }
 
 #pragma mark - 定时器
-- (void)removeTimer {
+- (void)removeBassTimer {
     [_timer invalidate];
     _timer = nil;
 }

@@ -33,6 +33,9 @@
 ///设置自动停止线单位DB 默认-50
 @property (nonatomic, assign) float stopRecordDBLevel;
 
+//静音检测时间 默认3秒
+@property (nonatomic, assign) float sliceTime;
+
 ///是否开启自动停止录制 默认NO
 @property (nonatomic, assign) BOOL isAutoStopRecord;
 
@@ -54,7 +57,7 @@
 
 - (void)addBassTimer;
 
-- (void)removeTimer;
+//- (void)removeTimer;
 
 - (Float32 )getCurrentPower;
 
