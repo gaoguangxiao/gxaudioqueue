@@ -36,6 +36,9 @@
 //静音检测时间 默认3秒
 @property (nonatomic, assign) float sliceTime;
 
+/// 重新记录静音
+- (void)resetSliceTimedown;
+
 ///是否开启自动停止录制 默认NO
 @property (nonatomic, assign) BOOL isAutoStopRecord;
 

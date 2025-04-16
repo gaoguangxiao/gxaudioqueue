@@ -629,6 +629,11 @@ OSStatus SetMagicCookieForFile (
     return kAudioFileWAVEType;
 }
 
+//重新开始计算静音
+- (void)resetSliceTimedown {
+    aqData.mEndDownTimeIndex = 0;
+}
+
 - (void)addPoint:(NSTimer *)timer {
     aqData.mEndDownTimeIndex += 0.1;
     
