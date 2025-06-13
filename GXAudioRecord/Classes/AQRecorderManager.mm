@@ -12,12 +12,18 @@
 #import "GGXFileManeger.h"
 #import "AQUnitTools.h"
 #import "GGXAudioConvertor.h"
+#import <Accelerate/Accelerate.h>
+
+#define kBufferSize 1280 * 3  // 每个缓冲区大小
+#define kBufferCount 3        // 缓冲区数量
+#define kReadChunkSize 1280   // 每次读取的字节数
+
 /// 自定义结构体
-static const int kNumberBuffers = 3;
+//static const int kNumberBuffers = 3;
 typedef struct AQRecorderState {
     AudioStreamBasicDescription  mDataFormat;
     AudioQueueRef                mQueue; //应用程序创建的录制音频队列
-    AudioQueueBufferRef          mBuffers[kNumberBuffers];//音频队列中音频数据指针的数组
+    AudioQueueBufferRef          mBuffers[kBufferCount];//音频队列中音频数据指针的数组
     AudioFileID                  mAudioFile;//录制的文件
     UInt32                       bufferByteSize;//当前录制文件的大小
     SInt64                       mCurrentPacket;
@@ -27,10 +33,16 @@ typedef struct AQRecorderState {
     
     //    CMTime
     bool                         mIsEndTime;     //是否开始进入结尾倒计时
-//    float                        mMaxEndDownTime;//3秒
+    //    float                        mMaxEndDownTime;//3秒
     float                        mEndDownTimeIndex;//
+    bool isRuningWrite;
+    
+    NSMutableData *circularBuffer;
+    NSLock *bufferLock;
+    NSUInteger lastReadIndex;
     
     AQRecorderManager            *recorderManager;//类实例
+    
 } AQRecorderState;
 
 
@@ -46,16 +58,16 @@ void caculate_bm_dbV2(void * const data, UInt32 numberOfSamples) {
     //限幅
     double maxDepth  =  pow(10, KDefaultLimitMaxDb/20);
     double maxDepthPref = maxDepth * KMaxDepthPREF;
-//    NSLog(@"限制分贝转采样值 %f",maxDepthPref);//0.7
+    //    NSLog(@"限制分贝转采样值 %f",maxDepthPref);//0.7
     SInt16 *curData = (SInt16 *)data;
     for (int pos = 0; pos < numberOfSamples; pos += 2, ++curData) {
         SInt16 data = *curData;
         data *= gain;
         if (data > maxDepthPref) {
-//            NSLog(@"太大了 %hd",data);
+            //            NSLog(@"太大了 %hd",data);
             data = maxDepthPref;
         } else if (data < -maxDepthPref) {
-//            NSLog(@"太小了 %hd",data);
+            //            NSLog(@"太小了 %hd",data);
             data = -maxDepthPref;
         }
         *curData = data;
@@ -67,8 +79,8 @@ void caculate_bm_db(void * const data ,size_t length ,int64_t timestamp, Channel
     int16_t *curData = (int16_t *)data;
     
     if (channelModel == k_Mono) {
-//        int     sDbChnnel     = 0;
-//        int16_t max           = 0;
+        //        int     sDbChnnel     = 0;
+        //        int16_t max           = 0;
         size_t traversalTimes = length;
         for (int pos = 0; pos < traversalTimes; pos += 2, ++curData) {
             int data = *curData;
@@ -77,8 +89,8 @@ void caculate_bm_db(void * const data ,size_t length ,int64_t timestamp, Channel
                 if (data > 0) {
                     NSInteger cDB = 20*log10(data);//当前分贝
                     NSInteger ncDB = cDB + 10;
-//                    NSLog(@"当前录制:%ld",(long)cDB);
-//                    NSLog(@"当前增益录制:%ld",(long)ncDB);
+                    //                    NSLog(@"当前录制:%ld",(long)cDB);
+                    //                    NSLog(@"当前增益录制:%ld",(long)ncDB);
                     double addDepth =  pow(10, ncDB/20);
                     double addDepthPref = addDepth * KMaxDepthPREF;
                     if (data > 0) {
@@ -97,16 +109,16 @@ void caculate_bm_db(void * const data ,size_t length ,int64_t timestamp, Channel
                 }
             }
             *curData = data;
-//            if(data > max) max = data;
+            //            if(data > max) max = data;
         }
         
-//        if(max < 1) {
-//            sDbChnnel = -100;
-//        }else {
-//            sDbChnnel = (20*log10((max)/32767) - 0.5);
-//        }
-//        
-//        channelValue[0] = sDbChnnel;
+        //        if(max < 1) {
+        //            sDbChnnel = -100;
+        //        }else {
+        //            sDbChnnel = (20*log10((max)/32767) - 0.5);
+        //        }
+        //        
+        //        channelValue[0] = sDbChnnel;
         
     } else if (channelModel == k_Stereo){
         int sDbChA = 0;
@@ -164,35 +176,30 @@ static void HandleInputBuffer (
     
     AQRecorderManager *audioRecorder = pAqData->recorderManager;
     
-//    AudioBufferList bufferList;
-//    bufferList.mNumberBuffers = 1;
-//    bufferList.mBuffers[0].mDataByteSize = inNumberFrames * sizeof(SInt16);// 设置数据大小
-//    bufferList.mBuffers[0].mNumberChannels = 1;
-//    bufferList.mBuffers[0].mData = malloc(inNumberFrames * sizeof(SInt16));// 为 mData
-    
     //    se inBuffer->mUserData;
     if (inNumberFrames == 0 && pAqData->mDataFormat.mBytesPerPacket != 0) {
         inNumberFrames = inBuffer->mAudioDataByteSize / pAqData->mDataFormat.mBytesPerPacket;
     }
     //获取音量
     // Get DB
-//    float channelValue[2];
-//    double maxDepth  =  pow(10, KDefaultLimitMaxDb/20);
-//    double maxDepthPref = maxDepth * KMaxDepthPREF;
-//    caculate_bm_db(inBuffer->mAudioData, inBuffer->mAudioDataByteSize, 0, k_Mono, channelValue,true,maxDepthPref);
+    //    float channelValue[2];
+    //    double maxDepth  =  pow(10, KDefaultLimitMaxDb/20);
+    //    double maxDepthPref = maxDepth * KMaxDepthPREF;
+    //    caculate_bm_db(inBuffer->mAudioData, inBuffer->mAudioDataByteSize, 0, k_Mono, channelValue,true,maxDepthPref);
     
-    caculate_bm_dbV2((SInt16 *)inBuffer->mAudioData,inBuffer->mAudioDataByteSize);
+    //    caculate_bm_dbV2((SInt16 *)inBuffer->mAudioData,inBuffer->mAudioDataByteSize);
     
-    NSData *audioTmp = [NSData dataWithBytes:inBuffer->mAudioData
-                                      length:inBuffer->mAudioDataByteSize];
-    //传递音频流
-    [audioRecorder.aqDataSource writeFileWithioNumPackets:audioTmp inPacketDesc:inPacketDesc];;
-    //提升录音分贝
-    //    NSLog(@"根据AudioData计算的分贝%.2f",channelValue[0]);
+    //    if (pAqData->isRuningWrite) {
     
-    //mAudioFile 要写入的音频文件
-    //false 写入文件不需要缓存文件
-    //mAudioDataByteSize 被写入文件大小
+    NSData *audioData = [NSData dataWithBytes:inBuffer->mAudioData
+                                       length:inBuffer->mAudioDataByteSize];
+    
+    [audioRecorder getPCMDB:audioData];
+    
+    [pAqData->bufferLock lock];
+    [pAqData->circularBuffer appendData:audioData];
+    [pAqData->bufferLock unlock];
+    
     //
     OSStatus writeStatus = AudioFileWritePackets(pAqData->mAudioFile,
                                                  false,
@@ -217,6 +224,8 @@ static void HandleInputBuffer (
                             inBuffer,
                             0,
                             NULL);
+    //    }
+    
 }
 
 
@@ -304,10 +313,17 @@ OSStatus SetMagicCookieForFile (
 @property (nonatomic, strong) NSTimer *recordTimer;//录制音频时长控制
 @property (nonatomic, assign) float recordTimeIndex;
 
+@property (nonatomic, assign) double currentPower;
+
+
 @property (nonatomic, copy) NSString *LocalfilePath;
+
+@property (nonatomic, strong) NSTimer *bufferTimer; //录制结束控制
 @end
 
-@implementation AQRecorderManager
+@implementation AQRecorderManager {
+    
+}
 
 - (instancetype)initAudioFormatType:(AudioFormatType)audioFormatType sampleRate:(Float64)sampleRate channels:(UInt32)channels bitsPerChannel:(UInt32)bitsPerChannel {
     self = [super init];
@@ -324,6 +340,7 @@ OSStatus SetMagicCookieForFile (
 
 - (void)initRecord {
     aqData.recorderManager = self;
+    aqData.bufferLock = [[NSLock alloc] init];
     
     self.isCutsilentHeadTail = NO;
     
@@ -375,6 +392,20 @@ OSStatus SetMagicCookieForFile (
 
 #pragma mark - 录音功能
 - (void)initAudioQueueBeforeRecord {
+    
+    aqData.isRuningWrite = NO;
+    
+    aqData.circularBuffer = [NSMutableData data];
+    aqData.lastReadIndex = 0;
+    
+    //停止时低音倒计时
+    [self removeBassTimer];
+    
+    //停止录制监听倒计时
+    [self removeRecordTimer];
+    
+    //停止缓存数据抛出
+    [self stopBufferTime];
     //1、创建音频队列
     /*
      mDataFormat：指定录制的音频格式
@@ -400,16 +431,16 @@ OSStatus SetMagicCookieForFile (
     //        SetMagicCookieForFile(aqData.mQueue, aqData.mAudioFile);
     //    }
     
-    //2、设置缓冲区大小
-    DeriveBufferSize(aqData.mQueue,
-                     aqData.mDataFormat,
-                     0.5,
-                     &aqData.bufferByteSize);
+    //2、设置缓冲区大小；`kBufferSize`默认值
+    //    DeriveBufferSize(aqData.mQueue,
+    //                     aqData.mDataFormat,
+    //                     0.5,
+    //                     &aqData.bufferByteSize);
     
     //3、创建音频队列缓冲区
-    for (int i = 0; i < kNumberBuffers; ++i) {
+    for (int i = 0; i < kBufferCount; ++i) {
         OSStatus allocBufferStatus = AudioQueueAllocateBuffer(aqData.mQueue,
-                                                              aqData.bufferByteSize,
+                                                              kBufferSize,
                                                               &aqData.mBuffers[i]);
         if (allocBufferStatus != noErr) {
             NSLog(@"分配缓冲区失败：%d", allocBufferStatus);
@@ -431,7 +462,7 @@ OSStatus SetMagicCookieForFile (
 - (void)startRecordWithFilePath:(NSString *)filePath {
     
     //设置会话
-//    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+    //    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:nil];
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
     
@@ -465,14 +496,15 @@ OSStatus SetMagicCookieForFile (
     
     aqData.mIsEndTime        = false;//
     aqData.mEndDownTimeIndex = 0;
-//    aqData.mMaxEndDownTime   = _sliceTime;
+    //    aqData.mMaxEndDownTime   = _sliceTime;
     
     aqData.mIsWritePackets = false;
     
     aqData.mCurrentPacket = 0;
-    aqData.mIsRunning = true;
     
     //开始录音
+    aqData.mIsRunning = true;
+    
     OSStatus startStatus = AudioQueueStart(aqData.mQueue, NULL);
     if (startStatus != noErr) {
         NSLog(@"开始录音失败：%d", startStatus);
@@ -480,13 +512,85 @@ OSStatus SetMagicCookieForFile (
     }
     //成功录音，开启录制声音
     [self addRecordTimer];
+    
+    //开始音频缓存读取
+    [self startBufferTimer];
 }
 
+//#MARK
+// MARK: - 定时器（定时40ms抛出音频数据）
+- (void)startBufferTimer {
+    // 确保在主线程创建Timer（NSTimer需要RunLoop）
+    //    dispatch_async(dispatch_get_main_queue(), ^{
+    self.bufferTimer = [NSTimer scheduledTimerWithTimeInterval:0.04 repeats:YES block:^(NSTimer * _Nonnull timer) {
+        [self timerBufferFired:timer];
+    }];
+    
+    // 提高定时器精度（但不保证绝对精确）
+    [[NSRunLoop mainRunLoop] addTimer:self.bufferTimer forMode:NSRunLoopCommonModes];
+    //    });
+}
+
+- (void)timerBufferFired:(NSTimer *)timer {
+    // 实际读取数据的逻辑保持不变
+    [self readDataChunk];
+}
+
+// MARK: - 数据处理
+- (void)startWriteRecord {
+    aqData.isRuningWrite = true;
+}
+
+- (void)readDataChunk {
+    [aqData.bufferLock lock];
+    
+    NSUInteger availableBytes = aqData.circularBuffer.length - aqData.lastReadIndex;
+    if (availableBytes < kReadChunkSize) {
+        NSLog(@"数据不足: %lu/%d", (unsigned long)availableBytes, kReadChunkSize);
+        [aqData.bufferLock unlock];
+        return;
+    }
+    
+    // 读取数据范围
+    NSRange chunkRange = NSMakeRange(aqData.lastReadIndex, kReadChunkSize);
+    NSData *chunk = [aqData.circularBuffer subdataWithRange:chunkRange];
+    aqData.lastReadIndex += kReadChunkSize;
+    
+    // 环形缓冲区处理
+    if (aqData.lastReadIndex >= aqData.circularBuffer.length) {
+        [aqData.circularBuffer replaceBytesInRange:NSMakeRange(0, aqData.lastReadIndex) withBytes:NULL length:0];
+        aqData.lastReadIndex = 0;
+    }
+    
+    if (self.aqDataSource && [self.aqDataSource respondsToSelector:@selector(writeFileWithioNumPackets:)]) {
+        [self.aqDataSource writeFileWithioNumPackets:chunk];
+    }
+    
+    [aqData.bufferLock unlock];
+    
+    //    [self.aqDataSource writeFileWithioNumPackets:audioData inPacketDesc:inPacketDesc];
+    //    // 使用数据（示例：打印前5字节）
+    //    if (chunk.length >= 5) {
+    //        const uint8_t *bytes = chunk.bytes;
+    //        NSLog(@"读取数据: %02X %02X %02X %02X %02X...", bytes[0], bytes[1], bytes[2], bytes[3], bytes[4]);
+    //    }
+}
+
+- (void)stopBufferTime {
+    // 停止Timer（必须在主线程操作）
+    NSLog(@"stopBufferTime");
+    //    dispatch_async(dispatch_get_main_queue(), ^{
+    [self.bufferTimer invalidate];
+    self.bufferTimer = nil;
+    //    });
+}
+
+//#MARK: 音量
 - (void)recoedTimeAdd {
     //    AudioTimeStamp *ats =  (AudioTimeStamp *)inStartTime;
     if (self.isEnableMeter) {
         float avaValue = [self getCurrentPower];
-//        NSLog(@"当前音量: %.2f，静音限制：%.2f",avaValue,_stopRecordDBLevel);
+        NSLog(@"当前音量: %.2f，静音限制：%.2f",avaValue,_stopRecordDBLevel);
         //如果音量足够 开始写入数据
         if (avaValue >= self.stopRecordDBLevel) {
             if (aqData.mIsWritePackets) {
@@ -505,18 +609,13 @@ OSStatus SetMagicCookieForFile (
             }
         } else {
             //音量不满足阈值
-            if (aqData.mIsWritePackets) {//写入数据中
+            if (!aqData.mIsEndTime) {
+                //音量低，写入数据，并且开启倒计时状态
+                aqData.mIsEndTime = true;
                 
-                if (aqData.mIsEndTime) {
-                    //音量低，写入数据，并且开启倒计时状态
-                    
-                } else {
-                    aqData.mIsEndTime = true;
-                    
-                    aqData.mEndDownTimeIndex = 0.1;
-                    //进入低音计时
-                    [self addBassTimer];
-                }
+                aqData.mEndDownTimeIndex = 0.1;
+                //进入低音计时
+                [self addBassTimer];
             }
         }
         
@@ -565,6 +664,9 @@ OSStatus SetMagicCookieForFile (
     //停止录制监听倒计时
     [self removeRecordTimer];
     
+    //停止缓存数据抛出
+    [self stopBufferTime];
+    
     if (self.isCutsilentHeadTail) {
         //需要裁剪
         NSLog(@"头部剪辑：%.2f",CMTimeGetSeconds(self.startTime));
@@ -595,10 +697,17 @@ OSStatus SetMagicCookieForFile (
         }];
     } else {
         
-        if (self.aqDataSource && [self.aqDataSource respondsToSelector:@selector(recorderManager:didOutputAudiofile:andEndTime:andFilePath:)]) {
+        if (self.LocalfilePath && self.aqDataSource && [self.aqDataSource respondsToSelector:@selector(recorderManager:didOutputAudiofile:andEndTime:andFilePath:)]) {
             [self.aqDataSource recorderManager:self didOutputAudiofile:self.startTime andEndTime:self.endTime andFilePath:[NSURL fileURLWithPath:self.LocalfilePath]];
         }
     }
+}
+
+- (void)cancelRecord {
+    //清理录音路径
+    self.LocalfilePath = nil;
+    
+    [self stopRecord];
 }
 
 //获取当前录制时间
@@ -614,9 +723,60 @@ OSStatus SetMagicCookieForFile (
     }
     return timeInterval;
 }
+//void * const
+#import <Accelerate/Accelerate.h>
+
+//- (double)calculateAmplitudeWithBuffer:(const uint8_t *)buffer bytesRead:(int)bytesRead {
+//    int shortCount = bytesRead / 2;
+//    int16_t *samples = (int16_t *)buffer;  // 直接转成 int16_t 数组
+//    
+//    double squaredSum;
+//    vDSP_svesq16(samples, 1, &squaredSum, shortCount);  // 计算平方和
+//    return sqrt(squaredSum / shortCount);
+//}
+
+-(int)getPCMDB:(NSData* )buffer
+{
+    //https://blog.csdn.net/balijinyi/article/details/80284520
+    long long sum = 0;
+    short *pos = (short *)buffer.bytes;
+    for (int i = 0; i < buffer.length /2; i++){
+        sum += abs(*pos);
+        pos++;
+    }
+    int db = (int)(sum * 600 / (buffer.length / 2 * 32767));
+    if(db >= 120){
+        db = 120;
+    }
+    
+    _currentPower = db;
+    return db;
+}
+
+//- (double)calculateAmplitudeWithBuffer:(void * const)buffer bytesRead:(int)bytesRead {
+//    double sum = 0.0;
+//    int shortCount = bytesRead / 2;  // 计算 16-bit 样本数
+//    
+//    for (int i = 0; i < shortCount; i++) {
+//        // 组合两个字节成一个 int16_t (相当于 Java 的 short)
+//        uint8_t lowByte = buffer[i * 2];
+//        uint8_t highByte = buffer[i * 2 + 1];
+//        int16_t sample = (int16_t)((highByte << 8) | lowByte);
+//        
+//        // 计算平方和
+//        sum += pow(fabs(sample), 2);
+//    }
+//    
+//    double vaor = sqrt(sum / shortCount);
+//    
+//    _currentPower = vaor;
+//    // 返回均方根 (RMS)
+//    return vaor;
+//}
 
 - (Float32 )getCurrentPower {
-    return [AQUnitTools getCurrentPower:aqData.mQueue andDataFormat:aqData.mDataFormat];
+    return  _currentPower;
+    //    return [AQUnitTools getCurrentPower:aqData.mQueue andDataFormat:aqData.mDataFormat];
 }
 
 - (AudioFileTypeID)getAudioFileByPath:(NSString *)path{
@@ -637,10 +797,10 @@ OSStatus SetMagicCookieForFile (
 - (void)addPoint:(NSTimer *)timer {
     aqData.mEndDownTimeIndex += 0.1;
     
-//    NSLog(@"静音倒计时：%.2f-目标静音时间：%.2f",aqData.mEndDownTimeIndex,_sliceTime);
+    //    NSLog(@"静音倒计时：%.2f-目标静音时间：%.2f",aqData.mEndDownTimeIndex,_sliceTime);
     if (aqData.mEndDownTimeIndex >= _sliceTime) {
-//        NSLog(@"停止录制");
-//        [self stopRecord];//回调结果，但不停止
+        //        NSLog(@"停止录制");
+        //        [self stopRecord];//回调结果，但不停止
         if (self.aqDelegate && [self.aqDelegate respondsToSelector:@selector(recorderStopRecordForLowPeak)]) {
             [self.aqDelegate recorderStopRecordForLowPeak];
         }
@@ -670,7 +830,7 @@ OSStatus SetMagicCookieForFile (
 
 - (void)addRecordTimer{
     if (!_recordTimer) {
-        _recordTimer = [NSTimer scheduledTimerWithTimeInterval:.1f target:self selector:@selector(recoedTimeAdd) userInfo:nil repeats:YES];
+        _recordTimer = [NSTimer scheduledTimerWithTimeInterval:.2f target:self selector:@selector(recoedTimeAdd) userInfo:nil repeats:YES];
         [[NSRunLoop mainRunLoop] addTimer:_recordTimer forMode:NSRunLoopCommonModes];
     }
 }

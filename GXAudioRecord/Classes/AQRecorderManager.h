@@ -36,6 +36,9 @@
 //静音检测时间 默认3秒
 @property (nonatomic, assign) float sliceTime;
 
+
+-(int)getPCMDB:(NSData* )buffer;
+
 /// 重新记录静音
 - (void)resetSliceTimedown;
 
@@ -54,9 +57,14 @@
 
 //默认
 @property (nonatomic, assign) CGFloat loudnessValue;
-//- (void)startRecord;
+
+//可写入文件
+- (void)startWriteRecord;
 
 - (void)stopRecord;
+
+///取消录制-无返回结果
+- (void)cancelRecord;
 
 - (void)addBassTimer;
 
