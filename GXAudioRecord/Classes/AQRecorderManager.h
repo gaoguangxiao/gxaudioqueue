@@ -30,6 +30,12 @@
 ///是否开启音量检查
 @property (nonatomic, assign) BOOL isEnableMeter;
 
+/// 最小音量回调
+@property (nonatomic, assign) float minVolumeCallbackTime;
+
+/// 是否设置静音检测：默认Yes
+@property (nonatomic, assign) BOOL isVad;
+
 ///设置自动停止线单位DB 默认-50
 @property (nonatomic, assign) float stopRecordDBLevel;
 

@@ -15,7 +15,7 @@
 //#define kDefaultMaxPeak 0.2 //阈值 0.2 对应metellevel
 //#define kDefaultMaxPeak -20 //电脑模拟器采集时，设置-20即可
 //#define kDefaultMaxPeak -60 //采集设备为6 对应metellevelDB -60
-#define kDefaultMaxPeak -50 //采集设备为7 对应metellevelDB -50
+#define kDefaultMaxPeak 20 //采集设备为7 对应metellevelDB -50
 
 #define KMaxDepthPREF 32767
 #define KDefaultLimitMaxDb -3.0

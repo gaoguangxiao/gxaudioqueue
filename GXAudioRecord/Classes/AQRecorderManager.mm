@@ -53,116 +53,6 @@ enum ChannelCount
     k_Stereo
 };
 
-void caculate_bm_dbV2(void * const data, UInt32 numberOfSamples) {
-    float gain = 3.0f; // 增益因子
-    //限幅
-    double maxDepth  =  pow(10, KDefaultLimitMaxDb/20);
-    double maxDepthPref = maxDepth * KMaxDepthPREF;
-    //    NSLog(@"限制分贝转采样值 %f",maxDepthPref);//0.7
-    SInt16 *curData = (SInt16 *)data;
-    for (int pos = 0; pos < numberOfSamples; pos += 2, ++curData) {
-        SInt16 data = *curData;
-        data *= gain;
-        if (data > maxDepthPref) {
-            //            NSLog(@"太大了 %hd",data);
-            data = maxDepthPref;
-        } else if (data < -maxDepthPref) {
-            //            NSLog(@"太小了 %hd",data);
-            data = -maxDepthPref;
-        }
-        *curData = data;
-    }
-}
-
-void caculate_bm_db(void * const data ,size_t length ,int64_t timestamp, ChannelCount channelModel,
-                    float channelValue[2],bool isAudioUnit,double maxDepthPref) {
-    int16_t *curData = (int16_t *)data;
-    
-    if (channelModel == k_Mono) {
-        //        int     sDbChnnel     = 0;
-        //        int16_t max           = 0;
-        size_t traversalTimes = length;
-        for (int pos = 0; pos < traversalTimes; pos += 2, ++curData) {
-            int data = *curData;
-            NSLog(@"data is :%ld",(long)data);
-            {
-                if (data > 0) {
-                    NSInteger cDB = 20*log10(data);//当前分贝
-                    NSInteger ncDB = cDB + 10;
-                    //                    NSLog(@"当前录制:%ld",(long)cDB);
-                    //                    NSLog(@"当前增益录制:%ld",(long)ncDB);
-                    double addDepth =  pow(10, ncDB/20);
-                    double addDepthPref = addDepth * KMaxDepthPREF;
-                    if (data > 0) {
-                        data = data + addDepthPref;
-                    } else {
-                        data = data - addDepthPref;
-                    }
-                } else {
-                    
-                }
-                
-                if (data > maxDepthPref) {
-                    data = maxDepthPref;
-                } else if (data < -maxDepthPref) {
-                    data = -maxDepthPref;
-                }
-            }
-            *curData = data;
-            //            if(data > max) max = data;
-        }
-        
-        //        if(max < 1) {
-        //            sDbChnnel = -100;
-        //        }else {
-        //            sDbChnnel = (20*log10((max)/32767) - 0.5);
-        //        }
-        //        
-        //        channelValue[0] = sDbChnnel;
-        
-    } else if (channelModel == k_Stereo){
-        int sDbChA = 0;
-        int sDbChB = 0;
-        
-        int16_t nCurr[2] = {0};
-        int16_t nMax[2] = {0};
-        
-        for(unsigned int i=0; i<length/2; i++) {
-            nCurr[0] = curData[i];
-            nCurr[1] = curData[i + 1];
-            
-            if(nMax[0] < nCurr[0]) nMax[0] = nCurr[0];
-            
-            if(nMax[1] < nCurr[1]) nMax[1] = nCurr[0];
-        }
-        
-        if(nMax[0] < 1) {
-            sDbChA = -100;
-        } else {
-            sDbChA = (20*log10((0.0 + nMax[0])/32767) - 0.5);
-        }
-        
-        if(nMax[1] < 1) {
-            sDbChB = -100;
-        } else {
-            sDbChB = (20*log10((0.0 + nMax[1])/32767) - 0.5);
-        }
-        
-        channelValue[0] = sDbChA;
-        channelValue[1] = sDbChB;
-    }
-}
-
-
-//tatic void HandleInputBuffer (
-//    void                                 *aqData,//用户数据指针
-//    AudioQueueRef                        inAQ, //
-//    AudioQueueBufferRef                  inBuffer, 装有音频数据的
-//    const AudioTimeStamp                 *inStartTime,
-//    UInt32                               inNumPackets,
-//    const AudioStreamPacketDescription   *inPacketDesc
-//) {
-
 /// 处理回调函数
 static void HandleInputBuffer (
                                void                                 *aqData,
@@ -347,6 +237,8 @@ OSStatus SetMagicCookieForFile (
     self.sliceTime = 3.0;
     
     self.stopRecordDBLevel = kDefaultMaxPeak;
+    self.minVolumeCallbackTime = 0.2;
+    self.isVad = YES;
 }
 
 - (void)setAudioFormatType:(AudioFormatType)audioFormatType
@@ -377,8 +269,16 @@ OSStatus SetMagicCookieForFile (
     _isEnableMeter = isEnableMeter;
 }
 
+- (void)setMinVolumeCallbackTime:(float)minVolumeCallbackTime {
+    _minVolumeCallbackTime = minVolumeCallbackTime;
+}
+
 - (void)setIsCutsilentHeadTail:(BOOL)isCutsilentHeadTail {
     _isCutsilentHeadTail = isCutsilentHeadTail;
+}
+
+- (void)setIsVad:(BOOL)isVad {
+    _isVad = isVad;
 }
 
 - (void)setStopRecordDBLevel:(float)stopRecordDBLevel {
@@ -588,9 +488,15 @@ OSStatus SetMagicCookieForFile (
 //#MARK: 音量
 - (void)recoedTimeAdd {
     //    AudioTimeStamp *ats =  (AudioTimeStamp *)inStartTime;
-    if (self.isEnableMeter) {
-        float avaValue = [self getCurrentPower];
-        NSLog(@"当前音量: %.2f，静音限制：%.2f",avaValue,_stopRecordDBLevel);
+    float avaValue = [self getCurrentPower];
+    if (_isEnableMeter) {
+        if (self.aqDataSource && [self.aqDataSource respondsToSelector:@selector(didOutputAudioPeakPower:)]) {
+            [self.aqDataSource didOutputAudioPeakPower:avaValue];
+        }
+    }
+    
+    if (self.isVad) {
+//        NSLog(@"当前音量: %.2f，静音限制：%.2f",avaValue,_stopRecordDBLevel);
         //如果音量足够 开始写入数据
         if (avaValue >= self.stopRecordDBLevel) {
             if (aqData.mIsWritePackets) {
@@ -601,7 +507,7 @@ OSStatus SetMagicCookieForFile (
             } else {
                 
                 Float64 timeInterval = [self getRecordTime];
-                NSLog(@"开始写入数据:%.2f",timeInterval);
+//                NSLog(@"开始写入数据:%.2f",timeInterval);
                 
                 self.startTime = CMTimeMakeWithSeconds(timeInterval - 0.2, 600);
                 
@@ -617,11 +523,6 @@ OSStatus SetMagicCookieForFile (
                 //进入低音计时
                 [self addBassTimer];
             }
-        }
-        
-        
-        if (self.aqDataSource && [self.aqDataSource respondsToSelector:@selector(didOutputAudioPeakPower:)]) {
-            [self.aqDataSource didOutputAudioPeakPower:avaValue];
         }
     }
 }
@@ -729,7 +630,7 @@ OSStatus SetMagicCookieForFile (
 //- (double)calculateAmplitudeWithBuffer:(const uint8_t *)buffer bytesRead:(int)bytesRead {
 //    int shortCount = bytesRead / 2;
 //    int16_t *samples = (int16_t *)buffer;  // 直接转成 int16_t 数组
-//    
+//
 //    double squaredSum;
 //    vDSP_svesq16(samples, 1, &squaredSum, shortCount);  // 计算平方和
 //    return sqrt(squaredSum / shortCount);
@@ -756,19 +657,19 @@ OSStatus SetMagicCookieForFile (
 //- (double)calculateAmplitudeWithBuffer:(void * const)buffer bytesRead:(int)bytesRead {
 //    double sum = 0.0;
 //    int shortCount = bytesRead / 2;  // 计算 16-bit 样本数
-//    
+//
 //    for (int i = 0; i < shortCount; i++) {
 //        // 组合两个字节成一个 int16_t (相当于 Java 的 short)
 //        uint8_t lowByte = buffer[i * 2];
 //        uint8_t highByte = buffer[i * 2 + 1];
 //        int16_t sample = (int16_t)((highByte << 8) | lowByte);
-//        
+//
 //        // 计算平方和
 //        sum += pow(fabs(sample), 2);
 //    }
-//    
+//
 //    double vaor = sqrt(sum / shortCount);
-//    
+//
 //    _currentPower = vaor;
 //    // 返回均方根 (RMS)
 //    return vaor;
@@ -830,7 +731,7 @@ OSStatus SetMagicCookieForFile (
 
 - (void)addRecordTimer{
     if (!_recordTimer) {
-        _recordTimer = [NSTimer scheduledTimerWithTimeInterval:.2f target:self selector:@selector(recoedTimeAdd) userInfo:nil repeats:YES];
+        _recordTimer = [NSTimer scheduledTimerWithTimeInterval:_minVolumeCallbackTime target:self selector:@selector(recoedTimeAdd) userInfo:nil repeats:YES];
         [[NSRunLoop mainRunLoop] addTimer:_recordTimer forMode:NSRunLoopCommonModes];
     }
 }
